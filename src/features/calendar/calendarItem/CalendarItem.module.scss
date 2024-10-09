@@ -1,0 +1,17 @@
+.calendarItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+
+.description {
+    margin: 0;
+    font-size: small;
+}
+
+.icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}

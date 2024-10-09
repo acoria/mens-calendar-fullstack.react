@@ -1,0 +1,11 @@
+{
+    "general": {
+        "left": "left",
+        "right": "right"
+    },
+    "calendar": {
+        "mensExpected": "Mens expected",
+        "ovulation": "Ovulation",
+        "ovulationCalculated": "Expected ovulation"
+    }
+}
