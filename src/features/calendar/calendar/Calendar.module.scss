@@ -8,43 +8,43 @@
 }
 
 .neutral {
-    border: 1px solid colors.$color-secondary-100;
+    border: 1px solid colors.$color-calendar-neutral-border;
 }
 
 .dayInCurrentMonth {
-    background-color: colors.$color-secondary-100;
+    background-color: colors.$color-calendar-day-in-current-month-background;
 }
 
 .lightestDay {
-    background-color: colors.$color-secondary-300;
+    background-color: colors.$color-calendar-lightest-day-background;
 }
 
 .lightDay {
-    background-color: colors.$color-secondary-500;
+    background-color: colors.$color-calendar-light-day-background;
 }
 
 .mensExpected {
-    background-color: colors.$color-accent;
+    background-color: colors.$color-calendar-mens-expected-background;
 }
 
 .normalDay {
-    background-color: colors.$color-secondary-600;
+    background-color: colors.$color-calendar-normal-day-background;
 }
 
 .strongDay {
-    background-color: colors.$color-secondary-700;
+    background-color: colors.$color-calendar-strong-day-background;
 }
 
 .ovulationDayCalculated {
-    background-color: colors.$color-primary-light;
+    background-color: colors.$color-calendar-ovulation-day-calculated-background;
 }
 
 .ovulationDayFelt {
-    background-color: colors.$color-primary;
+    background-color: colors.$color-calendar-ovulation-day-felt-background;
 }
 
 .icon {
-    color: colors.$color-secondary-900;
+    color: colors.$color-calendar-icon-color;
     width: 1rem;
     height: auto;
 }
