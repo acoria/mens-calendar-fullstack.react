@@ -1,0 +1,33 @@
+- Tage und Stärke (1-4) wählbar
+- nächste Periode berechnen (+28d) und anzeigen
+- Eisprung anzeigen
+- Übersicht: pro Jahr
+	- Startmonat
+	- von wann bis wann
+	- Anzahl Tage insg./ Anzahl Tage Stärke 2-4
+	- wieviele Tage dazwischen
+	
+	
+period
+	id
+	start_date (date of calculated ovulation)
+	felt_ovulation_date?
+	felt_ovulation_side?
+
+period-item
+	id: string
+	day: date
+	light_day: boolean
+	amount_tampon_mini: number
+	amount_tampon_normal: number
+	amount_tampon_super: number
+	period
+	
+- wird der erste period-entry angelegt, wird automatisch die nächste period angelegt
+- nur mini: leichterer Tag
+- 1 normal: leichter Tag
+- > 1 normal: normaler Tag
+- > 3 normal o. super: starker Tag
+- vorraus. Eisprung und Eisprung können am gleichen Tag auftreten -> im Wording beachten
+- Eisprung rechts/links beachten
+- heute wird farblich markiert
