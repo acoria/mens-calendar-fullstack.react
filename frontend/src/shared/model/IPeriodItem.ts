@@ -1,4 +1,5 @@
 import { IEntity } from "../../core/api/types/IEntity";
+import { IRouteMeta } from "../../core/api/types/IRouteMeta";
 
 export interface IPeriodItem extends IEntity {
   day: Date;
@@ -8,3 +9,5 @@ export interface IPeriodItem extends IEntity {
   amountTamponsSuper: number;
   periodId: string;
 }
+
+export const PeriodItemRouteMeta: IRouteMeta = { path: "/period-items" };
