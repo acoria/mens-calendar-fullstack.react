@@ -29,12 +29,19 @@
         },
         "right": "rechts",
         "weekdays": {
+            "monday": "Montag",
             "mondayShort": "Mo",
+            "tuesday": "Dienstag",
             "tuesdayShort": "Di",
+            "wednesday": "Mittwoch",
             "wednesdayShort": "Mi",
+            "thursday": "Donnerstag",
             "thursdayShort": "Do",
+            "friday": "Freitag",
             "fridayShort": "Fr",
+            "saturday": "Saturday",
             "saturdayShort": "Sa",
+            "sunday": "Sonntag",
             "sundayShort": "So"
         }
     },

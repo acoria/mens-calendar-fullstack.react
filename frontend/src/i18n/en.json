@@ -29,12 +29,19 @@
         },
         "right": "right",
         "weekdays": {
+            "monday": "Monday",
             "mondayShort": "Mon",
+            "tuesday": "Tuesday",
             "tuesdayShort": "Tue",
+            "wednesday": "Wednesday",
             "wednesdayShort": "Wed",
+            "thursday": "Thursday",
             "thursdayShort": "Thu",
+            "friday": "Friday",
             "fridayShort": "Fri",
+            "saturday": "Saturday",
             "saturdayShort": "Sat",
+            "sunday": "Sunday",
             "sundayShort": "Sun"
         }
     },
