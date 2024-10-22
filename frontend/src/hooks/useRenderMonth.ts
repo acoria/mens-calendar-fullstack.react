@@ -1,7 +1,7 @@
-import { IllegalArgumentError } from "../../../../core/errors/IllegalArgumentError";
-import { Month } from "../../../../core/types/Month";
-import { texts } from "../../../../lib/translation/texts";
-import { useTranslation } from "../../../../lib/translation/useTranslation";
+import { IllegalArgumentError } from "../core/errors/IllegalArgumentError";
+import { Month } from "../core/types/Month";
+import { texts } from "../lib/translation/texts";
+import { useTranslation } from "../lib/translation/useTranslation";
 
 export const useRenderMonth = () => {
   const { t } = useTranslation();

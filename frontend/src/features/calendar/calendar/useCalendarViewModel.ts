@@ -1,12 +1,14 @@
+import { useState } from "react";
 import { DateTime } from "../../../core/services/date/DateTime";
 import { DateTimeIterator } from "../../../core/services/date/DateTimeIterator";
-import { useRenderMonth } from "./hooks/useRenderMonth";
+import { useRenderMonth } from "../../../hooks/useRenderMonth";
 import { useWeekdayLister } from "./hooks/useWeekdayLister";
 import { ICalendarProps } from "./ICalendarProps";
 import { IDay } from "./IDay";
 import { PeriodInfo } from "./utils/PeriodInfo";
 
 export const useCalendarViewModel = (props: ICalendarProps) => {
+  const [testShowPeriodItem, setTestShowPeriodItem] = useState(false);
   const days: IDay[] = [];
   const periodInfo = new PeriodInfo(props.periods);
   const legend: string[] = useWeekdayLister(props.startDate);
@@ -37,7 +39,8 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
     );
     const periodItem = periodInfo.findPeriodItemByDate(day.date);
     console.log(periodItem?.periodId);
+    setTestShowPeriodItem((previous) => !previous);
   };
 
-  return { days, legend, onDayClicked };
+  return { days, legend, onDayClicked, testShowPeriodItem };
 };

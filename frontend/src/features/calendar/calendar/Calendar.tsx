@@ -1,15 +1,16 @@
 import { ReactElement } from "react";
 import { ReactComponent as Ovulation } from "../../../assets/crack.svg";
 import { ReactComponent as Drop } from "../../../assets/drop.svg";
+import { style } from "../../../core/ui/style";
 import { error } from "../../../core/utils/error";
 import { texts } from "../../../lib/translation/texts";
 import { useTranslation } from "../../../lib/translation/useTranslation";
+import { PeriodItem } from "../../periodItem/PeriodItem";
 import { CalendarItem } from "../calendarItem/CalendarItem";
 import styles from "./Calendar.module.scss";
 import { CalendarType } from "./CalendarType";
 import { ICalendarProps } from "./ICalendarProps";
 import { useCalendarViewModel } from "./useCalendarViewModel";
-import { style } from "../../../core/ui/style";
 
 export const Calendar: React.FC<ICalendarProps> = (props) => {
   const viewModel = useCalendarViewModel(props);
@@ -89,9 +90,14 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
   ));
 
   return (
-    <div className={styles.calendar}>
-      {legend}
-      {days}
-    </div>
+    <>
+      {viewModel.testShowPeriodItem && (
+        <PeriodItem date={new Date()} period={props.periods[0]} />
+      )}
+      <div className={styles.calendar}>
+        {legend}
+        {days}
+      </div>
+    </>
   );
 };
