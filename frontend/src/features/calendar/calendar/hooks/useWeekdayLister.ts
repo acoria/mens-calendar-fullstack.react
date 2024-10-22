@@ -6,13 +6,13 @@ export const useWeekdayLister = (date: Date): string[] => {
   const { t } = useTranslation();
 
   let weekdays = [
-    t(texts.weekdays.sundayShort),
-    t(texts.weekdays.mondayShort),
-    t(texts.weekdays.tuesdayShort),
-    t(texts.weekdays.wednesdayShort),
-    t(texts.weekdays.thursdayShort),
-    t(texts.weekdays.fridayShort),
-    t(texts.weekdays.saturdayShort),
+    t(texts.general.weekdays.sundayShort),
+    t(texts.general.weekdays.mondayShort),
+    t(texts.general.weekdays.tuesdayShort),
+    t(texts.general.weekdays.wednesdayShort),
+    t(texts.general.weekdays.thursdayShort),
+    t(texts.general.weekdays.fridayShort),
+    t(texts.general.weekdays.saturdayShort),
   ];
 
   const startingDay = DateTime.toWeekday(date);

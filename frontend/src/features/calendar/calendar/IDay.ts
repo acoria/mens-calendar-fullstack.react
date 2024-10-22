@@ -5,4 +5,5 @@ export interface IDay {
   dayOfMonth: number;
   isInCurrentMonth?: boolean;
   isToday: boolean;
+  month?: string;
 }

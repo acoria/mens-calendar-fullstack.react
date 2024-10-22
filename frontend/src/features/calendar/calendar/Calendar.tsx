@@ -25,7 +25,7 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
   const days = viewModel.days.map((day, index) => {
     let className = "";
     let icons: ReactElement | ReactElement[] | undefined = undefined;
-    let description: string = day.dayOfMonth.toString();
+    let description: string = `${day.dayOfMonth.toString()} ${day.month}`;
     switch (day.calendarType) {
       case CalendarType.NEUTRAL:
         className = day.isInCurrentMonth
@@ -82,7 +82,9 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
     );
   });
 
-  const legend = viewModel.legend.map((item) => <div className={styles.legendItem}>{item}</div>);
+  const legend = viewModel.legend.map((item) => (
+    <div className={styles.legendItem}>{item}</div>
+  ));
 
   return (
     <div className={styles.calendar}>

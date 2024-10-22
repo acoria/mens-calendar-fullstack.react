@@ -1,20 +1,46 @@
 {
     "general": {
         "left": "links",
-        "right": "rechts"
+        "months": {
+            "january": "Januar",
+            "januaryShort": "Jan.",
+            "february": "Februar",
+            "februaryShort": "Feb.",
+            "march": "März",
+            "marchShort": "März",
+            "april": "April",
+            "aprilShort": "Apr.",
+            "may": "Mai",
+            "mayShort": "Mai",
+            "june": "Juni",
+            "juneShort": "Juni",
+            "july": "Juli",
+            "julyShort": "Juli",
+            "august": "August",
+            "augustShort": "Aug.",
+            "september": "September",
+            "septemberShort": "Sept.",
+            "october": "Oktober",
+            "octoberShort": "Okt.",
+            "november": "November",
+            "novemberShort": "Nov.",
+            "december": "Dezember",
+            "decemberShort": "Dez."
+        },
+        "right": "rechts",
+        "weekdays": {
+            "mondayShort": "Mo",
+            "tuesdayShort": "Di",
+            "wednesdayShort": "Mi",
+            "thursdayShort": "Do",
+            "fridayShort": "Fr",
+            "saturdayShort": "Sa",
+            "sundayShort": "So"
+        }
     },
     "calendar": {
         "mensExpected": "Mens erwartet",
         "ovulation": "Eisprung",
         "ovulationCalculated": "Erwarteter Eisprung"
-    },
-    "weekdays": {
-        "mondayShort": "Mo",
-        "tuesdayShort": "Di",
-        "wednesdayShort": "Mi",
-        "thursdayShort": "Do",
-        "fridayShort": "Fr",
-        "saturdayShort": "Sa",
-        "sundayShort": "So"
     }
 }
