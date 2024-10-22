@@ -4,4 +4,5 @@ export interface IDay {
   calendarType: CalendarType;
   dayOfMonth: number;
   isInCurrentMonth?: boolean;
+  isToday: boolean;
 }

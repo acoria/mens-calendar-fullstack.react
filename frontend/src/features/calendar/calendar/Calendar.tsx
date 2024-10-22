@@ -9,6 +9,7 @@ import styles from "./Calendar.module.scss";
 import { CalendarType } from "./CalendarType";
 import { ICalendarProps } from "./ICalendarProps";
 import { useCalendarViewModel } from "./useCalendarViewModel";
+import { style } from "../../../core/ui/style";
 
 export const Calendar: React.FC<ICalendarProps> = (props) => {
   const viewModel = useCalendarViewModel(props);
@@ -65,6 +66,11 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
       default:
         error("Missing CalendarType");
     }
+
+    if(day.isToday){
+      className = style(className, styles.today)
+    }
+
     return (
       <CalendarItem
         key={index}

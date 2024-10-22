@@ -1,100 +1,25 @@
-import { CalendarType } from "./CalendarType";
+import { DateTime } from "../../../core/services/date/DateTime";
+import { DateTimeIterator } from "../../../core/services/date/DateTimeIterator";
 import { ICalendarProps } from "./ICalendarProps";
 import { IDay } from "./IDay";
+import { CalendarTypeInfo } from "./utils/CalendarTypeInfo";
 
 export const useCalendarViewModel = (props: ICalendarProps) => {
-  const days: IDay[] = [
-    {
-      calendarType: CalendarType.NEUTRAL,
-      dayOfMonth: 1,
-      isInCurrentMonth: false,
-    },
-    {
-      calendarType: CalendarType.NEUTRAL,
-      dayOfMonth: 2,
-      isInCurrentMonth: true,
-    },
-    {
-      calendarType: CalendarType.LIGHTEST_DAY,
-      dayOfMonth: 3,
-      isInCurrentMonth: true,
-    },
-    {
-      calendarType: CalendarType.LIGHT_DAY,
-      dayOfMonth: 4,
-      isInCurrentMonth: true,
-    },
-    {
-      calendarType: CalendarType.LIGHT_DAY,
-      dayOfMonth: 1,
-      isInCurrentMonth: true,
-    },
-    {
-      calendarType: CalendarType.NORMAL_DAY,
-      dayOfMonth: 1,
-      isInCurrentMonth: true,
-    },
-    {
-      calendarType: CalendarType.STRONG_DAY,
-      dayOfMonth: 1,
-      isInCurrentMonth: true,
-    },
-    {
-      calendarType: CalendarType.NEUTRAL,
-      dayOfMonth: 1,
-      isInCurrentMonth: true,
-    },
-    {
-      calendarType: CalendarType.NEUTRAL,
-      dayOfMonth: 1,
-      isInCurrentMonth: true,
-    },
-    {
-      calendarType: CalendarType.NEUTRAL,
-      dayOfMonth: 1,
-      isInCurrentMonth: true,
-    },
-    {
-      calendarType: CalendarType.NEUTRAL,
-      dayOfMonth: 1,
-      isInCurrentMonth: true,
-    },
-    {
-      calendarType: CalendarType.OVULATION_DAY_CALCULATED,
-      dayOfMonth: 1,
-      isInCurrentMonth: true,
-    },
-    {
-      calendarType: CalendarType.OVULATION_DAY_FELT,
-      dayOfMonth: 1,
-      isInCurrentMonth: true,
-    },
-    {
-      calendarType: CalendarType.NEUTRAL,
-      dayOfMonth: 1,
-      isInCurrentMonth: false,
-    },
-    {
-      calendarType: CalendarType.NEUTRAL,
-      dayOfMonth: 1,
-      isInCurrentMonth: false,
-    },
-    {
-      calendarType: CalendarType.NEUTRAL,
-      dayOfMonth: 1,
-      isInCurrentMonth: false,
-    },
-    {
-      calendarType: CalendarType.NEUTRAL,
-      dayOfMonth: 1,
-      isInCurrentMonth: false,
-    },
-    {
-      calendarType: CalendarType.MENS_EXPECTED,
-      dayOfMonth: 1,
-      isInCurrentMonth: false,
-    },
-  ];
+  const days: IDay[] = [];
+  const calendarTypeInfo = new CalendarTypeInfo(props.periods);
+
+  const addToDays = (date: Date, isInCurrentMonth: boolean) =>
+    days.push({
+      dayOfMonth: DateTime.toDay(date),
+      calendarType: calendarTypeInfo.findByDate(date),
+      isInCurrentMonth: isInCurrentMonth,
+      isToday: DateTime.equalsDate(date, new Date()),
+    });
+
+  const currentMonth = DateTime.toMonth(new Date());
+  DateTimeIterator.iterate(props.startDate, props.endDate, (date) =>
+    addToDays(date, DateTime.toMonth(date) === currentMonth)
+  );
 
   const onDayClicked = (index: number) => {
     console.log(`clicked ${index}`);

@@ -7,12 +7,14 @@
     grid-gap: 2px;
 }
 
-.neutral {
-    border: 1px solid colors.$color-calendar-neutral-border;
-}
-
 .dayInCurrentMonth {
     background-color: colors.$color-calendar-day-in-current-month-background;
+}
+
+.icon {
+    color: colors.$color-calendar-icon-color;
+    width: 1rem;
+    height: auto;
 }
 
 .lightestDay {
@@ -27,12 +29,12 @@
     background-color: colors.$color-calendar-mens-expected-background;
 }
 
-.normalDay {
-    background-color: colors.$color-calendar-normal-day-background;
+.neutral {
+    border: 1px solid colors.$color-calendar-neutral-border;
 }
 
-.strongDay {
-    background-color: colors.$color-calendar-strong-day-background;
+.normalDay {
+    background-color: colors.$color-calendar-normal-day-background;
 }
 
 .ovulationDayCalculated {
@@ -43,8 +45,10 @@
     background-color: colors.$color-calendar-ovulation-day-felt-background;
 }
 
-.icon {
-    color: colors.$color-calendar-icon-color;
-    width: 1rem;
-    height: auto;
+.strongDay {
+    background-color: colors.$color-calendar-strong-day-background;
+}
+
+.today {
+    border: 2px solid colors.$color-calendar-today-border;
 }

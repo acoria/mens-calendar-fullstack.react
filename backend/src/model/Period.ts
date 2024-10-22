@@ -14,7 +14,5 @@ const period: ModelStatic<Model<IPeriod, IEntityDetails<IPeriod>>> = db.define(
   }
 );
 export class Period extends period {
-  static associate(): void {
-    
-  }
+  static associate(): void {}
 }

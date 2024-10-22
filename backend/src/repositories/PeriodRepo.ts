@@ -20,6 +20,7 @@ export class PeriodRepo extends SequelizeRepository<IPeriod> {
           },
         ],
       },
+      include: [{ model: PeriodItem, as: "periodItems" }],
     });
     const periods = data.map((model) => model.toJSON());
     return periods;
