@@ -1,1 +1,20 @@
-{}
+{
+    "general": {
+        "left": "links",
+        "right": "rechts"
+    },
+    "calendar": {
+        "mensExpected": "Mens erwartet",
+        "ovulation": "Eisprung",
+        "ovulationCalculated": "Erwarteter Eisprung"
+    },
+    "weekdays": {
+        "mondayShort": "Mo",
+        "tuesdayShort": "Di",
+        "wednesdayShort": "Mi",
+        "thursdayShort": "Do",
+        "fridayShort": "Fr",
+        "saturdayShort": "Sa",
+        "sundayShort": "So"
+    }
+}

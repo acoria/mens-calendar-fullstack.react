@@ -17,6 +17,13 @@
     height: auto;
 }
 
+.legendItem {
+    justify-self: center;
+    align-self: flex-end;
+    font-weight: 700;
+    padding-bottom: 0.5rem;
+}
+
 .lightestDay {
     background-color: colors.$color-calendar-lightest-day-background;
 }

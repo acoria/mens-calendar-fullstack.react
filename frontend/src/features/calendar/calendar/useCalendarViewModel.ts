@@ -1,5 +1,6 @@
 import { DateTime } from "../../../core/services/date/DateTime";
 import { DateTimeIterator } from "../../../core/services/date/DateTimeIterator";
+import { useWeekdayLister } from "./hooks/useWeekdayLister";
 import { ICalendarProps } from "./ICalendarProps";
 import { IDay } from "./IDay";
 import { CalendarTypeInfo } from "./utils/CalendarTypeInfo";
@@ -7,6 +8,7 @@ import { CalendarTypeInfo } from "./utils/CalendarTypeInfo";
 export const useCalendarViewModel = (props: ICalendarProps) => {
   const days: IDay[] = [];
   const calendarTypeInfo = new CalendarTypeInfo(props.periods);
+  const legend: string[] = useWeekdayLister(props.startDate);
 
   const addToDays = (date: Date, isInCurrentMonth: boolean) =>
     days.push({
@@ -25,5 +27,5 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
     console.log(`clicked ${index}`);
   };
 
-  return { days, onDayClicked };
+  return { days, legend, onDayClicked };
 };

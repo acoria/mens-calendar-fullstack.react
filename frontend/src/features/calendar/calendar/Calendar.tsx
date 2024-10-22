@@ -67,8 +67,8 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
         error("Missing CalendarType");
     }
 
-    if(day.isToday){
-      className = style(className, styles.today)
+    if (day.isToday) {
+      className = style(className, styles.today);
     }
 
     return (
@@ -82,5 +82,12 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
     );
   });
 
-  return <div className={styles.calendar}>{days}</div>;
+  const legend = viewModel.legend.map((item) => <div className={styles.legendItem}>{item}</div>);
+
+  return (
+    <div className={styles.calendar}>
+      {legend}
+      {days}
+    </div>
+  );
 };

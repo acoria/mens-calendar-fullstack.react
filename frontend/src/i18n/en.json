@@ -7,5 +7,14 @@
         "mensExpected": "Mens expected",
         "ovulation": "Ovulation",
         "ovulationCalculated": "Expected ovulation"
+    },
+    "weekdays": {
+        "mondayShort": "Mon",
+        "tuesdayShort": "Tue",
+        "wednesdayShort": "Wed",
+        "thursdayShort": "Thu",
+        "fridayShort": "Fri",
+        "saturdayShort": "Sat",
+        "sundayShort": "Sun"
     }
 }
