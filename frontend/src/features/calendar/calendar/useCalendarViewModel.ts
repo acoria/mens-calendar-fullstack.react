@@ -4,11 +4,11 @@ import { useRenderMonth } from "./hooks/useRenderMonth";
 import { useWeekdayLister } from "./hooks/useWeekdayLister";
 import { ICalendarProps } from "./ICalendarProps";
 import { IDay } from "./IDay";
-import { CalendarTypeInfo } from "./utils/CalendarTypeInfo";
+import { PeriodInfo } from "./utils/PeriodInfo";
 
 export const useCalendarViewModel = (props: ICalendarProps) => {
   const days: IDay[] = [];
-  const calendarTypeInfo = new CalendarTypeInfo(props.periods);
+  const periodInfo = new PeriodInfo(props.periods);
   const legend: string[] = useWeekdayLister(props.startDate);
   const renderMonth = useRenderMonth();
 
@@ -17,10 +17,11 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
     const month = DateTime.toMonth(date);
     days.push({
       dayOfMonth: dayOfMonth,
-      calendarType: calendarTypeInfo.findByDate(date),
+      calendarType: periodInfo.getCalendarTypeByDate(date),
       isInCurrentMonth: isInCurrentMonth,
       isToday: DateTime.equalsDate(date, new Date()),
       month: dayOfMonth === 1 ? renderMonth(month, true) : "",
+      date,
     });
   };
 
@@ -30,7 +31,12 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
   );
 
   const onDayClicked = (index: number) => {
-    console.log(`clicked ${index}`);
+    const day = days[index];
+    console.log(
+      `${day.dayOfMonth} ${renderMonth(DateTime.toMonth(day.date))} clicked`
+    );
+    const periodItem = periodInfo.findPeriodItemByDate(day.date);
+    console.log(periodItem?.periodId);
   };
 
   return { days, legend, onDayClicked };

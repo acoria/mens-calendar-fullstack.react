@@ -6,4 +6,5 @@ export interface IDay {
   isInCurrentMonth?: boolean;
   isToday: boolean;
   month?: string;
+  date: Date;
 }

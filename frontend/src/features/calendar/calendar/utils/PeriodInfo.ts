@@ -3,7 +3,7 @@ import { IPeriod } from "../../../../shared/model/IPeriod";
 import { IPeriodItem } from "../../../../shared/model/IPeriodItem";
 import { CalendarType } from "../CalendarType";
 
-export class CalendarTypeInfo {
+export class PeriodInfo {
   private periodItems: IPeriodItem[] = [];
 
   constructor(private periods: IPeriod[]) {
@@ -14,7 +14,13 @@ export class CalendarTypeInfo {
     });
   }
 
-  findByDate(date: Date): CalendarType {
+  findPeriodItemByDate(date: Date): IPeriodItem | undefined {
+    return this.periodItems.find((periodItem) =>
+      DateTime.equalsDate(periodItem.day, date)
+    );
+  }
+
+  getCalendarTypeByDate(date: Date): CalendarType {
     let calendarType: CalendarType | undefined = undefined;
     this.periods.forEach((period) => {
       if (DateTime.equalsDate(period.startDay, date)) {
@@ -37,9 +43,7 @@ export class CalendarTypeInfo {
     });
     if (calendarType === undefined) {
       //check for period day
-      const periodItem = this.periodItems.find((periodItem) =>
-        DateTime.equalsDate(periodItem.day, date)
-      );
+      const periodItem = this.findPeriodItemByDate(date);
       if (periodItem !== undefined) {
         if (periodItem.isLightDay) {
           calendarType = CalendarType.LIGHTEST_DAY;

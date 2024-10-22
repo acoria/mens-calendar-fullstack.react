@@ -83,7 +83,9 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
   });
 
   const legend = viewModel.legend.map((item) => (
-    <div className={styles.legendItem}>{item}</div>
+    <div key={item} className={styles.legendItem}>
+      {item}
+    </div>
   ));
 
   return (
