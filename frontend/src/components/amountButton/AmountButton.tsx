@@ -3,7 +3,7 @@ import styles from "./AmountButton.module.scss";
 import { useState } from "react";
 
 export const AmountButton: React.FC<IAmountButtonProps> = (props) => {
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(props.initialValue ?? 0);
 
   const reduceAmount = () => {
     setAmount((previous) => {

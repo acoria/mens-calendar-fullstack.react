@@ -1,4 +1,3 @@
-import { ChangeEvent } from "react";
 import { AmountButton } from "../../components/amountButton/AmountButton";
 import { EnumMultiSelectButtons } from "../../components/multiSelectButtons/enumMultiSelectButtons/EnumMultiSelectButtons";
 import { texts } from "../../lib/translation/texts";
@@ -22,6 +21,7 @@ export const PeriodItem: React.FC<IPeriodItemProps> = (props) => {
           <EnumMultiSelectButtons
             enumType={OvulationSide}
             onChange={viewModel.onOvulationSideChange}
+            // initialValue={OvulationSide.LEFT}
           />
         </div>
       </div>
@@ -42,14 +42,17 @@ export const PeriodItem: React.FC<IPeriodItemProps> = (props) => {
             </label>
           </div>
           <AmountButton
+            initialValue={props.periodItem?.amountTamponsMini}
             label={t(texts.periodItem.mini)}
             onAmountChange={viewModel.onMiniTamponAmountChange}
           />
           <AmountButton
+            initialValue={props.periodItem?.amountTamponsNormal}
             label={t(texts.periodItem.normal)}
             onAmountChange={viewModel.onNormalTamponAmountChange}
           />
           <AmountButton
+            initialValue={props.periodItem?.amountTamponsSuper}
             label={t(texts.periodItem.super)}
             onAmountChange={viewModel.onSuperTamponAmountChange}
           />

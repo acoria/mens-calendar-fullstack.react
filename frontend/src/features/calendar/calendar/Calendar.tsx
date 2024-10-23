@@ -91,8 +91,12 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
 
   return (
     <>
-      {viewModel.testShowPeriodItem && (
-        <PeriodItem date={new Date()} period={props.periods[0]} />
+      {viewModel.testShowPeriodItem && props.periods.length !== 0 && (
+        <PeriodItem
+          date={new Date()}
+          period={props.periods[0]}
+          periodItem={props.periods[0].periodItems?.[1]}
+        />
       )}
       <div className={styles.calendar}>
         {legend}

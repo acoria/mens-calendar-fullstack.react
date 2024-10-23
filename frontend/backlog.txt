@@ -15,7 +15,8 @@
 - backend: wird der erste period-entry angelegt, wird automatisch die nächste period angelegt
 - vorraus. Eisprung und Eisprung (& Mens/1.Tag) können am gleichen Tag auftreten -> im Wording beachten und im Kalender markieren
 - Eisprung rechts/links beachten
-- Eisprung muss abwählbar sein (Multiselect ändern)
+#Eisprung muss abwählbar sein (Multiselect ändern)
+- Eisprung mit Wert vorbelegen
 - als App publishen
 
 #period

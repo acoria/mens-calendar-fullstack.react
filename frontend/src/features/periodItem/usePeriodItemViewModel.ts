@@ -11,7 +11,9 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
   const month = DateTime.toMonth(props.date);
   const dayOfWeek = DateTime.toWeekday(props.date);
   const day = DateTime.toDay(props.date);
-  const [isLightDay, setIsLightDay] = useState<boolean>(false);
+  const [isLightDay, setIsLightDay] = useState<boolean>(
+    props.periodItem?.isLightDay ?? false
+  );
 
   const date = `${renderWeekday(dayOfWeek)}, ${day} ${renderMonth(month)}`;
 
