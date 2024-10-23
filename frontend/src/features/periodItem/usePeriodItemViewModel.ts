@@ -14,7 +14,6 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
   const [isLightDay, setIsLightDay] = useState<boolean>(false);
 
   const date = `${renderWeekday(dayOfWeek)}, ${day} ${renderMonth(month)}`;
-  //   const isLightDay = isLightDayValue ? "on" : "off";
 
   const onLightDayChange = () => {
     // setIsLightDayValue((previous) => !previous);
@@ -33,8 +32,13 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
     console.log(`New amount: ${amount}`);
   };
 
-  const onOvulationSideChange = (ovulationSide: OvulationSide | undefined) => {
-    console.log(`new ovulation side: ${ovulationSide}`);
+  const onOvulationSideChange = (
+    ovulationSide: typeof OvulationSide,
+    selected: boolean
+  ) => {
+    console.log(
+      `new ovulation side: ${selected ? ovulationSide : "none selected"}`
+    );
   };
 
   const onSuperTamponAmountChange = (amount: number) => {

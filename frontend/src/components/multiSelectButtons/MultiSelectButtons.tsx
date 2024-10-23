@@ -15,20 +15,17 @@ export const MultiSelectButtons: React.FC<IMultiSelectButtonsProps> = (
     undefined;
 
   const onButtonClick = (index: number) => {
+    let selected = true;
     const buttonIndexOfSelectedButton = selectedButtonIndices.findIndex(
       (selectedButtonIndex) => selectedButtonIndex === index
     );
     if (props.isSingleSelect) {
       if (buttonIndexOfSelectedButton !== -1) {
-        return;
-      }else{
+        setSelectedButtonIndices([]);
+        selected = false;
+      } else {
         setSelectedButtonIndices([index]);
       }
-      // if (buttonIndexOfSelectedButton === -1) {
-
-      // } else {
-      //   setSelectedButtonIndices([]);
-      // }
     } else {
       if (buttonIndexOfSelectedButton !== -1) {
         selectedButtonIndices.splice(buttonIndexOfSelectedButton, 1);
@@ -37,21 +34,24 @@ export const MultiSelectButtons: React.FC<IMultiSelectButtonsProps> = (
       }
       setSelectedButtonIndices([...selectedButtonIndices]);
     }
-    props.onClick?.(index);
+    props.onClick?.(index, selected);
   };
 
-  const buttons = props.buttonLabels.map((buttonLabel, index) => (
-    <div
-      key={`${buttonLabel}_${index}`}
-      className={style(
-        styles.button,
-        isSelectedButton(index) ? styles.selectedButton : ""
-      )}
-      onClick={() => onButtonClick(index)}
-    >
-      {buttonLabel}
-    </div>
-  ));
+  const buttons = props.buttonLabels.map((buttonLabel, index) => {
+    const isButtonSelected = isSelectedButton(index);
+    return (
+      <div
+        key={`${buttonLabel}_${index}`}
+        className={style(
+          styles.button,
+          isButtonSelected ? styles.selectedButton : ""
+        )}
+        onClick={() => onButtonClick(index)}
+      >
+        {buttonLabel}
+      </div>
+    );
+  });
 
   return <div className={styles.multiSelectButton}>{buttons}</div>;
 };

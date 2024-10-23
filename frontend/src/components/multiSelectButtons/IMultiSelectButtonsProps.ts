@@ -5,5 +5,5 @@ export interface IMultiSelectButtonsProps
   extends IHaveSingleSelect,
     IHavePreselectedIndices {
   buttonLabels: string[];
-  onClick?: (index: number) => void;
+  onClick?: (index: number, selected: boolean) => void;
 }

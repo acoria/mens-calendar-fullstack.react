@@ -5,9 +5,9 @@ import { IEnumMultiSelectButtonsProps } from "./IEnumMultiSelectButtonsProps";
 export function EnumMultiSelectButtons<T extends Enum>(
   props: IEnumMultiSelectButtonsProps<T>
 ): JSX.Element {
-  const onClick = (index: number) => {
+  const onClick = (index: number, selected: boolean) => {
     const value = Object.values(props.enumType)[index];
-    props.onChange(value);
+    props.onChange(value, selected);
   };
 
   const { onChange, isSingleSelect, ...multiSelectButtonsProps } = props;
