@@ -7,7 +7,12 @@ export const AmountButton: React.FC<IAmountButtonProps> = (props) => {
 
   const reduceAmount = () => {
     setAmount((previous) => {
-      const newValue = previous - 1;
+      let newValue = previous - 1;
+      if (!props.allowsNegativeValues) {
+        if (newValue < 0) {
+          newValue = 0;
+        }
+      }
       props.onAmountChange?.(newValue);
       return newValue;
     });
