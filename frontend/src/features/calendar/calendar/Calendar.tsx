@@ -11,6 +11,7 @@ import styles from "./Calendar.module.scss";
 import { CalendarType } from "./CalendarType";
 import { ICalendarProps } from "./ICalendarProps";
 import { useCalendarViewModel } from "./useCalendarViewModel";
+import { OvulationSide } from "../../../shared/types/OvulationSide";
 
 export const Calendar: React.FC<ICalendarProps> = (props) => {
   const viewModel = useCalendarViewModel(props);
@@ -23,6 +24,23 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
     }
     return drops;
   };
+
+  const getOvulationSideText = (
+    ovulationSide: OvulationSide | undefined
+  ): string => {
+    if (ovulationSide === undefined) {
+      return "";
+    }
+    switch (ovulationSide) {
+      case OvulationSide.RIGHT: {
+        return t(texts.general.right);
+      }
+      case OvulationSide.LEFT: {
+        return t(texts.general.left);
+      }
+    }
+  };
+
   const days = viewModel.days.map((day, index) => {
     let className = "";
     let icons: ReactElement | ReactElement[] | undefined = undefined;
@@ -62,7 +80,9 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
       case CalendarType.OVULATION_DAY_FELT:
         className = styles.ovulationDayFelt;
         icons = <Ovulation className={styles.icon} />;
-        description = t(texts.calendar.ovulation);
+        description = `${t(texts.calendar.ovulation)} ${getOvulationSideText(
+          day.feltOvulationSide
+        )}`;
         break;
       default:
         error("Missing CalendarType");
@@ -95,7 +115,7 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
         <PeriodItem
           date={new Date()}
           period={props.periods[0]}
-          periodItem={props.periods[0].periodItems?.[1]}
+          // periodItem={props.periods[0].periodItems?.[0]}
         />
       )}
       <div className={styles.calendar}>

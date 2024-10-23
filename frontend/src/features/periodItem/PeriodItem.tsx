@@ -1,8 +1,7 @@
 import { AmountButton } from "../../components/amountButton/AmountButton";
-import { EnumMultiSelectButtons } from "../../components/multiSelectButtons/enumMultiSelectButtons/EnumMultiSelectButtons";
+import { ToggleButtonGroup } from "../../components/toggleButtonGroup/ToggleButtonGroup";
 import { texts } from "../../lib/translation/texts";
 import { useTranslation } from "../../lib/translation/useTranslation";
-import { OvulationSide } from "../../shared/types/OvulationSide";
 import { IPeriodItemProps } from "./IPeriodItemProps";
 import styles from "./PeriodItem.module.scss";
 import { usePeriodItemViewModel } from "./usePeriodItemViewModel";
@@ -18,10 +17,15 @@ export const PeriodItem: React.FC<IPeriodItemProps> = (props) => {
           {t(texts.periodItem.ovulationSide)}
         </h4>
         <div className={styles.settingsContent}>
-          <EnumMultiSelectButtons
-            enumType={OvulationSide}
+          <ToggleButtonGroup
+            items={viewModel.ovulationSelectOptions}
             onChange={viewModel.onOvulationSideChange}
-            // initialValue={OvulationSide.LEFT}
+            enableUnselectAll
+            selected={
+              viewModel.ovulationSide
+                ? viewModel.ovulationSelectOptions[viewModel.ovulationSide]
+                : undefined
+            }
           />
         </div>
       </div>

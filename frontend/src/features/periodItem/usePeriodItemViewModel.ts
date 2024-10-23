@@ -1,60 +1,154 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { PeriodApi } from "../../api/PeriodApi";
+import { PeriodItemApi } from "../../api/PeriodItemApi";
+import { ISelectOption } from "../../components/select/ISelectOption";
 import { DateTime } from "../../core/services/date/DateTime";
 import { useRenderMonth } from "../../hooks/useRenderMonth";
 import { useRenderWeekday } from "../../hooks/useRenderWeekday";
+import { useRequest } from "../../hooks/useRequest";
+import { texts } from "../../lib/translation/texts";
+import { useTranslation } from "../../lib/translation/useTranslation";
+import { IPeriod } from "../../shared/model/IPeriod";
+import { IPeriodItem } from "../../shared/model/IPeriodItem";
 import { OvulationSide } from "../../shared/types/OvulationSide";
+import { uuid } from "../../utils/uuid";
 import { IPeriodItemProps } from "./IPeriodItemProps";
 
 export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
+  const { t } = useTranslation();
   const renderMonth = useRenderMonth();
   const renderWeekday = useRenderWeekday();
   const month = DateTime.toMonth(props.date);
   const dayOfWeek = DateTime.toWeekday(props.date);
   const day = DateTime.toDay(props.date);
-  const [isLightDay, setIsLightDay] = useState<boolean>(
-    props.periodItem?.isLightDay ?? false
+  const [period, setPeriod] = useState<IPeriod>(props.period);
+  const [periodItem, setPeriodItem] = useState<IPeriodItem>(
+    props.periodItem ?? {
+      id: "new",
+      amountTamponsMini: 0,
+      amountTamponsNormal: 0,
+      amountTamponsSuper: 0,
+      day: props.date,
+      isLightDay: false,
+      periodId: props.period.id,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
   );
+  const [updatePeriodItemRequest] = useRequest();
+  const [updatePeriodRequest] = useRequest();
 
   const date = `${renderWeekday(dayOfWeek)}, ${day} ${renderMonth(month)}`;
 
-  const onLightDayChange = () => {
-    // setIsLightDayValue((previous) => !previous);
-    setIsLightDay((previous) => {
-      const newValue = !previous;
-      console.log(`Light day: ${newValue}`);
-      return newValue;
+  const sendUpdatePeriodItemRequest = (periodItem: IPeriodItem) => {
+    updatePeriodItemRequest(async () => {
+      new PeriodItemApi().update(periodItem);
     });
   };
+
+  const toggleIsLightDay = () => {
+    setPeriodItem((previous) => {
+      const newPeriodItem: IPeriodItem = {
+        ...previous,
+        isLightDay: !previous.isLightDay,
+      };
+      if (newPeriodItem.id === "new") {
+        newPeriodItem.id = uuid();
+        updatePeriodItemRequest(async () => {
+          new PeriodItemApi().insert(newPeriodItem);
+        });
+      } else {
+        updatePeriodItemRequest(async () => {
+          new PeriodItemApi().update(newPeriodItem);
+        });
+      }
+      return newPeriodItem;
+    });
+  };
+
+  const onLightDayChange = () => {
+    toggleIsLightDay();
+  };
   const onMiniTamponAmountChange = (amount: number) => {
-    amount > 0 && setIsLightDay(false);
-    console.log(`New amount: ${amount}`);
+    setPeriodItem((previous) => {
+      const newPeriodItem: IPeriodItem = {
+        ...previous,
+        amountTamponsMini: amount,
+      };
+      if (amount > 0) {
+        newPeriodItem.isLightDay = false;
+      }
+      sendUpdatePeriodItemRequest(newPeriodItem);
+      return newPeriodItem;
+    });
   };
   const onNormalTamponAmountChange = (amount: number) => {
-    amount > 0 && setIsLightDay(false);
-    console.log(`New amount: ${amount}`);
+    setPeriodItem((previous) => {
+      const newPeriodItem: IPeriodItem = {
+        ...previous,
+        amountTamponsNormal: amount,
+      };
+      if (amount > 0) {
+        newPeriodItem.isLightDay = false;
+      }
+      sendUpdatePeriodItemRequest(newPeriodItem);
+      return newPeriodItem;
+    });
   };
 
   const onOvulationSideChange = (
-    ovulationSide: typeof OvulationSide,
-    selected: boolean
+    option: ISelectOption<OvulationSide> | undefined
   ) => {
-    console.log(
-      `new ovulation side: ${selected ? ovulationSide : "none selected"}`
-    );
+    setPeriod((previous) => {
+      let feltOvulationDate = option === undefined ? undefined : props.date;
+      const feltOvulationSide = option?.key;
+
+      const newValue: IPeriod = {
+        ...previous,
+        feltOvulationDate,
+        feltOvulationSide,
+      };
+      updatePeriodRequest(async () => {
+        await new PeriodApi().update(newValue);
+      });
+      return newValue;
+    });
   };
 
   const onSuperTamponAmountChange = (amount: number) => {
-    amount > 0 && setIsLightDay(false);
-    console.log(`New amount: ${amount}`);
+    setPeriodItem((previous) => {
+      const newPeriodItem: IPeriodItem = {
+        ...previous,
+        amountTamponsSuper: amount,
+      };
+      if (amount > 0) {
+        newPeriodItem.isLightDay = false;
+      }
+      sendUpdatePeriodItemRequest(newPeriodItem);
+      return newPeriodItem;
+    });
   };
 
+  const ovulationSelectOptions: ISelectOption<OvulationSide>[] = useMemo(
+    () => [
+      { key: OvulationSide.LEFT, text: t(texts.general.left) },
+      { key: OvulationSide.RIGHT, text: t(texts.general.right) },
+    ],
+    [t]
+  );
+
   return {
+    amountMiniTampons: periodItem.amountTamponsMini,
+    amountNormalTampons: periodItem.amountTamponsNormal,
+    amountSuperTampons: periodItem.amountTamponsSuper,
     date,
-    isLightDay,
+    isLightDay: periodItem.isLightDay,
     onLightDayChange,
     onMiniTamponAmountChange,
     onNormalTamponAmountChange,
     onOvulationSideChange,
     onSuperTamponAmountChange,
+    ovulationSide: period.feltOvulationSide,
+    ovulationSelectOptions,
   };
 };

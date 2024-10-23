@@ -26,7 +26,10 @@ export class PeriodInfo {
       if (DateTime.equalsDate(period.startDay, date)) {
         //is calculated ovulation date?
         calendarType = CalendarType.OVULATION_DAY_CALCULATED;
-      } else if (DateTime.equalsDate(period.feltOvulationDate, date)) {
+      } else if (
+        period.feltOvulationDate &&
+        DateTime.equalsDate(period.feltOvulationDate, date)
+      ) {
         //is felt ovulation date?
         calendarType = CalendarType.OVULATION_DAY_FELT;
       } else if (

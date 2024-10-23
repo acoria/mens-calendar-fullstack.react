@@ -5,8 +5,8 @@ import { IPeriodItem } from "./IPeriodItem";
 
 export interface IPeriod extends IEntity {
   startDay: Date;
-  feltOvulationDate: Date;
-  feltOvulationSide: OvulationSide;
+  feltOvulationDate?: Date;
+  feltOvulationSide?: OvulationSide | undefined;
   periodItems?: IPeriodItem[];
 }
 

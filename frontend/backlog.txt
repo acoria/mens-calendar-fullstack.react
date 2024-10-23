@@ -16,7 +16,7 @@
 - vorraus. Eisprung und Eisprung (& Mens/1.Tag) können am gleichen Tag auftreten -> im Wording beachten und im Kalender markieren
 - Eisprung rechts/links beachten
 #Eisprung muss abwählbar sein (Multiselect ändern)
-- Eisprung mit Wert vorbelegen
+- Eisprung mit Wert vorbelegen (auch in Calendar)
 - als App publishen
 
 #period

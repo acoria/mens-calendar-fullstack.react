@@ -1,0 +1,16 @@
+@use "../../styles/colors.module.scss";
+
+.selected {
+  border: none;
+  background-color: colors.$color-button-background-selected;
+}
+
+.unselected {
+  border: none;
+  background-color: colors.$color-button-background;
+
+  &:hover {
+    cursor: pointer;
+    background-color: colors.$color-button-background-selected;
+  }
+}
