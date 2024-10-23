@@ -49,5 +49,13 @@
         "mensExpected": "Mens erwartet",
         "ovulation": "Eisprung",
         "ovulationCalculated": "Erwarteter Eisprung"
+    },
+    "periodItem": {
+        "lightDay": "Leichter Tag",
+        "mini": "mini",
+        "normal": "normal",
+        "ovulationSide": "Gefühlte Eisprung-Seite",
+        "super": "super",
+        "tamponAmount": "Benötigte Tampons"
     }
 }

@@ -8,7 +8,7 @@ import { IDay } from "./IDay";
 import { PeriodInfo } from "./utils/PeriodInfo";
 
 export const useCalendarViewModel = (props: ICalendarProps) => {
-  const [testShowPeriodItem, setTestShowPeriodItem] = useState(false);
+  const [testShowPeriodItem, setTestShowPeriodItem] = useState(true);
   const days: IDay[] = [];
   const periodInfo = new PeriodInfo(props.periods);
   const legend: string[] = useWeekdayLister(props.startDate);

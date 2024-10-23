@@ -49,5 +49,13 @@
         "mensExpected": "Mens expected",
         "ovulation": "Ovulation",
         "ovulationCalculated": "Expected ovulation"
+    },
+    "periodItem": {
+        "lightDay": "Light day",
+        "mini": "mini",
+        "normal": "normal",
+        "ovulationSide": "Felt ovulation side",
+        "super": "super",
+        "tamponAmount": "Needed tampons"
     }
 }

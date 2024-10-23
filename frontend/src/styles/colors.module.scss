@@ -19,6 +19,13 @@ $color-font-light: white;
 
 $color-dark-gray: #7e7383;
 
+//components
+$color-button-background: $color-primary-light;
+$color-button-border: $color-primary;
+$color-button-selected-background: $color-primary;
+$color-button-font: $color-secondary-300;
+$color-button-font-selected: $color-font-light;
+
 //features
 $color-calendar-neutral-border: $color-secondary-100;
 $color-calendar-day-in-current-month-background: $color-secondary-100;

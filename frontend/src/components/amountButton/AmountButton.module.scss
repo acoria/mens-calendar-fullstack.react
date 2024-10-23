@@ -1,0 +1,24 @@
+.amountButton{
+    display: flex;
+    flex-direction: row;
+    font-weight: 600;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 0.3rem;
+}
+
+.button{
+    font-size: large;
+    outline: none;
+    border: none;
+    padding: 0.5rem 1rem;
+}
+
+.label{
+    align-self: center;
+    font-size: large;
+}
