@@ -17,6 +17,7 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
   const addToDays = (date: Date, isInCurrentMonth: boolean) => {
     const dayOfMonth = DateTime.toDay(date);
     const month = DateTime.toMonth(date);
+    const period = periodInfo.findPeriodByDate(date);
     days.push({
       dayOfMonth: dayOfMonth,
       calendarType: periodInfo.getCalendarTypeByDate(date),
@@ -24,6 +25,7 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
       isToday: DateTime.equalsDate(date, new Date()),
       month: dayOfMonth === 1 ? renderMonth(month, true) : "",
       date,
+      feltOvulationSide: period?.feltOvulationSide,
     });
   };
 

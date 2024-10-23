@@ -1,4 +1,5 @@
 import { DateTime } from "../../../../core/services/date/DateTime";
+import { error } from "../../../../core/utils/error";
 import { IPeriod } from "../../../../shared/model/IPeriod";
 import { IPeriodItem } from "../../../../shared/model/IPeriodItem";
 import { CalendarType } from "../CalendarType";
@@ -12,6 +13,23 @@ export class PeriodInfo {
         this.periodItems.push(periodItem)
       );
     });
+  }
+
+  findPeriodByDate(date: Date): IPeriod | undefined {
+    const periodsBefore = this.periods.filter((period) =>
+      DateTime.isBefore(period.startDay, date)
+    );
+    let latestPeriod: IPeriod | undefined = undefined;
+    periodsBefore.forEach((period) => {
+      if (latestPeriod === undefined) {
+        latestPeriod = period;
+      } else {
+        if (DateTime.isAfter(period.startDay, latestPeriod.startDay)) {
+          latestPeriod = period;
+        }
+      }
+    });
+    return latestPeriod;
   }
 
   findPeriodItemByDate(date: Date): IPeriodItem | undefined {

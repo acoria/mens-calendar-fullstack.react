@@ -1,4 +1,5 @@
 export enum OvulationSide {
-  LEFT = 0,
-  RIGHT = 1,
+  UNKNOWN = 0,
+  LEFT = 1,
+  RIGHT = 2,
 }

@@ -28,15 +28,18 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
   const getOvulationSideText = (
     ovulationSide: OvulationSide | undefined
   ): string => {
-    if (ovulationSide === undefined) {
+    if (
+      ovulationSide === undefined ||
+      ovulationSide === OvulationSide.UNKNOWN
+    ) {
       return "";
     }
     switch (ovulationSide) {
-      case OvulationSide.RIGHT: {
-        return t(texts.general.right);
-      }
       case OvulationSide.LEFT: {
         return t(texts.general.left);
+      }
+      case OvulationSide.RIGHT: {
+        return t(texts.general.right);
       }
     }
   };
