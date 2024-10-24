@@ -1,0 +1,16 @@
+@use '../../../styles/colors.module.scss';
+
+.header {
+    display: flex;
+    flex-direction: row;
+}
+
+.backIcon {
+    fill: colors.$color-calendar-details-back-icon;
+    width: 2.5rem;
+    height: auto;
+}
+
+.periodItem{
+    margin: 1rem 2.5rem;
+}

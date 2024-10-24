@@ -1,13 +1,23 @@
+@use '../../../styles/mixins.scss';
+
 .calendarItem {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 0.5rem;
+    padding: 0.2rem;
+
+    @include mixins.medium-screen {
+        padding: 0.5rem;
+    }
 }
 
 .description {
     margin: 0;
-    font-size: small;
+    font-size: 0.5rem;
+
+    @include mixins.medium-screen {
+        font-size: small;
+    }
 }
 
 .icons {

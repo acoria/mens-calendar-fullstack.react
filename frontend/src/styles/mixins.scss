@@ -1,0 +1,13 @@
+@use "./dimensions.module.scss";
+
+@mixin medium-screen($width: dimensions.$medium-screen-min-width-in-rem) {
+  @media (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin large-screen($width: dimensions.$large-screen-min-width-in-rem) {
+  @media (min-width: $width) {
+    @content;
+  }
+}

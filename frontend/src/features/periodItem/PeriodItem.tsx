@@ -1,17 +1,19 @@
 import { AmountButton } from "../../components/amountButton/AmountButton";
+import { Switch } from "../../components/switch/Switch";
 import { ToggleButtonGroup } from "../../components/toggleButtonGroup/ToggleButtonGroup";
+import { style } from "../../core/ui/style";
 import { texts } from "../../lib/translation/texts";
 import { useTranslation } from "../../lib/translation/useTranslation";
 import { IPeriodItemProps } from "./IPeriodItemProps";
 import styles from "./PeriodItem.module.scss";
 import { usePeriodItemViewModel } from "./usePeriodItemViewModel";
+import colors from "../../styles/colors.module.scss";
 
 export const PeriodItem: React.FC<IPeriodItemProps> = (props) => {
   const viewModel = usePeriodItemViewModel(props);
   const { t } = useTranslation();
   return (
-    <div className={styles.periodItem}>
-      <h3>{viewModel.date}</h3>
+    <div className={style(styles.periodItem, props.className)}>
       <div className={styles.settings}>
         <h4 className={styles.settingsTitle}>
           {t(texts.periodItem.ovulationSide)}
@@ -35,13 +37,15 @@ export const PeriodItem: React.FC<IPeriodItemProps> = (props) => {
         </h4>
         <div className={styles.settingsContent}>
           <div className={styles.lightDay}>
-            <input
-              checked={viewModel.isLightDay}
+            <Switch
               id="lightDay"
-              type="checkbox"
+              checked={viewModel.isLightDay}
+              colorOnState={colors.colorSwitchOn}
+              colorOffState={colors.colorSwitchOff}
+              width="2.9rem"
               onChange={viewModel.onLightDayChange}
             />
-            <label htmlFor="lightDay" className={styles.label}>
+            <label htmlFor="lightDay" className={styles.lightDayLabel}>
               {t(texts.periodItem.lightDay)}
             </label>
           </div>

@@ -30,13 +30,11 @@ export const CalendarSection: React.FC<ICalendarSectionProps> = (props) => {
     // <div className={styles.calendarSection}>
     <>
       {periods && (
-        <div>
-          <Calendar
-            startDate={calendarStartDate}
-            endDate={calendarEndDate}
-            periods={periods}
-          />
-        </div>
+        <Calendar
+          startDate={calendarStartDate}
+          endDate={calendarEndDate}
+          periods={periods}
+        />
       )}
     </>
   );

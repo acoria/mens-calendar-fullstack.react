@@ -2,9 +2,6 @@ import { useMemo, useState } from "react";
 import { PeriodApi } from "../../api/PeriodApi";
 import { PeriodItemApi } from "../../api/PeriodItemApi";
 import { ISelectOption } from "../../components/select/ISelectOption";
-import { DateTime } from "../../core/services/date/DateTime";
-import { useRenderMonth } from "../../hooks/useRenderMonth";
-import { useRenderWeekday } from "../../hooks/useRenderWeekday";
 import { useRequest } from "../../hooks/useRequest";
 import { texts } from "../../lib/translation/texts";
 import { useTranslation } from "../../lib/translation/useTranslation";
@@ -16,11 +13,7 @@ import { IPeriodItemProps } from "./IPeriodItemProps";
 
 export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
   const { t } = useTranslation();
-  const renderMonth = useRenderMonth();
-  const renderWeekday = useRenderWeekday();
-  const month = DateTime.toMonth(props.date);
-  const dayOfWeek = DateTime.toWeekday(props.date);
-  const day = DateTime.toDay(props.date);
+  
   const [period, setPeriod] = useState<IPeriod>(props.period);
   const [periodItem, setPeriodItem] = useState<IPeriodItem>(
     props.periodItem ?? {
@@ -38,8 +31,7 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
   const [updatePeriodItemRequest] = useRequest();
   const [updatePeriodRequest] = useRequest();
 
-  const date = `${renderWeekday(dayOfWeek)}, ${day} ${renderMonth(month)}`;
-
+  
   const sendUpdatePeriodItemRequest = (periodItem: IPeriodItem) => {
     updatePeriodItemRequest(async () => {
       new PeriodItemApi().update(periodItem);
@@ -141,7 +133,6 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
     amountMiniTampons: periodItem.amountTamponsMini,
     amountNormalTampons: periodItem.amountTamponsNormal,
     amountSuperTampons: periodItem.amountTamponsSuper,
-    date,
     isLightDay: periodItem.isLightDay,
     onLightDayChange,
     onMiniTamponAmountChange,

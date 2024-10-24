@@ -1,7 +1,14 @@
+@use '../../styles/mixins.scss';
+@use '../../styles/colors.module.scss';
+
 .periodItem {
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
+
+    @include mixins.medium-screen {
+        row-gap: 4rem;
+    }
 }
 
 .settings {
@@ -16,9 +23,15 @@
 
 .settingsContent {
     display: flex;
-    flex-direction: row;
-    column-gap: 3rem;
+    flex-direction: column;
+    row-gap: 1rem;
     margin-left: 1rem;
+
+    @include mixins.medium-screen {
+        flex-direction: row;
+        column-gap: 3rem;
+
+    }
 }
 
 .lightDay {
@@ -28,6 +41,6 @@
     align-items: center;
 }
 
-.label {
+.lightDayLabel {
     font-weight: 600;
 }

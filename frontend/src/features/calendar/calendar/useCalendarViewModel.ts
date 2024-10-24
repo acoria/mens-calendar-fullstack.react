@@ -8,7 +8,9 @@ import { IDay } from "./IDay";
 import { PeriodInfo } from "./utils/PeriodInfo";
 
 export const useCalendarViewModel = (props: ICalendarProps) => {
-  const [testShowPeriodItem, setTestShowPeriodItem] = useState(true);
+  const [detailsDate, setDetailsDate] = useState<Date | undefined>(
+    undefined
+  );
   const days: IDay[] = [];
   const periodInfo = new PeriodInfo(props.periods);
   const legend: string[] = useWeekdayLister(props.startDate);
@@ -41,8 +43,18 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
     );
     const periodItem = periodInfo.findPeriodItemByDate(day.date);
     console.log(periodItem?.periodId);
-    setTestShowPeriodItem((previous) => !previous);
+    setDetailsDate(day.date);
   };
 
-  return { days, legend, onDayClicked, testShowPeriodItem };
+  const onNavigateBackFromDetailsClicked = () => {
+    setDetailsDate(undefined);
+  };
+
+  return {
+    days,
+    legend,
+    onDayClicked,
+    onNavigateBackFromDetailsClicked,
+    detailsDate,
+  };
 };

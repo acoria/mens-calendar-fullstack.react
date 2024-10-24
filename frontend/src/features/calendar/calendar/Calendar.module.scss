@@ -1,10 +1,17 @@
 @use '../../../styles/colors.module.scss';
+@use '../../../styles/mixins.scss';
 
 .calendar {
     display: grid;
-    grid-template-columns: repeat(7, 5rem);
-    grid-auto-rows: 5rem;
+    justify-content: center;
+    grid-template-columns: repeat(7, 3rem);
+    grid-auto-rows: 3rem;
     grid-gap: 2px;
+
+    @include mixins.medium-screen {
+        grid-template-columns: repeat(7, 5rem);
+        grid-auto-rows: 5rem;
+    }
 }
 
 .dayInCurrentMonth {
@@ -13,15 +20,27 @@
 
 .icon {
     color: colors.$color-calendar-icon-color;
-    width: 1rem;
+    width: 0.6rem;
     height: auto;
+    flex-shrink: 0;
+
+    @include mixins.medium-screen {
+        width: 1rem;
+    }
 }
 
 .legendItem {
     justify-self: center;
     align-self: flex-end;
-    font-weight: 700;
+    font-weight: 600;
+    font-size: small;
     padding-bottom: 0.5rem;
+
+    @include mixins.medium-screen {
+        font-size: medium;
+        font-weight: 700;
+    }
+
 }
 
 .lightestDay {
