@@ -62,6 +62,8 @@ export class CycleInfo {
           CycleUtils.calculateOvulationDateByPeriodStartDate(
             cycle.calculatedPeriodStartDate
           );
+        const expectedPeriodStartDate =
+          CycleUtils.calculateExpectedPeriodStartDate(cycle);
         if (DateTime.equalsDate(cycle.calculatedPeriodStartDate, date)) {
           return true;
         } else if (DateTime.equalsDate(calculatedOvulationDate, date)) {
@@ -70,6 +72,8 @@ export class CycleInfo {
           cycle.feltOvulationDate &&
           DateTime.equalsDate(cycle.feltOvulationDate, date)
         ) {
+          return true;
+        } else if (expectedPeriodStartDate && DateTime.equalsDate(date, expectedPeriodStartDate)) {
           return true;
         }
         return false;

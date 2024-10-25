@@ -12,25 +12,26 @@ export class CalendarInfo {
       return calendarTypes;
     }
 
-    //when period has not started yet
-    if (cycleInfo.periodItem === undefined) {
-      //add expected mens day
-      const expectedMensDate = DateTime.addDays(
-        cycleInfo.cycle.calculatedPeriodStartDate,
-        28
-      );
-      if (DateTime.equalsDate(cycleInfo.date, expectedMensDate)) {
-        calendarTypes.push(CalendarType.MENS_EXPECTED);
-      }
-    } else {
-      if (cycleInfo.periodItem.isLightDay) {
+    //add expected period day
+    const expectedPeriodDate = CycleUtils.calculateExpectedPeriodStartDate(
+      cycleInfo.cycle
+    );
+    if (
+      expectedPeriodDate &&
+      DateTime.equalsDate(cycleInfo.date, expectedPeriodDate)
+    ) {
+      calendarTypes.push(CalendarType.MENS_EXPECTED);
+    }
+    if (cycleInfo.periodItem !== undefined) {
+      if (cycleInfo.periodItem?.isLightDay) {
         calendarTypes.push(CalendarType.LIGHTEST_DAY);
       } else if (
-        cycleInfo.periodItem.amountTamponsSuper !== 0 ||
-        cycleInfo.periodItem.amountTamponsNormal > 3
+        (cycleInfo.periodItem?.amountTamponsSuper !== 0 &&
+          cycleInfo.periodItem?.amountTamponsSuper !== null) ||
+        cycleInfo.periodItem?.amountTamponsNormal > 3
       ) {
         calendarTypes.push(CalendarType.STRONG_DAY);
-      } else if (cycleInfo.periodItem.amountTamponsNormal > 1) {
+      } else if (cycleInfo.periodItem?.amountTamponsNormal > 1) {
         calendarTypes.push(CalendarType.NORMAL_DAY);
       } else {
         calendarTypes.push(CalendarType.LIGHT_DAY);
@@ -43,10 +44,6 @@ export class CalendarInfo {
       DateTime.equalsDate(cycleInfo.cycle.feltOvulationDate, cycleInfo.date)
     ) {
       calendarTypes.push(CalendarType.OVULATION_DAY_FELT);
-    }
-
-    if (DateTime.equalsDate(cycleInfo.date, new Date(2024, 10, 6))) {
-      debugger;
     }
 
     //add calculated ovulation
