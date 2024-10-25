@@ -1,7 +1,7 @@
-import { ICycle } from "../../../shared/model/ICycle";
+import { ICycleInfo } from "../../../types/ICycleInfo";
 
 export interface ICalendarDetailsProps {
   date: Date;
-  cycles: ICycle[];
+  cycleInfo?: ICycleInfo;
   onNavigateBack?: () => void;
 }

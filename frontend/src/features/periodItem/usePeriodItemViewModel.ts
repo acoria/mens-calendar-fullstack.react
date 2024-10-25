@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Cycle } from "../../api/CycleApi";
 import { PeriodItemApi } from "../../api/PeriodItemApi";
 import { ISelectOption } from "../../components/select/ISelectOption";
+import { DateTime } from "../../core/services/date/DateTime";
 import { useRequest } from "../../hooks/useRequest";
 import { texts } from "../../lib/translation/texts";
 import { useTranslation } from "../../lib/translation/useTranslation";
@@ -10,23 +11,22 @@ import { IPeriodItem } from "../../shared/model/IPeriodItem";
 import { OvulationSide } from "../../shared/types/OvulationSide";
 import { uuid } from "../../utils/uuid";
 import { IPeriodItemProps } from "./IPeriodItemProps";
-import { DateTime } from "../../core/services/date/DateTime";
-import { CycleInfo } from "../calendar/calendar/utils/CycleInfo";
 
 export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
   const { t } = useTranslation();
-  const periodInfo = new CycleInfo()
 
-  const [cycle, setCycle] = useState<ICycle | undefined>(props.cycle);
+  const [cycle, setCycle] = useState<ICycle | undefined>(
+    props.cycleInfo?.cycle
+  );
   const [periodItem, setPeriodItem] = useState<IPeriodItem>(
-    props.periodItem ?? {
+    props.cycleInfo?.periodItem ?? {
       id: "new",
       amountTamponsMini: 0,
       amountTamponsNormal: 0,
       amountTamponsSuper: 0,
       day: props.date,
       isLightDay: false,
-      periodId: props.cycle?.id ?? "new",
+      cycleId: props.cycleInfo?.cycle.id ?? "new",
       createdAt: new Date(),
       updatedAt: new Date(),
     }
@@ -57,7 +57,7 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
           calculatedPeriodStartDate,
         });
         setCycle(period);
-        periodItem.periodId = period.id;
+        periodItem.cycleId = period.id;
         upsertPeriodItem(periodItem);
       });
     } else {

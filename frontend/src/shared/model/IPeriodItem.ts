@@ -7,7 +7,7 @@ export interface IPeriodItem extends IEntity {
   amountTamponsMini: number;
   amountTamponsNormal: number;
   amountTamponsSuper: number;
-  periodId: string;
+  cycleId: string;
 }
 
 export const PeriodItemRouteMeta: IRouteMeta = { path: "/period-items" };

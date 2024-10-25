@@ -1,4 +1,4 @@
-import { OvulationSide } from "../../../shared/types/OvulationSide";
+import { ICycleInfo } from "../../../types/ICycleInfo";
 import { CalendarType } from "./CalendarType";
 
 export interface IDay {
@@ -8,5 +8,5 @@ export interface IDay {
   isInCurrentMonth?: boolean;
   isToday: boolean;
   month?: string;
-  feltOvulationSide?: OvulationSide;
+  cycleInfo?: ICycleInfo
 }

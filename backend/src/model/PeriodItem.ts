@@ -19,7 +19,7 @@ export class PeriodItem extends periodItem {
   static associate() {
     PeriodItem.belongsTo(Cycle);
     Cycle.hasMany(PeriodItem, {
-      foreignKey: "periodId",
+      foreignKey: "cycleId",
       as: "periodItems",
     });
   }

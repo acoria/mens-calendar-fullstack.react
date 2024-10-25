@@ -21,6 +21,7 @@
 - Statistik-Seite anlegen
 - PMS Feature
 - als App publishen
+- bug: mens expected not shown
 
 #period
 	id

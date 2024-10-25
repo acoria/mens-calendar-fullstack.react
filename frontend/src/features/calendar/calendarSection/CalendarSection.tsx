@@ -3,6 +3,7 @@ import { Cycle } from "../../../api/CycleApi";
 import { useInitialize } from "../../../hooks/useInitialize";
 import { useRequest } from "../../../hooks/useRequest";
 import { ICycle } from "../../../shared/model/ICycle";
+import { ICycleInfo } from "../../../types/ICycleInfo";
 import { Calendar } from "../calendar/Calendar";
 import { DateCalculator } from "../calendar/utils/DateCalculator";
 import { CalendarDetails } from "../calendarDetails/CalendarDetails";
@@ -10,41 +11,43 @@ import { ICalendarSectionProps } from "./ICalendarSectionProps";
 // import styles from "./CalendarSection.module.scss";
 
 export const CalendarSection: React.FC<ICalendarSectionProps> = (props) => {
-  const [periods, setPeriods] = useState<ICycle[] | undefined>([]);
-  const [loadPeriods] = useRequest();
+  const [cycles, setCycles] = useState<ICycle[] | undefined>([]);
+  const [loadCycles] = useRequest();
 
   const dateCalculator = useMemo(() => new DateCalculator(), []);
   const calendarStartDate = dateCalculator.getFirstDayOfPreviousMonth();
   const calendarEndDate = dateCalculator.getLastDayOfNextMonth();
-  const [detailsDate, setDetailsDate] = useState<Date | undefined>(undefined);
+  const [details, setDetails] = useState<[Date, ICycleInfo?] | undefined>(
+    undefined
+  );
 
   useInitialize(() => {
-    loadPeriods(async () => {
-      const periods = await new Cycle().findByDateTimeSpan({
+    loadCycles(async () => {
+      const cycles = await new Cycle().findByDateTimeSpan({
         from: calendarStartDate,
         to: calendarEndDate,
       });
-      setPeriods(periods);
+      setCycles(cycles);
     });
   });
 
   return (
     // <div className={styles.calendarSection}>
     <>
-      {periods && detailsDate !== undefined && (
+      {cycles && details !== undefined && (
         <CalendarDetails
-          date={detailsDate}
-          cycles={periods}
-          onNavigateBack={() => setDetailsDate(undefined)}
+          date={details[0]}
+          cycleInfo={details[1]}
+          onNavigateBack={() => setDetails(undefined)}
         />
       )}
-      {periods && !detailsDate && (
+      {cycles && !details && (
         <>
           <Calendar
             startDate={calendarStartDate}
             endDate={calendarEndDate}
-            periods={periods}
-            onDayClicked={setDetailsDate}
+            cycles={cycles}
+            onDayClicked={(date, cycleInfo) => setDetails([date, cycleInfo])}
           />
         </>
       )}
