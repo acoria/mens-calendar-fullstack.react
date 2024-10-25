@@ -1,20 +1,23 @@
 import { useMemo, useState } from "react";
-import { PeriodApi } from "../../api/PeriodApi";
+import { Cycle } from "../../api/CycleApi";
 import { PeriodItemApi } from "../../api/PeriodItemApi";
 import { ISelectOption } from "../../components/select/ISelectOption";
 import { useRequest } from "../../hooks/useRequest";
 import { texts } from "../../lib/translation/texts";
 import { useTranslation } from "../../lib/translation/useTranslation";
-import { IPeriod } from "../../shared/model/IPeriod";
+import { ICycle } from "../../shared/model/ICycle";
 import { IPeriodItem } from "../../shared/model/IPeriodItem";
 import { OvulationSide } from "../../shared/types/OvulationSide";
 import { uuid } from "../../utils/uuid";
 import { IPeriodItemProps } from "./IPeriodItemProps";
+import { DateTime } from "../../core/services/date/DateTime";
+import { CycleInfo } from "../calendar/calendar/utils/CycleInfo";
 
 export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
   const { t } = useTranslation();
-  
-  const [period, setPeriod] = useState<IPeriod>(props.period);
+  const periodInfo = new CycleInfo()
+
+  const [cycle, setCycle] = useState<ICycle | undefined>(props.cycle);
   const [periodItem, setPeriodItem] = useState<IPeriodItem>(
     props.periodItem ?? {
       id: "new",
@@ -23,19 +26,43 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
       amountTamponsSuper: 0,
       day: props.date,
       isLightDay: false,
-      periodId: props.period.id,
+      periodId: props.cycle?.id ?? "new",
       createdAt: new Date(),
       updatedAt: new Date(),
     }
   );
   const [updatePeriodItemRequest] = useRequest();
+  const [insertPeriodRequest] = useRequest();
   const [updatePeriodRequest] = useRequest();
 
-  
-  const sendUpdatePeriodItemRequest = (periodItem: IPeriodItem) => {
-    updatePeriodItemRequest(async () => {
-      new PeriodItemApi().update(periodItem);
-    });
+  const upsertPeriodItem = (periodItem: IPeriodItem) => {
+    if (periodItem.id === "new") {
+      periodItem.id = uuid();
+      updatePeriodItemRequest(async () => {
+        new PeriodItemApi().insert(periodItem);
+      });
+    } else {
+      updatePeriodItemRequest(async () => {
+        new PeriodItemApi().update(periodItem);
+      });
+    }
+  };
+
+  const handlePeriodItemRequest = (periodItem: IPeriodItem) => {
+    //if there is no period yet, set it
+    if (cycle === undefined) {
+      const calculatedPeriodStartDate = DateTime.subtractDays(props.date, 14);
+      insertPeriodRequest(async () => {
+        const period = await new Cycle().insert({
+          calculatedPeriodStartDate,
+        });
+        setCycle(period);
+        periodItem.periodId = period.id;
+        upsertPeriodItem(periodItem);
+      });
+    } else {
+      upsertPeriodItem(periodItem);
+    }
   };
 
   const toggleIsLightDay = () => {
@@ -44,16 +71,7 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
         ...previous,
         isLightDay: !previous.isLightDay,
       };
-      if (newPeriodItem.id === "new") {
-        newPeriodItem.id = uuid();
-        updatePeriodItemRequest(async () => {
-          new PeriodItemApi().insert(newPeriodItem);
-        });
-      } else {
-        updatePeriodItemRequest(async () => {
-          new PeriodItemApi().update(newPeriodItem);
-        });
-      }
+      handlePeriodItemRequest(newPeriodItem);
       return newPeriodItem;
     });
   };
@@ -70,7 +88,7 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
       if (amount > 0) {
         newPeriodItem.isLightDay = false;
       }
-      sendUpdatePeriodItemRequest(newPeriodItem);
+      handlePeriodItemRequest(newPeriodItem);
       return newPeriodItem;
     });
   };
@@ -83,7 +101,7 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
       if (amount > 0) {
         newPeriodItem.isLightDay = false;
       }
-      sendUpdatePeriodItemRequest(newPeriodItem);
+      handlePeriodItemRequest(newPeriodItem);
       return newPeriodItem;
     });
   };
@@ -91,20 +109,32 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
   const onOvulationSideChange = (
     option: ISelectOption<OvulationSide> | undefined
   ) => {
-    setPeriod((previous) => {
-      let feltOvulationDate = option === undefined ? undefined : props.date;
-      const feltOvulationSide = option?.key;
+    let feltOvulationDate = option === undefined ? undefined : props.date;
+    const feltOvulationSide = option?.key;
 
-      const newValue: IPeriod = {
-        ...previous,
-        feltOvulationDate,
-        feltOvulationSide,
-      };
-      updatePeriodRequest(async () => {
-        await new PeriodApi().update(newValue);
+    if (cycle) {
+      setCycle((previous) => {
+        const newValue = {
+          ...previous!,
+          feltOvulationDate,
+          feltOvulationSide,
+        };
+        updatePeriodRequest(async () => {
+          await new Cycle().update(newValue);
+        });
+        return newValue;
       });
-      return newValue;
-    });
+    } else {
+      //if there is no period yet, create it
+      insertPeriodRequest(async () => {
+        const period = await new Cycle().insert({
+          calculatedPeriodStartDate: props.date,
+          feltOvulationDate: props.date,
+          feltOvulationSide: feltOvulationSide,
+        });
+        setCycle(period);
+      });
+    }
   };
 
   const onSuperTamponAmountChange = (amount: number) => {
@@ -116,7 +146,7 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
       if (amount > 0) {
         newPeriodItem.isLightDay = false;
       }
-      sendUpdatePeriodItemRequest(newPeriodItem);
+      handlePeriodItemRequest(newPeriodItem);
       return newPeriodItem;
     });
   };
@@ -139,7 +169,7 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
     onNormalTamponAmountChange,
     onOvulationSideChange,
     onSuperTamponAmountChange,
-    ovulationSide: period.feltOvulationSide,
+    ovulationSide: cycle?.feltOvulationSide,
     ovulationSelectOptions,
   };
 };

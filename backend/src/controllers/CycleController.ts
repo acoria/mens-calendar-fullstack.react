@@ -1,12 +1,12 @@
 import { HttpStatusCode } from "../core/api/types/HttpStatusCode";
-import { PeriodRepo } from "../repositories/PeriodRepo";
-import { IPeriod, PeriodRouteMeta } from "../shared/model/IPeriod";
+import { CycleRepo } from "../repositories/CycleRepo";
+import { ICycle, CycleRouteMeta } from "../shared/model/ICycle";
 import { EntityController } from "./core/EntityController";
 import { ErrorInterceptor } from "./core/ErrorInterceptor";
 
-export class PeriodController extends EntityController<IPeriod, PeriodRepo> {
+export class CycleController extends EntityController<ICycle, CycleRepo> {
   constructor() {
-    super(PeriodRouteMeta, new PeriodRepo());
+    super(CycleRouteMeta, new CycleRepo());
   }
 
   protected findAll(): void {

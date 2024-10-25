@@ -3,7 +3,7 @@ import { IEntityDetails } from "../core/api/types/IEntityDetails";
 import { db } from "../db/db";
 import { IPeriodItem } from "../shared/model/IPeriodItem";
 import { createIdType } from "./core/createIdType";
-import { Period } from "./Period";
+import { Cycle } from "./Cycle";
 
 const periodItem: ModelStatic<Model<IPeriodItem, IEntityDetails<IPeriodItem>>> =
   db.define("period_items", {
@@ -17,8 +17,8 @@ const periodItem: ModelStatic<Model<IPeriodItem, IEntityDetails<IPeriodItem>>> =
 
 export class PeriodItem extends periodItem {
   static associate() {
-    PeriodItem.belongsTo(Period);
-    Period.hasMany(PeriodItem, {
+    PeriodItem.belongsTo(Cycle);
+    Cycle.hasMany(PeriodItem, {
       foreignKey: "periodId",
       as: "periodItems",
     });

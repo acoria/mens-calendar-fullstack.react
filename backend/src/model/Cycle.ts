@@ -1,18 +1,18 @@
 import { DataTypes, Model, ModelStatic } from "sequelize";
 import { IEntityDetails } from "../core/api/types/IEntityDetails";
 import { db } from "../db/db";
-import { IPeriod } from "../shared/model/IPeriod";
+import { ICycle } from "../shared/model/ICycle";
 import { createIdType } from "./core/createIdType";
 
-const period: ModelStatic<Model<IPeriod, IEntityDetails<IPeriod>>> = db.define(
-  "periods",
+const cycle: ModelStatic<Model<ICycle, IEntityDetails<ICycle>>> = db.define(
+  "cycle",
   {
     id: createIdType(),
+    calculatedPeriodStartDate: DataTypes.DATE,
     feltOvulationDate: DataTypes.DATE,
     feltOvulationSide: DataTypes.INTEGER,
-    startDay: DataTypes.DATE,
   }
 );
-export class Period extends period {
+export class Cycle extends cycle {
   static associate(): void {}
 }

@@ -6,7 +6,6 @@ import { error } from "../../../core/utils/error";
 import { texts } from "../../../lib/translation/texts";
 import { useTranslation } from "../../../lib/translation/useTranslation";
 import { OvulationSide } from "../../../shared/types/OvulationSide";
-import { CalendarDetails } from "../calendarDetails/CalendarDetails";
 import { CalendarItem } from "../calendarItem/CalendarItem";
 import styles from "./Calendar.module.scss";
 import { CalendarType } from "./CalendarType";
@@ -113,21 +112,9 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
   ));
 
   return (
-    <>
-      {viewModel.detailsDate !== undefined && props.periods.length !== 0 && (
-        <CalendarDetails
-          date={viewModel.detailsDate}
-          period={props.periods[0]}
-          periodItem={props.periods[0].periodItems?.[0]}
-          onNavigateBack={viewModel.onNavigateBackFromDetailsClicked}
-        />
-      )}
-      {!viewModel.detailsDate && (
-        <div className={styles.calendar}>
-          {legend}
-          {days}
-        </div>
-      )}
-    </>
+    <div className={styles.calendar}>
+      {legend}
+      {days}
+    </div>
   );
 };

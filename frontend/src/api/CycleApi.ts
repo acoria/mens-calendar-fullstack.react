@@ -1,14 +1,14 @@
 import { IDateTimeSpan } from "../core/services/date/IDateTimeSpan";
-import { IPeriod, PeriodRouteMeta } from "../shared/model/IPeriod";
+import { ICycle, CycleRouteMeta } from "../shared/model/ICycle";
 import { EntityRepository } from "./core/EntityRepository";
 import { RESTApi } from "./core/RESTApi";
 
-export class PeriodApi extends EntityRepository<IPeriod> {
+export class Cycle extends EntityRepository<ICycle> {
   constructor() {
-    super(PeriodRouteMeta);
+    super(CycleRouteMeta);
   }
 
-  async findByDateTimeSpan(dateTimeSpan: IDateTimeSpan): Promise<IPeriod[]> {
+  async findByDateTimeSpan(dateTimeSpan: IDateTimeSpan): Promise<ICycle[]> {
     return await RESTApi.get(this.url, {
       urlParams: {
         from: dateTimeSpan.from.toString(),

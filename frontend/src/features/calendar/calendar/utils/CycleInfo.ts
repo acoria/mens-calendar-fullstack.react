@@ -1,62 +1,83 @@
 import { DateTime } from "../../../../core/services/date/DateTime";
 import { error } from "../../../../core/utils/error";
-import { IPeriod } from "../../../../shared/model/IPeriod";
+import { ICycle } from "../../../../shared/model/ICycle";
 import { IPeriodItem } from "../../../../shared/model/IPeriodItem";
 import { CalendarType } from "../CalendarType";
 
-export class PeriodInfo {
+export class CycleInfo {
   private periodItems: IPeriodItem[] = [];
 
-  constructor(private periods: IPeriod[]) {
-    periods.forEach((period) => {
-      period.periodItems?.forEach((periodItem) =>
+  constructor(private cycles: ICycle[]) {
+    cycles.forEach((cycle) => {
+      cycle.periodItems?.forEach((periodItem) =>
         this.periodItems.push(periodItem)
       );
     });
   }
 
-  findPeriodByDate(date: Date): IPeriod | undefined {
-    const periodsBefore = this.periods.filter((period) =>
-      DateTime.isBefore(period.startDay, date)
+  getCycleById(id: string): ICycle {
+    return (
+      this.cycles.find((cycle) => (cycle.id = id)) ??
+      error(`Cycle with id ${id} not found`)
     );
-    let latestPeriod: IPeriod | undefined = undefined;
-    periodsBefore.forEach((period) => {
-      if (latestPeriod === undefined) {
-        latestPeriod = period;
+  }
+
+  findCycleByDate(date: Date): ICycle | undefined {
+    const cyclesBefore = this.cycles.filter((cycle) =>
+      DateTime.isBefore(cycle.calculatedPeriodStartDate, date)
+    );
+    let lastCycle: ICycle | undefined = undefined;
+    cyclesBefore.forEach((cycle) => {
+      if (lastCycle === undefined) {
+        lastCycle = cycle;
       } else {
-        if (DateTime.isAfter(period.startDay, latestPeriod.startDay)) {
-          latestPeriod = period;
+        if (DateTime.isAfter(cycle.calculatedPeriodStartDate, lastCycle.calculatedPeriodStartDate)) {
+          lastCycle = cycle;
         }
       }
     });
-    return latestPeriod;
+    return lastCycle;
   }
 
-  findPeriodItemByDate(date: Date): IPeriodItem | undefined {
+  private findPeriodItemByDate(date: Date): IPeriodItem | undefined {
     return this.periodItems.find((periodItem) =>
       DateTime.equalsDate(periodItem.day, date)
     );
   }
 
+  findCycleInfoByDate(
+    date: Date
+  ): [cycle: ICycle | undefined, periodItem: IPeriodItem | undefined] {
+    const periodItem = this.findPeriodItemByDate(date);
+    let cycle: ICycle|undefined = undefined;
+    if (periodItem !== undefined) {
+      cycle = this.getCycleById(periodItem.periodId);
+    }else{
+
+    }
+
+    return [cycle, periodItem];
+  }
+
   getCalendarTypeByDate(date: Date): CalendarType {
     let calendarType: CalendarType | undefined = undefined;
-    this.periods.forEach((period) => {
-      if (DateTime.equalsDate(period.startDay, date)) {
+    this.cycles.forEach((cycle) => {
+      if (DateTime.equalsDate(cycle.calculatedPeriodStartDate, date)) {
         //is calculated ovulation date?
         calendarType = CalendarType.OVULATION_DAY_CALCULATED;
       } else if (
-        period.feltOvulationDate &&
-        DateTime.equalsDate(period.feltOvulationDate, date)
+        cycle.feltOvulationDate &&
+        DateTime.equalsDate(cycle.feltOvulationDate, date)
       ) {
         //is felt ovulation date?
         calendarType = CalendarType.OVULATION_DAY_FELT;
       } else if (
-        period.periodItems === undefined ||
-        period.periodItems.length === 0
+        cycle.periodItems === undefined ||
+        cycle.periodItems.length === 0
       ) {
-        //is mens expected date? (only show for period that has not started yet)
+        //is mens expected date? (only show for cycle that has not started yet)
         //for this add 14 days to ovulation date
-        const dateOfExpectedMens = DateTime.addDays(period.startDay, 14);
+        const dateOfExpectedMens = DateTime.addDays(cycle.calculatedPeriodStartDate, 14);
         if (DateTime.equalsDate(dateOfExpectedMens, date)) {
           calendarType = CalendarType.MENS_EXPECTED;
         }

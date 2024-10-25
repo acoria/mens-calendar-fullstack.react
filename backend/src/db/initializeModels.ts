@@ -1,10 +1,10 @@
 import { ModelStatic } from "sequelize";
 import { IHaveStaticAssociate } from "../model/core/IHaveStaticAssociate";
-import { Period } from "../model/Period";
+import { Cycle } from "../model/Cycle";
 import { PeriodItem } from "../model/PeriodItem";
 
 export const initializeModels = async (alter: boolean) => {
-  const models: IHaveStaticAssociate[] = [Period, PeriodItem];
+  const models: IHaveStaticAssociate[] = [Cycle, PeriodItem];
 
   // create associations
   models.forEach((model) => model.associate());

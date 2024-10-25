@@ -1,33 +1,29 @@
-import { useState } from "react";
 import { DateTime } from "../../../core/services/date/DateTime";
 import { DateTimeIterator } from "../../../core/services/date/DateTimeIterator";
 import { useRenderMonth } from "../../../hooks/useRenderMonth";
 import { useWeekdayLister } from "./hooks/useWeekdayLister";
 import { ICalendarProps } from "./ICalendarProps";
 import { IDay } from "./IDay";
-import { PeriodInfo } from "./utils/PeriodInfo";
+import { CycleInfo } from "./utils/CycleInfo";
 
 export const useCalendarViewModel = (props: ICalendarProps) => {
-  const [detailsDate, setDetailsDate] = useState<Date | undefined>(
-    undefined
-  );
   const days: IDay[] = [];
-  const periodInfo = new PeriodInfo(props.periods);
+  const cycleInfo = new CycleInfo(props.periods);
   const legend: string[] = useWeekdayLister(props.startDate);
   const renderMonth = useRenderMonth();
 
   const addToDays = (date: Date, isInCurrentMonth: boolean) => {
     const dayOfMonth = DateTime.toDay(date);
     const month = DateTime.toMonth(date);
-    const period = periodInfo.findPeriodByDate(date);
+    const cycle = cycleInfo.findCycleByDate(date);
     days.push({
       dayOfMonth: dayOfMonth,
-      calendarType: periodInfo.getCalendarTypeByDate(date),
+      calendarType: cycleInfo.getCalendarTypeByDate(date),
       isInCurrentMonth: isInCurrentMonth,
       isToday: DateTime.equalsDate(date, new Date()),
       month: dayOfMonth === 1 ? renderMonth(month, true) : "",
       date,
-      feltOvulationSide: period?.feltOvulationSide,
+      feltOvulationSide: cycle?.feltOvulationSide,
     });
   };
 
@@ -37,24 +33,12 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
   );
 
   const onDayClicked = (index: number) => {
-    const day = days[index];
-    console.log(
-      `${day.dayOfMonth} ${renderMonth(DateTime.toMonth(day.date))} clicked`
-    );
-    const periodItem = periodInfo.findPeriodItemByDate(day.date);
-    console.log(periodItem?.periodId);
-    setDetailsDate(day.date);
-  };
-
-  const onNavigateBackFromDetailsClicked = () => {
-    setDetailsDate(undefined);
+    props.onDayClicked(days[index].date);
   };
 
   return {
     days,
     legend,
     onDayClicked,
-    onNavigateBackFromDetailsClicked,
-    detailsDate,
   };
 };

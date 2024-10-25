@@ -1,6 +1,6 @@
 import express from "express";
 import { initializeModels } from "./db/initializeModels";
-import { PeriodController } from "./controllers/PeriodController";
+import { CycleController } from "./controllers/CycleController";
 import { PeriodItemController } from "./controllers/PeriodItemController";
 
 const initialize = async () => {
@@ -22,7 +22,7 @@ server.use((_, res, next) => {
   res.setHeader("Access-Control-Allow-Credentials", "true");
   next();
 });
-server.use("/api", new PeriodController().router);
+server.use("/api", new CycleController().router);
 server.use("/api", new PeriodItemController().router)
 
 server.listen(5000);

@@ -12,20 +12,21 @@ export const CalendarDetails: React.FC<ICalendarDetailsProps> = (props) => {
   const month = DateTime.toMonth(props.date);
   const dayOfWeek = DateTime.toWeekday(props.date);
   const day = DateTime.toDay(props.date);
-
   const title = `${renderWeekday(dayOfWeek)}, ${day}. ${renderMonth(month)}`;
 
   return (
     <div className={styles.calendarDetails}>
       <div className={styles.header}>
-        <ChevronLeft className={styles.backIcon} onClick={props.onNavigateBack} />
+        <ChevronLeft
+          className={styles.backIcon}
+          onClick={props.onNavigateBack}
+        />
         <h3>{title}</h3>
       </div>
       <PeriodItem
         date={props.date}
         className={styles.periodItem}
-        period={props.period}
-        periodItem={props.periodItem}
+        cycles={props.cycles}
       />
     </div>
   );

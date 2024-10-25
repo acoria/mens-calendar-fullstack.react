@@ -1,7 +1,8 @@
-import { IPeriod } from "../../../shared/model/IPeriod";
+import { ICycle } from "../../../shared/model/ICycle";
 
 export interface ICalendarProps {
   endDate: Date;
-  periods: IPeriod[];
+  onDayClicked: (date: Date) => void;
+  periods: ICycle[];
   startDate: Date;
 }
