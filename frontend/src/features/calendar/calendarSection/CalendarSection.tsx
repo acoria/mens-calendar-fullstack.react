@@ -1,6 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CycleApi } from "../../../api/CycleApi";
-import { useInitialize } from "../../../hooks/useInitialize";
 import { useRequest } from "../../../hooks/useRequest";
 import { ICycle } from "../../../shared/model/ICycle";
 import { ICycleData } from "../../../types/ICycleData";
@@ -14,13 +13,19 @@ import { ICalendarSectionProps } from "./ICalendarSectionProps";
 
 export const CalendarSection: React.FC<ICalendarSectionProps> = (props) => {
   const [cycles, setCycles] = useState<ICycle[] | undefined>([]);
+  const [details, setDetails] = useState<[Date, ICycleData?] | undefined>(
+    undefined
+  );
   const [loadCycles] = useRequest();
 
   const dateCalculator = useMemo(() => new DateCalculator(), []);
-  const calendarStartDate = dateCalculator.getFirstDayOfPreviousMonth();
-  const calendarEndDate = dateCalculator.getLastDayOfNextMonth();
-  const [details, setDetails] = useState<[Date, ICycleData?] | undefined>(
-    undefined
+  const calendarStartDate = useMemo(
+    () => dateCalculator.getFirstDayOfPreviousMonth(),
+    [dateCalculator]
+  );
+  const calendarEndDate = useMemo(
+    () => dateCalculator.getLastDayOfNextMonth(),
+    [dateCalculator]
   );
   const cycleInfo: ICycleInfo | undefined = useMemo(() => {
     if (cycles) {
@@ -28,7 +33,7 @@ export const CalendarSection: React.FC<ICalendarSectionProps> = (props) => {
     }
   }, [cycles]);
 
-  useInitialize(() => {
+  useEffect(() => {
     loadCycles(async () => {
       const cycles = await new CycleApi().findByDateTimeSpan({
         from: calendarStartDate,
@@ -36,7 +41,9 @@ export const CalendarSection: React.FC<ICalendarSectionProps> = (props) => {
       });
       setCycles(cycles);
     });
-  });
+    // do not add loadCycles since it currently has a bug
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [calendarEndDate, calendarStartDate, details]);
 
   return (
     // <div className={styles.calendarSection}>

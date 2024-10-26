@@ -8,6 +8,8 @@ import { IPeriodItemProps } from "./IPeriodItemProps";
 import styles from "./PeriodItem.module.scss";
 import { usePeriodItemViewModel } from "./usePeriodItemViewModel";
 import colors from "../../styles/colors.module.scss";
+import { ReactComponent as Drop } from "../../assets/drop.svg";
+import { ReactComponent as Crack } from "../../assets/crack.svg";
 
 export const PeriodItem: React.FC<IPeriodItemProps> = (props) => {
   const viewModel = usePeriodItemViewModel(props);
@@ -15,9 +17,12 @@ export const PeriodItem: React.FC<IPeriodItemProps> = (props) => {
   return (
     <div className={style(styles.periodItem, props.className)}>
       <div className={styles.settings}>
-        <h4 className={styles.settingsTitle}>
-          {t(texts.periodItem.ovulationSide)}
-        </h4>
+        <div className={styles.settingsTitleSection}>
+          <Crack className={styles.icon} />
+          <h4 className={styles.settingsTitle}>
+            {t(texts.periodItem.ovulationSide)}
+          </h4>
+        </div>
         <div className={styles.settingsContent}>
           <ToggleButtonGroup
             items={viewModel.ovulationSelectOptions}
@@ -32,9 +37,13 @@ export const PeriodItem: React.FC<IPeriodItemProps> = (props) => {
         </div>
       </div>
       <div className={styles.settings}>
-        <h4 className={styles.settingsTitle}>
-          {t(texts.periodItem.tamponAmount)}
-        </h4>
+        {" "}
+        <div className={styles.settingsTitleSection}>
+          <Drop className={styles.icon} />
+          <h4 className={styles.settingsTitle}>
+            {t(texts.periodItem.tamponAmount)}
+          </h4>
+        </div>
         <div className={styles.settingsContent}>
           <div className={styles.lightDay}>
             <Switch
