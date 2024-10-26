@@ -3,7 +3,7 @@ import { ICycle, CycleRouteMeta } from "../shared/model/ICycle";
 import { EntityRepository } from "./core/EntityRepository";
 import { RESTApi } from "./core/RESTApi";
 
-export class Cycle extends EntityRepository<ICycle> {
+export class CycleApi extends EntityRepository<ICycle> {
   constructor() {
     super(CycleRouteMeta);
   }

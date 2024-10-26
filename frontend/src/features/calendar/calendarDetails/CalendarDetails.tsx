@@ -26,6 +26,7 @@ export const CalendarDetails: React.FC<ICalendarDetailsProps> = (props) => {
       <PeriodItem
         date={props.date}
         className={styles.periodItem}
+        cycleData={props.cycleData}
         cycleInfo={props.cycleInfo}
       />
     </div>

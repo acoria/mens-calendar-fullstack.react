@@ -1,37 +1,37 @@
 import { DateTime } from "../../../../core/services/date/DateTime";
-import { ICycleInfo } from "../../../../types/ICycleInfo";
+import { ICycleData } from "../../../../types/ICycleData";
 import { CycleUtils } from "../../../../utils/CycleUtils";
 import { CalendarType } from "../CalendarType";
 
 export class CalendarInfo {
-  getCalendarTypesByCycleInfo(cycleInfo?: ICycleInfo): CalendarType[] {
+  getCalendarTypesByCycleInfo(cycleData?: ICycleData): CalendarType[] {
     const calendarTypes: CalendarType[] = [];
 
-    if (cycleInfo === undefined) {
+    if (cycleData === undefined) {
       calendarTypes.push(CalendarType.NEUTRAL);
       return calendarTypes;
     }
 
     //add expected period day
     const expectedPeriodDate = CycleUtils.calculateExpectedPeriodStartDate(
-      cycleInfo.cycle
+      cycleData.cycle
     );
     if (
       expectedPeriodDate &&
-      DateTime.equalsDate(cycleInfo.date, expectedPeriodDate)
+      DateTime.equalsDate(cycleData.date, expectedPeriodDate)
     ) {
       calendarTypes.push(CalendarType.MENS_EXPECTED);
     }
-    if (cycleInfo.periodItem !== undefined) {
-      if (cycleInfo.periodItem?.isLightDay) {
+    if (cycleData.periodItem !== undefined) {
+      if (cycleData.periodItem?.isLightDay) {
         calendarTypes.push(CalendarType.LIGHTEST_DAY);
       } else if (
-        (cycleInfo.periodItem?.amountTamponsSuper !== 0 &&
-          cycleInfo.periodItem?.amountTamponsSuper !== null) ||
-        cycleInfo.periodItem?.amountTamponsNormal > 3
+        (cycleData.periodItem?.amountTamponsSuper !== 0 &&
+          cycleData.periodItem?.amountTamponsSuper !== null) ||
+        cycleData.periodItem?.amountTamponsNormal > 3
       ) {
         calendarTypes.push(CalendarType.STRONG_DAY);
-      } else if (cycleInfo.periodItem?.amountTamponsNormal > 1) {
+      } else if (cycleData.periodItem?.amountTamponsNormal > 1) {
         calendarTypes.push(CalendarType.NORMAL_DAY);
       } else {
         calendarTypes.push(CalendarType.LIGHT_DAY);
@@ -40,8 +40,8 @@ export class CalendarInfo {
 
     //add felt ovulation
     if (
-      cycleInfo.cycle.feltOvulationDate !== undefined &&
-      DateTime.equalsDate(cycleInfo.cycle.feltOvulationDate, cycleInfo.date)
+      cycleData.cycle.feltOvulationDate !== undefined &&
+      DateTime.equalsDate(cycleData.cycle.feltOvulationDate, cycleData.date)
     ) {
       calendarTypes.push(CalendarType.OVULATION_DAY_FELT);
     }
@@ -49,9 +49,9 @@ export class CalendarInfo {
     //add calculated ovulation
     const calculatedOvulationDate =
       CycleUtils.calculateOvulationDateByPeriodStartDate(
-        cycleInfo.cycle.calculatedPeriodStartDate
+        cycleData.cycle.calculatedPeriodStartDate
       );
-    if (DateTime.equalsDate(cycleInfo.date, calculatedOvulationDate)) {
+    if (DateTime.equalsDate(cycleData.date, calculatedOvulationDate)) {
       calendarTypes.push(CalendarType.OVULATION_DAY_CALCULATED);
     }
 

@@ -83,7 +83,7 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
         className = styles.ovulationDayFelt;
         icons = <Ovulation className={styles.icon} />;
         description = `${t(texts.calendar.ovulation)} ${getOvulationSideText(
-          day.cycleInfo?.cycle.feltOvulationSide
+          day.cycleData?.cycle.feltOvulationSide
         )}`;
         break;
       default:

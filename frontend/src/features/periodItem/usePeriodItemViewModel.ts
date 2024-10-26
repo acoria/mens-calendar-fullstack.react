@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Cycle } from "../../api/CycleApi";
+import { CycleApi } from "../../api/CycleApi";
 import { PeriodItemApi } from "../../api/PeriodItemApi";
 import { ISelectOption } from "../../components/select/ISelectOption";
 import { DateTime } from "../../core/services/date/DateTime";
@@ -16,24 +16,24 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
   const { t } = useTranslation();
 
   const [cycle, setCycle] = useState<ICycle | undefined>(
-    props.cycleInfo?.cycle
+    props.cycleData?.cycle
   );
   const [periodItem, setPeriodItem] = useState<IPeriodItem>(
-    props.cycleInfo?.periodItem ?? {
+    props.cycleData?.periodItem ?? {
       id: "new",
       amountTamponsMini: 0,
       amountTamponsNormal: 0,
       amountTamponsSuper: 0,
       day: props.date,
       isLightDay: false,
-      cycleId: props.cycleInfo?.cycle.id ?? "new",
+      cycleId: props.cycleData?.cycle.id ?? "new",
       createdAt: new Date(),
       updatedAt: new Date(),
     }
   );
   const [updatePeriodItemRequest] = useRequest();
-  const [insertPeriodRequest] = useRequest();
-  const [updatePeriodRequest] = useRequest();
+  const [insertCycleRequest] = useRequest();
+  const [updateCycleRequest] = useRequest();
 
   const upsertPeriodItem = (periodItem: IPeriodItem) => {
     if (periodItem.id === "new") {
@@ -51,15 +51,23 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
   const handlePeriodItemRequest = (periodItem: IPeriodItem) => {
     //if there is no period yet, set it
     if (cycle === undefined) {
-      const calculatedPeriodStartDate = DateTime.subtractDays(props.date, 14);
-      insertPeriodRequest(async () => {
-        const period = await new Cycle().insert({
-          calculatedPeriodStartDate,
-        });
-        setCycle(period);
-        periodItem.cycleId = period.id;
+      const cycle = props.cycleInfo.findPotentialCycleForPeriodByDate(
+        props.date
+      );
+      if (cycle !== undefined) {
+        setCycle(cycle);
+        periodItem.cycleId = cycle.id;
         upsertPeriodItem(periodItem);
-      });
+      } else {
+        insertCycleRequest(async () => {
+          const period = await new CycleApi().insert({
+            calculatedPeriodStartDate: periodItem.day,
+          });
+          setCycle(period);
+          periodItem.cycleId = period.id;
+          upsertPeriodItem(periodItem);
+        });
+      }
     } else {
       upsertPeriodItem(periodItem);
     }
@@ -119,21 +127,39 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
           feltOvulationDate,
           feltOvulationSide,
         };
-        updatePeriodRequest(async () => {
-          await new Cycle().update(newValue);
+        updateCycleRequest(async () => {
+          await new CycleApi().update(newValue);
         });
         return newValue;
       });
     } else {
-      //if there is no period yet, create it
-      insertPeriodRequest(async () => {
-        const period = await new Cycle().insert({
-          calculatedPeriodStartDate: props.date,
-          feltOvulationDate: props.date,
-          feltOvulationSide: feltOvulationSide,
+      //if there is no cycle yet, find or create it
+      const cycle = props.cycleInfo.findPotentialCycleForOvulationDate(
+        props.date
+      );
+      if (cycle !== undefined) {
+        cycle.feltOvulationDate = feltOvulationDate;
+        cycle.feltOvulationSide = feltOvulationSide;
+        if (feltOvulationDate !== undefined) {
+          cycle.calculatedPeriodStartDate = DateTime.addDays(
+            feltOvulationDate,
+            14
+          );
+        }
+        setCycle(cycle);
+        updateCycleRequest(async () => {
+          await new CycleApi().update(cycle);
         });
-        setCycle(period);
-      });
+      } else {
+        insertCycleRequest(async () => {
+          const cycle = await new CycleApi().insert({
+            calculatedPeriodStartDate: DateTime.addDays(props.date, 14),
+            feltOvulationDate: props.date,
+            feltOvulationSide: feltOvulationSide,
+          });
+          setCycle(cycle);
+        });
+      }
     }
   };
 

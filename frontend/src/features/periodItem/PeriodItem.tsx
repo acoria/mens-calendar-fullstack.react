@@ -50,17 +50,17 @@ export const PeriodItem: React.FC<IPeriodItemProps> = (props) => {
             </label>
           </div>
           <AmountButton
-            initialValue={props.cycleInfo?.periodItem?.amountTamponsMini}
+            initialValue={props.cycleData?.periodItem?.amountTamponsMini}
             label={t(texts.periodItem.mini)}
             onAmountChange={viewModel.onMiniTamponAmountChange}
           />
           <AmountButton
-            initialValue={props.cycleInfo?.periodItem?.amountTamponsNormal}
+            initialValue={props.cycleData?.periodItem?.amountTamponsNormal}
             label={t(texts.periodItem.normal)}
             onAmountChange={viewModel.onNormalTamponAmountChange}
           />
           <AmountButton
-            initialValue={props.cycleInfo?.periodItem?.amountTamponsSuper}
+            initialValue={props.cycleData?.periodItem?.amountTamponsSuper}
             label={t(texts.periodItem.super)}
             onAmountChange={viewModel.onSuperTamponAmountChange}
           />

@@ -1,4 +1,4 @@
-import { ICycleInfo } from "../../../types/ICycleInfo";
+import { ICycleData } from "../../../types/ICycleData";
 import { CalendarType } from "./CalendarType";
 
 export interface IDay {
@@ -8,5 +8,5 @@ export interface IDay {
   isInCurrentMonth?: boolean;
   isToday: boolean;
   month?: string;
-  cycleInfo?: ICycleInfo
+  cycleData?: ICycleData
 }

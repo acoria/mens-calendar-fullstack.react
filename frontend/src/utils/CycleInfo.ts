@@ -2,10 +2,11 @@ import { DateTime } from "../core/services/date/DateTime";
 import { error } from "../core/utils/error";
 import { ICycle } from "../shared/model/ICycle";
 import { IPeriodItem } from "../shared/model/IPeriodItem";
-import { ICycleInfo } from "../types/ICycleInfo";
+import { ICycleData } from "../types/ICycleData";
 import { CycleUtils } from "./CycleUtils";
+import { ICycleInfo } from "./ICycleInfo";
 
-export class CycleInfo {
+export class CycleInfo implements ICycleInfo {
   private periodItems: IPeriodItem[] = [];
 
   constructor(private cycles: ICycle[]) {
@@ -15,6 +16,31 @@ export class CycleInfo {
       );
     });
   }
+  //check if a cycle or a period item with this date exists
+  private findCycleByDate(date: Date): ICycle | undefined {
+    let cycle: ICycle | undefined;
+    const periodItem = this.periodItems.find((periodItem) => {
+      return DateTime.equalsDate(periodItem.day, date);
+    });
+    if (periodItem !== undefined) {
+      cycle = this.getCycleById(periodItem.cycleId);
+    }
+    if (cycle === undefined) {
+      cycle = this.findCycleByCalculatedPeriodStartDate(date);
+    }
+    return cycle;
+  }
+
+  private findCycleByCalculatedPeriodStartDate(
+    calculatedPeriodStartDate: Date
+  ) {
+    return this.cycles.find((cycle) =>
+      DateTime.equalsDate(
+        cycle.calculatedPeriodStartDate,
+        calculatedPeriodStartDate
+      )
+    );
+  }
 
   private getCycleById(id: string): ICycle {
     return (
@@ -22,36 +48,16 @@ export class CycleInfo {
       error(`Cycle with id ${id} not found`)
     );
   }
-
-  private findCycleByDate(date: Date): ICycle | undefined {
-    const cyclesBefore = this.cycles.filter((cycle) =>
-      DateTime.isBefore(cycle.calculatedPeriodStartDate, date)
-    );
-    let lastCycle: ICycle | undefined = undefined;
-    cyclesBefore.forEach((cycle) => {
-      if (lastCycle === undefined) {
-        lastCycle = cycle;
-      } else {
-        if (
-          DateTime.isAfter(
-            cycle.calculatedPeriodStartDate,
-            lastCycle.calculatedPeriodStartDate
-          )
-        ) {
-          lastCycle = cycle;
-        }
-      }
-    });
-    return lastCycle;
-  }
-
   private findPeriodItemByDate(date: Date): IPeriodItem | undefined {
     return this.periodItems.find((periodItem) =>
       DateTime.equalsDate(periodItem.day, date)
     );
   }
 
-  findCycleInfoByDate(date: Date): ICycleInfo | undefined {
+  findCycleDataByDate(date: Date): ICycleData | undefined {
+    // if(DateTime.equalsDate(date, new Date(2024, 10, 11))){
+    //   debugger;
+    // }
     const periodItem = this.findPeriodItemByDate(date);
     let cycle: ICycle | undefined = undefined;
     if (periodItem !== undefined) {
@@ -73,7 +79,10 @@ export class CycleInfo {
           DateTime.equalsDate(cycle.feltOvulationDate, date)
         ) {
           return true;
-        } else if (expectedPeriodStartDate && DateTime.equalsDate(date, expectedPeriodStartDate)) {
+        } else if (
+          expectedPeriodStartDate &&
+          DateTime.equalsDate(date, expectedPeriodStartDate)
+        ) {
           return true;
         }
         return false;
@@ -82,5 +91,42 @@ export class CycleInfo {
     if (cycle !== undefined) {
       return { date, cycle, periodItem };
     }
+  }
+
+  /**
+   * Finds the cycle with the latest calculated period start day 20 days after the potential ovulation date
+   */
+  findPotentialCycleForOvulationDate(date: Date): ICycle | undefined {
+    let day = 1;
+    let foundCycle: ICycle | undefined = undefined;
+    do {
+      const laterDate = DateTime.addDays(date, day);
+      foundCycle = this.findCycleByCalculatedPeriodStartDate(laterDate);
+      day++;
+    } while (foundCycle === undefined && day < 21);
+
+    return foundCycle;
+  }
+
+  /**
+   * Finds the cycle that is within 20 days before or 10 days after the provided date.
+   */
+  findPotentialCycleForPeriodByDate(date: Date): ICycle | undefined {
+    let foundCycle = undefined;
+    let day = 1;
+    do {
+      const earlierDate = DateTime.subtractDays(date, day);
+      foundCycle = this.findCycleByDate(earlierDate);
+      day++;
+    } while (foundCycle === undefined && day < 21);
+    if (foundCycle === undefined) {
+      day = 1;
+      do {
+        const laterDate = DateTime.addDays(date, day);
+        foundCycle = this.findCycleByDate(laterDate);
+        day++;
+      } while (foundCycle === undefined && day < 11);
+    }
+    return foundCycle;
   }
 }
