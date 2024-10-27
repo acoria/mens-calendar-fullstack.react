@@ -28,7 +28,7 @@
 	id
 	start_date (date of calculated ovulation)
 	felt_ovulation_date?
-	felt_ovulation_side?
+	felt_ovulation_side
 #period-item
 	id: string
 	day: date
