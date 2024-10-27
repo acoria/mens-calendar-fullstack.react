@@ -46,7 +46,8 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
   const days = viewModel.days.map((day, index) => {
     let className = "";
     let icons: ReactElement | ReactElement[] | undefined = undefined;
-    let description: string = `${day.dayOfMonth.toString()} ${day.month}`;
+    let description: string = "";
+    let markerColor: string | undefined = undefined;
     switch (day.calendarType) {
       case CalendarType.NEUTRAL:
         className = day.isInCurrentMonth
@@ -85,6 +86,7 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
         description = `${t(texts.calendar.ovulation)} ${getOvulationSideText(
           day.cycleData?.cycle.feltOvulationSide
         )}`;
+        markerColor = "#67bcb2";
         break;
       default:
         error("Missing CalendarType");
@@ -97,9 +99,11 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
     return (
       <CalendarItem
         key={index}
+        dayOfMonth={`${day.dayOfMonth.toString()} ${day.month}`}
         description={description}
         icons={icons}
         className={className}
+        markerColor={markerColor}
         onClick={() => viewModel.onDayClicked(index)}
       />
     );
