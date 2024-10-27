@@ -42,9 +42,25 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
         new PeriodItemApi().insert(periodItem);
       });
     } else {
-      updatePeriodItemRequest(async () => {
-        new PeriodItemApi().update(periodItem);
-      });
+      //if at least one attribute is filled -> update
+      //otherwise delete
+      if (
+        (periodItem.amountTamponsMini === 0 ||
+          periodItem.amountTamponsMini === undefined) &&
+        (periodItem.amountTamponsNormal === 0 ||
+          periodItem.amountTamponsNormal === undefined) &&
+        (periodItem.amountTamponsSuper === 0 ||
+          periodItem.amountTamponsSuper === undefined) &&
+        (periodItem.isLightDay === false || periodItem.isLightDay === undefined)
+      ) {
+        updatePeriodItemRequest(async () => {
+          new PeriodItemApi().delete(periodItem);
+        });
+      } else {
+        updatePeriodItemRequest(async () => {
+          new PeriodItemApi().update(periodItem);
+        });
+      }
     }
   };
 
