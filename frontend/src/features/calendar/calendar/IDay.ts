@@ -2,7 +2,7 @@ import { ICycleData } from "../../../types/ICycleData";
 import { CalendarType } from "./CalendarType";
 
 export interface IDay {
-  calendarType: CalendarType;
+  calendarTypes: CalendarType[];
   date: Date;
   dayOfMonth: number;
   isInCurrentMonth?: boolean;

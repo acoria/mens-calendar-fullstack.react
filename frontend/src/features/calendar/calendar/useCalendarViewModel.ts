@@ -18,7 +18,7 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
     const cycleInfos = props.cycleInfo.findCycleDataByDate(date);
     days.push({
       dayOfMonth: dayOfMonth,
-      calendarType: calendarInfo.getCalendarTypesByCycleInfo(cycleInfos)?.[0],
+      calendarTypes: calendarInfo.getCalendarTypesByCycleInfo(cycleInfos),
       isInCurrentMonth: isInCurrentMonth,
       isToday: DateTime.equalsDate(date, new Date()),
       month: dayOfMonth === 1 ? renderMonth(month, true) : "",

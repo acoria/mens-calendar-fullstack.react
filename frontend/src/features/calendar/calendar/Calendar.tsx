@@ -6,6 +6,7 @@ import { error } from "../../../core/utils/error";
 import { texts } from "../../../lib/translation/texts";
 import { useTranslation } from "../../../lib/translation/useTranslation";
 import { OvulationSide } from "../../../shared/types/OvulationSide";
+import colors from "../../../styles/colors.module.scss";
 import { CalendarItem } from "../calendarItem/CalendarItem";
 import styles from "./Calendar.module.scss";
 import { CalendarType } from "./CalendarType";
@@ -24,6 +25,18 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
     return drops;
   };
 
+  const getMarkerColorByCalendarType = (
+    calendarType: CalendarType
+  ): string | undefined => {
+    switch (calendarType) {
+      case CalendarType.OVULATION_DAY_CALCULATED:
+        return colors.colorCalendarOvulationDayCalculated;
+      case CalendarType.MENS_EXPECTED:
+        return colors.colorCalendarPeriodExpected;
+      default:
+        error("Marker color not defined.");
+    }
+  };
   const getOvulationSideText = (
     ovulationSide: OvulationSide | undefined
   ): string => {
@@ -43,12 +56,87 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
     }
   };
 
+  const sortCalendarTypesByProminence = (
+    calendarTypes: CalendarType[]
+  ): CalendarType[] => {
+    let sortedCalendarTypes: CalendarType[] = [];
+    if (calendarTypes.length > 2) {
+      error(
+        `${calendarTypes.length} calendar types found for a day. The highest expected amount is 2.`
+      );
+    }
+
+    //check for expected menstruation date
+    const index = calendarTypes.findIndex(
+      (calendarType) => calendarType === CalendarType.MENS_EXPECTED
+    );
+    switch (index) {
+      case -1:
+        break;
+      case 0: {
+        sortedCalendarTypes.push(calendarTypes[1], CalendarType.MENS_EXPECTED);
+        break;
+      }
+      case 1: {
+        sortedCalendarTypes = calendarTypes;
+        break;
+      }
+    }
+
+    //check for calculated ovulation date, which can be paired with felt ovulation day
+    if (sortedCalendarTypes.length === 0) {
+      const index = calendarTypes.findIndex(
+        (calendarType) => calendarType === CalendarType.OVULATION_DAY_CALCULATED
+      );
+      switch (index) {
+        case -1:
+          break;
+        case 0: {
+          if (calendarTypes[1] === CalendarType.OVULATION_DAY_FELT) {
+            sortedCalendarTypes.push(
+              CalendarType.OVULATION_DAY_FELT,
+              CalendarType.OVULATION_DAY_CALCULATED
+            );
+          } else {
+            error(
+              `Unexpected calendar type combination. Calendar type '${CalendarType.OVULATION_DAY_FELT}' expected.`
+            );
+          }
+          break;
+        }
+        case 1: {
+          if (calendarTypes[0] === CalendarType.OVULATION_DAY_FELT) {
+            sortedCalendarTypes = calendarTypes;
+            break;
+          } else {
+            error(
+              `Unexpected calendar type combination. Calendar type '${CalendarType.OVULATION_DAY_FELT}' expected.`
+            );
+          }
+        }
+      }
+    }
+
+    return sortedCalendarTypes;
+  };
+
   const days = viewModel.days.map((day, index) => {
+    // if (DateTime.equalsDate(day.date, new Date(2024, 9, 14))) {
+    //   debugger;
+    // }
     let className = "";
     let icons: ReactElement | ReactElement[] | undefined = undefined;
     let description: string = "";
     let markerColor: string | undefined = undefined;
-    switch (day.calendarType) {
+    let calendarType: CalendarType;
+    if (day.calendarTypes.length === 1) {
+      calendarType = day.calendarTypes[0];
+    } else {
+      let calendarTypes = sortCalendarTypesByProminence(day.calendarTypes);
+      calendarType = calendarTypes[0];
+      markerColor = getMarkerColorByCalendarType(calendarTypes[1]);
+    }
+    switch (calendarType) {
       case CalendarType.NEUTRAL:
         className = day.isInCurrentMonth
           ? styles.dayInCurrentMonth
@@ -86,7 +174,6 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
         description = `${t(texts.calendar.ovulation)} ${getOvulationSideText(
           day.cycleData?.cycle.feltOvulationSide
         )}`;
-        markerColor = "#67bcb2";
         break;
       default:
         error("Missing CalendarType");
