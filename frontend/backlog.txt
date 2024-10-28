@@ -24,7 +24,7 @@
 - Backend auf Raspberry laufen lassen
 - als App publishen
 - Eisprung mit Wert vorbelegen -> Bug beim Togglen
-
+- sicherstellen, dass beim nachträglichen Abwählen aller Eisprung-Seites "null" gesetzt wird und evtl. der Zyklus gelöscht wird, wenn noch keine weiteren Angaben bestehen
 #period
 	id
 	start_date (date of calculated ovulation)

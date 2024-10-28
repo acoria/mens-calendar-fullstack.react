@@ -18,6 +18,9 @@ export class CycleInfo implements ICycleInfo {
   }
   //check if a cycle or a period item with this date exists
   private findCycleByDate(date: Date): ICycle | undefined {
+    if (this.cycles.length === 0) {
+      return;
+    }
     let cycle: ICycle | undefined;
     const periodItem = this.periodItems.find((periodItem) => {
       return DateTime.equalsDate(periodItem.day, date);
@@ -55,9 +58,12 @@ export class CycleInfo implements ICycleInfo {
   }
 
   findCycleDataByDate(date: Date): ICycleData | undefined {
-    // if(DateTime.equalsDate(date, new Date(2024, 10, 11))){
+    // if (DateTime.equalsDate(date, new Date(2024, 8, 3))) {
     //   debugger;
     // }
+    if (this.cycles.length === 0) {
+      return;
+    }
     const periodItem = this.findPeriodItemByDate(date);
     let cycle: ICycle | undefined = undefined;
     if (periodItem !== undefined) {

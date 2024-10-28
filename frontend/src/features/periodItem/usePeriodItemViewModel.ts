@@ -162,10 +162,10 @@ export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
             14
           );
         }
-        setCycle(cycle);
         updateCycleRequest(async () => {
           await new CycleApi().update(cycle);
         });
+        setCycle(cycle);
       } else {
         insertCycleRequest(async () => {
           const cycle = await new CycleApi().insert({

@@ -43,7 +43,7 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
   ): string => {
     if (
       ovulationSide === undefined ||
-      ovulationSide === OvulationSide.UNKNOWN
+      ovulationSide === null
     ) {
       return "";
     }

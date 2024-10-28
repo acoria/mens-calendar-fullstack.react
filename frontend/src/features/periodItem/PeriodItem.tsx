@@ -29,7 +29,7 @@ export const PeriodItem: React.FC<IPeriodItemProps> = (props) => {
             onChange={viewModel.onOvulationSideChange}
             enableUnselectAll
             selected={
-              viewModel.ovulationSide
+              viewModel.ovulationSide !== undefined
                 ? viewModel.ovulationSelectOptions[viewModel.ovulationSide]
                 : undefined
             }
