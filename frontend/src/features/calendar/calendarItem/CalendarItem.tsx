@@ -14,9 +14,14 @@ export const CalendarItem: React.FC<ICalendarItemProps> = (props) => {
           className={styles.marker}
         ></div>
       )}
-      {<h1 className={styles.description}>{props.dayOfMonth}</h1>}
+      {
+        <header className={styles.header}>
+          <h1 className={styles.description}>{props.dayOfMonth}</h1>
+          {props.headerIcon}
+        </header>
+      }
       {<h1 className={styles.description}>{props.description}</h1>}
-      <div className={styles.icons}>{props.icons}</div>
+      <div className={styles.footerIcons}>{props.footerIcons}</div>
     </div>
   );
 };

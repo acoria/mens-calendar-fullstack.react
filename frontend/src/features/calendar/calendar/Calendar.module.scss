@@ -29,6 +29,11 @@
     }
 }
 
+.sunIcon {
+    color: colors.$color-icon-sun-background;
+    stroke: colors.$color-icon-sun-stroke;
+}
+
 .legendItem {
     justify-self: center;
     align-self: flex-end;

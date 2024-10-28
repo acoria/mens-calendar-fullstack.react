@@ -18,11 +18,12 @@
 #nächste Periode berechnen (+28d) und anzeigen
 #reload der Daten, wenn zurück navigiert wird
 #vorraus. Eisprung und Eisprung (& Mens/1.Tag) können am gleichen Tag auftreten -> im Wording beachten und im Kalender markieren
-- Eisprung mit Wert vorbelegen -> Bug beim Togglen
+#deutsch als default Sprache
 - Statistik-Seite anlegen
 - PMS Feature
+- Backend auf Raspberry laufen lassen
 - als App publishen
-- deutsch als default Sprache
+- Eisprung mit Wert vorbelegen -> Bug beim Togglen
 
 #period
 	id

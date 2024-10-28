@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { ReactComponent as Ovulation } from "../../../assets/crack.svg";
 import { ReactComponent as Drop } from "../../../assets/drop.svg";
+import { ReactComponent as Sun } from "../../../assets/sun.svg";
 import { style } from "../../../core/ui/style";
 import { error } from "../../../core/utils/error";
 import { texts } from "../../../lib/translation/texts";
@@ -128,6 +129,7 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
     let icons: ReactElement | ReactElement[] | undefined = undefined;
     let description: string = "";
     let markerColor: string | undefined = undefined;
+    let showHeaderIcon: boolean = false;
     let calendarType: CalendarType;
     if (day.calendarTypes.length === 1) {
       calendarType = day.calendarTypes[0];
@@ -188,7 +190,14 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
         key={index}
         dayOfMonth={`${day.dayOfMonth.toString()} ${day.month}`}
         description={description}
-        icons={icons}
+        footerIcons={icons}
+        headerIcon={
+          showHeaderIcon ? (
+            <Sun className={style(styles.icon, styles.sunIcon)} />
+          ) : (
+            <></>
+          )
+        }
         className={className}
         markerColor={markerColor}
         onClick={() => viewModel.onDayClicked(index)}

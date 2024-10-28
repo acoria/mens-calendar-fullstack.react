@@ -13,6 +13,9 @@ $color-secondary-400: #c58bdf;
 $color-secondary-300: #d9b1ec;
 $color-secondary-200: #e2caed;
 $color-secondary-100: #eeeaf1;
+$color-second-accent-dark: #FD7A4F;
+$color-second-accent: #FDBB56;
+$color-second-accent-light: #F9F87C;
 
 $color-font: $color-secondary-900;
 $color-font-light: white;
@@ -46,6 +49,9 @@ $color-calendar-ovulation-day-felt-background: $color-primary;
 $color-calendar-icon-color: $color-secondary-900;
 
 $color-calendar-details-back-icon: $color-secondary-900;
+
+$color-icon-sun-background: $color-second-accent;
+$color-icon-sun-stroke: $color-second-accent-dark;
 
 :export {
     colorSwitchOff: $color-switch-off;

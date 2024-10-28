@@ -9,9 +9,21 @@
     }
 }
 
+.header {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.3rem;
+    align-items: center;
+
+    @include mixins.medium-screen {
+        column-gap: 0.2rem;
+    }
+}
+
 .marker {
     position: absolute;
-    top: 0;
+    top: -1px;
     right: 5px;
     width: 0;
     height: 0;
@@ -30,7 +42,7 @@
     }
 }
 
-.icons {
+.footerIcons {
     position: absolute;
     bottom: 0;
     right: 0.3rem;
