@@ -59,5 +59,8 @@
         "ovulationSide": "Gefühlte Eisprung-Seite",
         "super": "super",
         "tamponAmount": "Benötigte Tampons"
+    },
+    "pmsSettings":{
+        "title": "PMS Tag"
     }
 }

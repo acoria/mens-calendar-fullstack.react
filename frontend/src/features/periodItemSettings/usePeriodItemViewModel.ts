@@ -10,9 +10,9 @@ import { ICycle } from "../../shared/model/ICycle";
 import { IPeriodItem } from "../../shared/model/IPeriodItem";
 import { OvulationSide } from "../../shared/types/OvulationSide";
 import { uuid } from "../../utils/uuid";
-import { IPeriodItemProps } from "./IPeriodItemProps";
+import { IPeriodItemSettingsProps } from "./IPeriodItemSettingsProps";
 
-export const usePeriodItemViewModel = (props: IPeriodItemProps) => {
+export const usePeriodItemViewModel = (props: IPeriodItemSettingsProps) => {
   const { t } = useTranslation();
 
   const [cycle, setCycle] = useState<ICycle | undefined>(

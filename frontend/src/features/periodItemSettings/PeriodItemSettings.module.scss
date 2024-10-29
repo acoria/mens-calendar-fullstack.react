@@ -1,7 +1,8 @@
 @use '../../styles/mixins.scss';
 @use '../../styles/colors.module.scss';
+@use '../../styles/dimensions.module.scss';
 
-.periodItem {
+.periodItemSettings {
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
@@ -12,8 +13,7 @@
 }
 
 .icon {
-    width: 2rem;
-    height: auto;
+    @extend .calendarDetailsSettingsIcon;
 }
 
 .lightDay {

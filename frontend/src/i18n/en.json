@@ -59,5 +59,8 @@
         "ovulationSide": "Felt ovulation side",
         "super": "super",
         "tamponAmount": "Needed tampons"
+    },
+    "pmsSettings":{
+        "title": "PMS day"
     }
 }

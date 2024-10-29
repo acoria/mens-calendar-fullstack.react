@@ -4,19 +4,21 @@ import { ToggleButtonGroup } from "../../components/toggleButtonGroup/ToggleButt
 import { style } from "../../core/ui/style";
 import { texts } from "../../lib/translation/texts";
 import { useTranslation } from "../../lib/translation/useTranslation";
-import { IPeriodItemProps } from "./IPeriodItemProps";
-import styles from "./PeriodItem.module.scss";
+import { IPeriodItemSettingsProps } from "./IPeriodItemSettingsProps";
+import styles from "./PeriodItemSettings.module.scss";
 import { usePeriodItemViewModel } from "./usePeriodItemViewModel";
 import colors from "../../styles/colors.module.scss";
 import { ReactComponent as Drop } from "../../assets/drop.svg";
 import { ReactComponent as Crack } from "../../assets/crack.svg";
 import { CalendarDetailsSettings } from "../calendar/calendarDetails/calendarDetailsSettings/CalendarDetailsSettings";
 
-export const PeriodItem: React.FC<IPeriodItemProps> = (props) => {
+export const PeriodItemSettings: React.FC<IPeriodItemSettingsProps> = (
+  props
+) => {
   const viewModel = usePeriodItemViewModel(props);
   const { t } = useTranslation();
   return (
-    <div className={style(styles.periodItem, props.className)}>
+    <div className={style(styles.periodItemSettings, props.className)}>
       <CalendarDetailsSettings
         icon={<Crack className={styles.icon} />}
         title={t(texts.periodItem.ovulationSide)}

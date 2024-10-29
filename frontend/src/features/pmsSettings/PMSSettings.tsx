@@ -5,6 +5,8 @@ import { texts } from "../../lib/translation/texts";
 import { useTranslation } from "../../lib/translation/useTranslation";
 import { IPMSSettingsProps } from "./IPMSSettingsProps";
 import styles from "./PMSSettings.module.scss";
+import { CalendarDetailsSettings } from "../calendar/calendarDetails/calendarDetailsSettings/CalendarDetailsSettings";
+import { ReactComponent as Sun } from "../../assets/sun.svg";
 
 export const PMSSettings: React.FC<IPMSSettingsProps> = (props) => {
   const { t } = useTranslation();
@@ -22,7 +24,12 @@ export const PMSSettings: React.FC<IPMSSettingsProps> = (props) => {
 
   return (
     <div className={styles.pmsSettings}>
-      <ToggleButtonGroup items={selectOptions} />
+      <CalendarDetailsSettings
+        title={t(texts.pmsSettings.title)}
+        icon={<Sun className={styles.icon} />}
+      >
+        <ToggleButtonGroup items={selectOptions} />
+      </CalendarDetailsSettings>
     </div>
   );
 };
