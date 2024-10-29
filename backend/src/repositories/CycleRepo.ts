@@ -25,4 +25,15 @@ export class CycleRepo extends SequelizeRepository<ICycle> {
     const cycles = data.map((model) => model.toJSON());
     return cycles;
   }
+
+  async update(entity: ICycle): Promise<boolean> {
+    const cycle: any = entity;
+    if (entity.feltOvulationDate === undefined) {
+      cycle.feltOvulationDate = null;
+    }
+    if (entity.feltOvulationSide === undefined) {
+      cycle.feltOvulationSide = null;
+    }
+    return super.update(cycle);
+  }
 }
