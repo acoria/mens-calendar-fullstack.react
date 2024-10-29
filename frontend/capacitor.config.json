@@ -1,8 +1,0 @@
-{
-    "appId": "de.verenatewes.mensCalendar.react",
-    "appName": "Mens Kalender",
-    "bundledWebRuntime": false,
-    "npmClient": "npm",
-    "webDir": "build",
-    "cordova": {}
-   }

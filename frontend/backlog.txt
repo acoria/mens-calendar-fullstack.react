@@ -20,11 +20,11 @@
 #vorraus. Eisprung und Eisprung (& Mens/1.Tag) können am gleichen Tag auftreten -> im Wording beachten und im Kalender markieren
 #deutsch als default Sprache
 #Eisprung mit Wert vorbelegen -> Bug beim Togglen
-#PMS Feature
-- Statistik-Seite anlegen
-- Backend auf Raspberry laufen lassen
-- als App publishen
+#Backend auf Raspberry laufen lassen
 #sicherstellen, dass beim nachträglichen Abwählen aller Eisprung-Seites "null" gesetzt wird und evtl. der Zyklus gelöscht wird, wenn noch keine weiteren Angaben bestehen
+#PMS Feature
+- als App publishen
+- Statistik-Seite anlegen
 
 #period
 	id
