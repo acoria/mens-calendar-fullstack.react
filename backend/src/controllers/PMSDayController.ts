@@ -1,6 +1,6 @@
 import { HttpStatusCode } from "../core/api/types/HttpStatusCode";
 import { PMSDayRepo } from "../repositories/PMSDayRepo";
-import { IPMSDay, PMSDayRouteMeta } from "../shared/model/IPmsDay";
+import { IPMSDay, PMSDayRouteMeta } from "../shared/model/IPMSDay";
 import { EntityController } from "./core/EntityController";
 import { ErrorInterceptor } from "./core/ErrorInterceptor";
 

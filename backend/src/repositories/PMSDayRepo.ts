@@ -1,7 +1,7 @@
 import { Op } from "sequelize";
 import { IDateTimeSpan } from "../core/services/date/IDateTimeSpan";
 import { PMSDay } from "../model/PmsDay";
-import { IPMSDay } from "../shared/model/IPmsDay";
+import { IPMSDay } from "../shared/model/IPMSDay";
 import { SequelizeRepository } from "./sequelize/SequelizeRepository";
 
 export class PMSDayRepo extends SequelizeRepository<IPMSDay> {
