@@ -1,0 +1,7 @@
+{
+  "name": "Mens Kalender",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
