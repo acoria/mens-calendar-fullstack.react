@@ -17,8 +17,12 @@ export class CalendarInfo {
       cycleData.cycle
     );
     if (
-      expectedPeriodDate &&
-      DateTime.equalsDate(cycleData.date, expectedPeriodDate)
+      (expectedPeriodDate &&
+        DateTime.equalsDate(cycleData.date, expectedPeriodDate)) ||
+      DateTime.equalsDate(
+        cycleData.date,
+        cycleData.cycle.calculatedPeriodStartDate
+      )
     ) {
       calendarTypes.push(CalendarType.MENS_EXPECTED);
     }

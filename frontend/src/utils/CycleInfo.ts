@@ -58,9 +58,9 @@ export class CycleInfo implements ICycleInfo {
   }
 
   findCycleDataByDate(date: Date): ICycleData | undefined {
-    // if (DateTime.equalsDate(date, new Date(2024, 8, 3))) {
-    //   debugger;
-    // }
+    if (DateTime.equalsDate(date, new Date(2024, 9, 31))) {
+      debugger;
+    }
     if (this.cycles.length === 0) {
       return;
     }
