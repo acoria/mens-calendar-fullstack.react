@@ -48,9 +48,9 @@
         "yes": "Ja"
     },
     "calendar": {
-        "mensExpected": "Erwartete Mens",
+        "mensExpected": "Mens?",
         "ovulation": "Eisprung",
-        "ovulationCalculated": "Erwarteter Eisprung"
+        "ovulationCalculated": "Eisprung?"
     },
     "periodItem": {
         "lightDay": "Leichter Tag",

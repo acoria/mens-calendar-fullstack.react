@@ -1,35 +1,30 @@
-import { useMemo } from "react";
-import { ISelectOption } from "../../components/select/ISelectOption";
+import { ReactComponent as Sun } from "../../assets/sun.svg";
 import { ToggleButtonGroup } from "../../components/toggleButtonGroup/ToggleButtonGroup";
 import { texts } from "../../lib/translation/texts";
 import { useTranslation } from "../../lib/translation/useTranslation";
+import { CalendarDetailsSettings } from "../calendar/calendarDetails/calendarDetailsSettings/CalendarDetailsSettings";
 import { IPMSSettingsProps } from "./IPMSSettingsProps";
 import styles from "./PMSSettings.module.scss";
-import { CalendarDetailsSettings } from "../calendar/calendarDetails/calendarDetailsSettings/CalendarDetailsSettings";
-import { ReactComponent as Sun } from "../../assets/sun.svg";
+import { usePMSSettingsViewModel } from "./usePMSSettingsViewModel";
 
 export const PMSSettings: React.FC<IPMSSettingsProps> = (props) => {
   const { t } = useTranslation();
-
-  const selectOptions: ISelectOption<boolean>[] = useMemo(
-    () => [
-      {
-        key: false,
-        text: t(texts.general.no),
-      },
-      { key: true, text: t(texts.general.yes) },
-    ],
-    [t]
-  );
+  const viewModel = usePMSSettingsViewModel(props);
 
   return (
-    <div className={styles.pmsSettings}>
-      <CalendarDetailsSettings
-        title={t(texts.pmsSettings.title)}
-        icon={<Sun className={styles.icon} />}
-      >
-        <ToggleButtonGroup items={selectOptions} />
-      </CalendarDetailsSettings>
-    </div>
+    <CalendarDetailsSettings
+      title={t(texts.pmsSettings.title)}
+      icon={<Sun className={styles.icon} />}
+    >
+      <ToggleButtonGroup
+        items={viewModel.toggleButtonOptions}
+        onChange={viewModel.onPMSOptionChange}
+        selected={
+          viewModel.isPMSDay
+            ? viewModel.toggleButtonOptions[0]
+            : viewModel.toggleButtonOptions[1]
+        }
+      />
+    </CalendarDetailsSettings>
   );
 };

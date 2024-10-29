@@ -1,22 +1,26 @@
 import { useEffect, useMemo, useState } from "react";
 import { CycleApi } from "../../../api/CycleApi";
+import { PMSDayApi } from "../../../api/PMSDayApi";
 import { useRequest } from "../../../hooks/useRequest";
 import { ICycle } from "../../../shared/model/ICycle";
-import { ICycleData } from "../../../types/ICycleData";
+import { IPMSDay } from "../../../shared/model/IPMSDay";
 import { CycleInfo } from "../../../utils/CycleInfo";
 import { ICycleInfo } from "../../../utils/ICycleInfo";
 import { Calendar } from "../calendar/Calendar";
 import { DateCalculator } from "../calendar/utils/DateCalculator";
 import { CalendarDetails } from "../calendarDetails/CalendarDetails";
+import { ICalendarDayDetails } from "../types/ICalendarDayDetails";
 import { ICalendarSectionProps } from "./ICalendarSectionProps";
 // import styles from "./CalendarSection.module.scss";
 
 export const CalendarSection: React.FC<ICalendarSectionProps> = (props) => {
   const [cycles, setCycles] = useState<ICycle[] | undefined>([]);
-  const [details, setDetails] = useState<[Date, ICycleData?] | undefined>(
+  const [pmsDays, setPMSDays] = useState<IPMSDay[]>([]);
+  const [details, setDetails] = useState<ICalendarDayDetails | undefined>(
     undefined
   );
   const [loadCycles] = useRequest();
+  const [loadPMSDays] = useRequest();
 
   const dateCalculator = useMemo(() => new DateCalculator(), []);
   const calendarStartDate = useMemo(
@@ -41,6 +45,14 @@ export const CalendarSection: React.FC<ICalendarSectionProps> = (props) => {
       });
       setCycles(cycles);
     });
+    loadPMSDays(async () => {
+      const pmsDays = await new PMSDayApi().findByDateTimeSpan({
+        from: calendarStartDate,
+        to: calendarEndDate,
+      });
+      setPMSDays(pmsDays);
+    });
+
     // do not add loadCycles since it currently has a bug
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [calendarEndDate, calendarStartDate, details]);
@@ -50,10 +62,11 @@ export const CalendarSection: React.FC<ICalendarSectionProps> = (props) => {
     <>
       {cycleInfo && details !== undefined && (
         <CalendarDetails
-          date={details[0]}
-          cycleData={details[1]}
+          date={details.day}
+          cycleData={details.cycleData}
           cycleInfo={cycleInfo}
           onNavigateBack={() => setDetails(undefined)}
+          pmsDay={details.pmsDay}
         />
       )}
       {cycleInfo && !details && (
@@ -62,7 +75,10 @@ export const CalendarSection: React.FC<ICalendarSectionProps> = (props) => {
             startDate={calendarStartDate}
             endDate={calendarEndDate}
             cycleInfo={cycleInfo}
-            onDayClicked={(date, cycleData) => setDetails([date, cycleData])}
+            pmsDays={pmsDays}
+            onDayClicked={(date, cycleData, pmsDay) =>
+              setDetails({ day: date, cycleData, pmsDay })
+            }
           />
         </>
       )}

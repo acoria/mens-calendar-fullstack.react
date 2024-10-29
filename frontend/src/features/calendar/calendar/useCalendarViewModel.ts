@@ -12,6 +12,9 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
   const legend: string[] = useWeekdayLister(props.startDate);
   const renderMonth = useRenderMonth();
 
+  const findPMSDay = (date: Date) =>
+    props.pmsDays.find((pmsDay) => DateTime.equalsDate(pmsDay.day, date));
+
   const addToDays = (date: Date, isInCurrentMonth: boolean) => {
     const dayOfMonth = DateTime.toDay(date);
     const month = DateTime.toMonth(date);
@@ -24,6 +27,7 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
       month: dayOfMonth === 1 ? renderMonth(month, true) : "",
       date,
       cycleData: cycleInfos,
+      pmsDay: findPMSDay(date),
     });
   };
 
@@ -34,7 +38,11 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
 
   const onDayClicked = (index: number) => {
     const clickedDay = days[index];
-    props.onDayClicked(clickedDay.date, clickedDay.cycleData);
+    props.onDayClicked(
+      clickedDay.date,
+      clickedDay.cycleData,
+      clickedDay.pmsDay
+    );
   };
 
   return {

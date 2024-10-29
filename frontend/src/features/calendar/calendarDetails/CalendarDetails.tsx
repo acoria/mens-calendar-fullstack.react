@@ -30,9 +30,7 @@ export const CalendarDetails: React.FC<ICalendarDetailsProps> = (props) => {
           cycleData={props.cycleData}
           cycleInfo={props.cycleInfo}
         />
-        <PMSSettings
-          pmsDay={{ id: "1", createdAt: new Date(), updatedAt: new Date() }}
-        />
+        <PMSSettings date={props.date} pmsDay={props.pmsDay} />
       </div>
     </div>
   );

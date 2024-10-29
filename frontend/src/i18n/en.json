@@ -48,9 +48,9 @@
         "yes": "Yes"
     },
     "calendar": {
-        "mensExpected": "Mens expected",
+        "mensExpected": "Mens?",
         "ovulation": "Ovulation",
-        "ovulationCalculated": "Expected ovulation"
+        "ovulationCalculated": "Ovulation?"
     },
     "periodItem": {
         "lightDay": "Light day",
@@ -60,7 +60,7 @@
         "super": "super",
         "tamponAmount": "Needed tampons"
     },
-    "pmsSettings":{
+    "pmsSettings": {
         "title": "PMS day"
     }
 }

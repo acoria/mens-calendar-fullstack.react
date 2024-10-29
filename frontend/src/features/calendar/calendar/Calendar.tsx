@@ -41,10 +41,7 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
   const getOvulationSideText = (
     ovulationSide: OvulationSide | undefined
   ): string => {
-    if (
-      ovulationSide === undefined ||
-      ovulationSide === null
-    ) {
+    if (ovulationSide === undefined || ovulationSide === null) {
       return "";
     }
     switch (ovulationSide) {
@@ -129,7 +126,7 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
     let icons: ReactElement | ReactElement[] | undefined = undefined;
     let description: string = "";
     let markerColor: string | undefined = undefined;
-    let showHeaderIcon: boolean = false;
+    let showHeaderIcon: boolean = day.pmsDay !== undefined;
     let calendarType: CalendarType;
     if (day.calendarTypes.length === 1) {
       calendarType = day.calendarTypes[0];

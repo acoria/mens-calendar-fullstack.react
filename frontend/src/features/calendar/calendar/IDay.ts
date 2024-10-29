@@ -1,3 +1,4 @@
+import { IPMSDay } from "../../../shared/model/IPMSDay";
 import { ICycleData } from "../../../types/ICycleData";
 import { CalendarType } from "./CalendarType";
 
@@ -8,5 +9,6 @@ export interface IDay {
   isInCurrentMonth?: boolean;
   isToday: boolean;
   month?: string;
-  cycleData?: ICycleData
+  cycleData?: ICycleData;
+  pmsDay?: IPMSDay;
 }
