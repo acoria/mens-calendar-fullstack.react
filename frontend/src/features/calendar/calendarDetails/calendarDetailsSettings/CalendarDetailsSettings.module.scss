@@ -1,0 +1,34 @@
+@use '../../../../styles/mixins.scss';
+@use '../../../../styles/colors.module.scss';
+
+.calendarDetailsSettings {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+.titleSection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 0.5rem;
+}
+
+.title {
+    margin: 0;
+    font-size: large;
+    text-transform: uppercase;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    margin-left: 2.5rem;
+
+    @include mixins.medium-screen {
+        flex-direction: row;
+        column-gap: 3rem;
+
+    }
+}

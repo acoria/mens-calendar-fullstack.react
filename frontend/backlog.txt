@@ -24,7 +24,7 @@
 - PMS Feature
 - Backend auf Raspberry laufen lassen
 - als App publishen
-- sicherstellen, dass beim nachträglichen Abwählen aller Eisprung-Seites "null" gesetzt wird und evtl. der Zyklus gelöscht wird, wenn noch keine weiteren Angaben bestehen
+#sicherstellen, dass beim nachträglichen Abwählen aller Eisprung-Seites "null" gesetzt wird und evtl. der Zyklus gelöscht wird, wenn noch keine weiteren Angaben bestehen
 
 #period
 	id

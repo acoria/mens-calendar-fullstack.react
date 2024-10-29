@@ -11,41 +11,9 @@
     }
 }
 
-.settings {
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-}
-
-.settingsTitleSection{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: 0.5rem;
-}
-
-.icon{
+.icon {
     width: 2rem;
     height: auto;
-}
-
-.settingsTitle {
-    margin: 0;
-    font-size: large;
-    text-transform: uppercase;
-}
-
-.settingsContent {
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-    margin-left: 2.5rem;
-
-    @include mixins.medium-screen {
-        flex-direction: row;
-        column-gap: 3rem;
-
-    }
 }
 
 .lightDay {

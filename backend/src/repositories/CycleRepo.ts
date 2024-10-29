@@ -26,14 +26,16 @@ export class CycleRepo extends SequelizeRepository<ICycle> {
     return cycles;
   }
 
+  /**
+   * Updates only the entity but not the relations
+   */
   async update(entity: ICycle): Promise<boolean> {
-    const cycle: any = entity;
     if (entity.feltOvulationDate === undefined) {
-      cycle.feltOvulationDate = null;
+      (entity.feltOvulationDate as any) = null;
     }
     if (entity.feltOvulationSide === undefined) {
-      cycle.feltOvulationSide = null;
+      (entity.feltOvulationSide as any) = null;
     }
-    return super.update(cycle);
+    return super.update(entity);
   }
 }

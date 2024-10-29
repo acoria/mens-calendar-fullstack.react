@@ -5,6 +5,7 @@ import { DateTime } from "../../../core/services/date/DateTime";
 import { useRenderMonth } from "../../../hooks/useRenderMonth";
 import { useRenderWeekday } from "../../../hooks/useRenderWeekday";
 import { PeriodItem } from "../../periodItem/PeriodItem";
+import { PMSSettings } from "../../pmsSettings/PMSSettings";
 
 export const CalendarDetails: React.FC<ICalendarDetailsProps> = (props) => {
   const renderMonth = useRenderMonth();
@@ -28,6 +29,9 @@ export const CalendarDetails: React.FC<ICalendarDetailsProps> = (props) => {
         className={styles.periodItem}
         cycleData={props.cycleData}
         cycleInfo={props.cycleInfo}
+      />
+      <PMSSettings
+        pmsDay={{ id: "1", createdAt: new Date(), updatedAt: new Date() }}
       />
     </div>
   );

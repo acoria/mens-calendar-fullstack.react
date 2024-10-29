@@ -27,6 +27,7 @@
             "december": "Dezember",
             "decemberShort": "Dez."
         },
+        "no": "Nein",
         "right": "rechts",
         "weekdays": {
             "monday": "Montag",
@@ -43,7 +44,8 @@
             "saturdayShort": "Sa",
             "sunday": "Sonntag",
             "sundayShort": "So"
-        }
+        },
+        "yes": "Ja"
     },
     "calendar": {
         "mensExpected": "Erwartete Mens",
