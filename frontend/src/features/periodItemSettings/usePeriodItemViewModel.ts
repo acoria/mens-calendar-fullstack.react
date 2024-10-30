@@ -37,8 +37,10 @@ export const usePeriodItemViewModel = (props: IPeriodItemSettingsProps) => {
   const [updateCycleRequest] = useRequest();
 
   const upsertPeriodItem = (periodItem: IPeriodItem) => {
-    if (periodItem.id === "new") {
-      periodItem.id = uuid();
+    let id: string = periodItem.id;
+    if (id === "new") {
+      id = uuid();
+      periodItem.id = id;
       updatePeriodItemRequest(async () => {
         new PeriodItemApi().insert(periodItem);
       });
@@ -54,6 +56,7 @@ export const usePeriodItemViewModel = (props: IPeriodItemSettingsProps) => {
           periodItem.amountTamponsSuper === undefined) &&
         (periodItem.isLightDay === false || periodItem.isLightDay === undefined)
       ) {
+        id = "new";
         updatePeriodItemRequest(async () => {
           new PeriodItemApi().delete(periodItem);
         });
@@ -63,6 +66,7 @@ export const usePeriodItemViewModel = (props: IPeriodItemSettingsProps) => {
         });
       }
     }
+    setPeriodItem({ ...periodItem, id });
   };
 
   const handlePeriodItemRequest = (periodItem: IPeriodItem) => {
@@ -91,44 +95,36 @@ export const usePeriodItemViewModel = (props: IPeriodItemSettingsProps) => {
   };
 
   const toggleIsLightDay = () => {
-    setPeriodItem((previous) => {
-      const newPeriodItem: IPeriodItem = {
-        ...previous,
-        isLightDay: !previous.isLightDay,
-      };
-      handlePeriodItemRequest(newPeriodItem);
-      return newPeriodItem;
-    });
+    const newPeriodItem: IPeriodItem = {
+      ...periodItem,
+      isLightDay: !periodItem.isLightDay,
+    };
+    handlePeriodItemRequest(newPeriodItem);
   };
 
   const onLightDayChange = () => {
     toggleIsLightDay();
   };
   const onMiniTamponAmountChange = (amount: number) => {
-    setPeriodItem((previous) => {
-      const newPeriodItem: IPeriodItem = {
-        ...previous,
-        amountTamponsMini: amount,
-      };
-      if (amount > 0) {
-        newPeriodItem.isLightDay = false;
-      }
-      handlePeriodItemRequest(newPeriodItem);
-      return newPeriodItem;
-    });
+    const newPeriodItem: IPeriodItem = {
+      ...periodItem,
+      amountTamponsMini: amount,
+    };
+    if (amount > 0) {
+      newPeriodItem.isLightDay = false;
+    }
+    handlePeriodItemRequest(newPeriodItem);
   };
+
   const onNormalTamponAmountChange = (amount: number) => {
-    setPeriodItem((previous) => {
       const newPeriodItem: IPeriodItem = {
-        ...previous,
+        ...periodItem,
         amountTamponsNormal: amount,
       };
       if (amount > 0) {
         newPeriodItem.isLightDay = false;
       }
       handlePeriodItemRequest(newPeriodItem);
-      return newPeriodItem;
-    });
   };
 
   const onOvulationSideChange = (
@@ -182,17 +178,14 @@ export const usePeriodItemViewModel = (props: IPeriodItemSettingsProps) => {
   };
 
   const onSuperTamponAmountChange = (amount: number) => {
-    setPeriodItem((previous) => {
       const newPeriodItem: IPeriodItem = {
-        ...previous,
+        ...periodItem,
         amountTamponsSuper: amount,
       };
       if (amount > 0) {
         newPeriodItem.isLightDay = false;
       }
       handlePeriodItemRequest(newPeriodItem);
-      return newPeriodItem;
-    });
   };
 
   const ovulationSelectOptions: ISelectOption<OvulationSide>[] = useMemo(
