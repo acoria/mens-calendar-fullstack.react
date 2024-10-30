@@ -1,5 +1,6 @@
 @use '../../../styles/colors.module.scss';
 @use '../../../styles/mixins.scss';
+@use '../../../styles/features.scss';
 
 .calendar {
     display: grid;
@@ -19,7 +20,6 @@
 }
 
 .icon {
-    color: colors.$color-calendar-icon-color;
     width: 0.6rem;
     height: auto;
     flex-shrink: 0;
@@ -30,8 +30,7 @@
 }
 
 .sunIcon {
-    color: colors.$color-icon-sun-background;
-    stroke: colors.$color-icon-sun-stroke;
+    @extend .sunIcon;
 }
 
 .legendItem {

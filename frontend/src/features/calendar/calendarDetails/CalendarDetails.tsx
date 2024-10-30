@@ -22,7 +22,7 @@ export const CalendarDetails: React.FC<ICalendarDetailsProps> = (props) => {
           className={styles.backIcon}
           onClick={props.onNavigateBack}
         />
-        <h3>{title}</h3>
+        <h3 className={styles.title}>{title}</h3>
       </div>
       <div className={styles.settings}>
         <PeriodItemSettings

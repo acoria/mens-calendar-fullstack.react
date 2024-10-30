@@ -1,0 +1,11 @@
+@use '../styles/colors.module.scss';
+
+.calendarDetailsSettingsIcon {
+    width: 2rem;
+    height: auto;
+}
+
+.sunIcon {
+    color: colors.$color-icon-sun-background;
+    stroke: colors.$color-icon-sun-stroke;
+}

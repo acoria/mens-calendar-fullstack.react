@@ -20,7 +20,7 @@ export const PeriodItemSettings: React.FC<IPeriodItemSettingsProps> = (
   return (
     <div className={style(styles.periodItemSettings, props.className)}>
       <CalendarDetailsSettings
-        icon={<Crack className={styles.icon} />}
+        icon={<Crack className={styles.ovulationIcon} />}
         title={t(texts.periodItem.ovulationSide)}
       >
         <ToggleButtonGroup
@@ -35,7 +35,7 @@ export const PeriodItemSettings: React.FC<IPeriodItemSettingsProps> = (
         />
       </CalendarDetailsSettings>
       <CalendarDetailsSettings
-        icon={<Drop className={styles.icon} />}
+        icon={<Drop className={styles.dropIcon} />}
         title={t(texts.periodItem.tamponAmount)}
       >
         <div className={styles.lightDay}>

@@ -3,12 +3,19 @@
 .header {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .backIcon {
     fill: colors.$color-calendar-details-back-icon;
-    width: 2.5rem;
+    width: 3rem;
     height: auto;
+}
+
+.title {
+    font-family: "Antonio";
+    font-size: x-large;
+    letter-spacing: 0.05rem;
 }
 
 .settings {

@@ -7,7 +7,7 @@ export const CalendarDetailsSettings: React.FC<
   return (
     <div className={styles.calendarDetailsSettings}>
       <div className={styles.titleSection}>
-        <div>{props.icon}</div>
+        {props.icon}
         <h4 className={styles.title}>{props.title}</h4>
       </div>
       <div className={styles.content}>{props.children}</div>

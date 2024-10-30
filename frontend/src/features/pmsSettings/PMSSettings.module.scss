@@ -1,5 +1,6 @@
-@use '../../styles/dimensions.module.scss';
+@use '../../styles/features.scss';
 
 .icon {
     @extend .calendarDetailsSettingsIcon;
+    @extend .sunIcon;
 }
