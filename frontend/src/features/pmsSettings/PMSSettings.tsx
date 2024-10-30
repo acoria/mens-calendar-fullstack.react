@@ -21,8 +21,8 @@ export const PMSSettings: React.FC<IPMSSettingsProps> = (props) => {
         onChange={viewModel.onPMSOptionChange}
         selected={
           viewModel.isPMSDay
-            ? viewModel.toggleButtonOptions[0]
-            : viewModel.toggleButtonOptions[1]
+            ? viewModel.toggleButtonOptions[1]
+            : viewModel.toggleButtonOptions[0]
         }
       />
     </CalendarDetailsSettings>

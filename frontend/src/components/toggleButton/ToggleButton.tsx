@@ -1,3 +1,4 @@
+import { style } from "../../core/ui/style";
 import { Button } from "../button/Button";
 import { IToggleButtonOption } from "../toggleButtonGroup/IToggleButtonOption";
 import { IToggleButtonProps } from "./IToggleButtonProps";
@@ -9,7 +10,10 @@ export function ToggleButton<T extends IToggleButtonOption<any>>(
   return (
     <Button
       disabled={props.disabled}
-      className={props.selected ? styles.selected : styles.unselected}
+      className={style(
+        styles.button,
+        props.selected ? styles.selected : styles.unselected
+      )}
       onClick={props.onClick}
     >
       {props.item.text}

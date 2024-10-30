@@ -14,11 +14,11 @@ export const usePMSSettingsViewModel = (props: IPMSSettingsProps) => {
 
   const toggleButtonOptions: ISelectOption<boolean>[] = useMemo(
     () => [
-      { key: true, text: t(texts.general.yes) },
       {
         key: false,
         text: t(texts.general.no),
       },
+      { key: true, text: t(texts.general.yes) },
     ],
     [t]
   );

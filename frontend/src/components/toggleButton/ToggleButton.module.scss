@@ -1,5 +1,9 @@
 @use "../../styles/colors.module.scss";
 
+.button {
+  min-width: 4rem;
+}
+
 .selected {
   border: none;
   background-color: colors.$color-button-background-selected;
