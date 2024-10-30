@@ -12,13 +12,7 @@ export class CalendarInfo {
       return calendarTypes;
     }
 
-    //add expected period day
-    const expectedPeriodDate = CycleUtils.calculateExpectedPeriodStartDate(
-      cycleData.cycle
-    );
     if (
-      (expectedPeriodDate &&
-        DateTime.equalsDate(cycleData.date, expectedPeriodDate)) ||
       DateTime.equalsDate(
         cycleData.date,
         cycleData.cycle.calculatedPeriodStartDate

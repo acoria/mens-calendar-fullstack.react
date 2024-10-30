@@ -26,6 +26,9 @@
 - als App publishen
 - Statistik-Seite anlegen
 
+Bugs:
+- leerer Kalender, leichter Tag zweimal anhaken im gleichen Screen -> danach ist das Period Item weg
+
 #period
 	id
 	start_date (date of calculated ovulation)

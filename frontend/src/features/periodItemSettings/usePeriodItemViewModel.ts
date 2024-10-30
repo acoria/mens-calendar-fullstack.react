@@ -9,6 +9,7 @@ import { useTranslation } from "../../lib/translation/useTranslation";
 import { ICycle } from "../../shared/model/ICycle";
 import { IPeriodItem } from "../../shared/model/IPeriodItem";
 import { OvulationSide } from "../../shared/types/OvulationSide";
+import { CycleUtils } from "../../utils/CycleUtils";
 import { uuid } from "../../utils/uuid";
 import { IPeriodItemSettingsProps } from "./IPeriodItemSettingsProps";
 
@@ -136,46 +137,47 @@ export const usePeriodItemViewModel = (props: IPeriodItemSettingsProps) => {
     let feltOvulationDate = option === undefined ? undefined : props.date;
     const feltOvulationSide = option?.key;
 
-    if (cycle) {
-      setCycle((previous) => {
-        const newValue = {
-          ...previous!,
-          feltOvulationDate,
-          feltOvulationSide,
-        };
-        updateCycleRequest(async () => {
-          await new CycleApi().update(newValue);
-        });
-        return newValue;
-      });
-    } else {
-      //if there is no cycle yet, find or create it
-      const cycle = props.cycleInfo.findPotentialCycleForOvulationDate(
-        props.date
-      );
-      if (cycle !== undefined) {
-        cycle.feltOvulationDate = feltOvulationDate;
-        cycle.feltOvulationSide = feltOvulationSide;
+    const currentCycle =
+      cycle !== undefined
+        ? cycle
+        : props.cycleInfo.findPotentialCycleForOvulationDate(props.date);
+    if (currentCycle !== undefined) {
+      updateCycleRequest(async () => {
+        currentCycle.feltOvulationDate = feltOvulationDate;
+        currentCycle.feltOvulationSide = feltOvulationSide;
         if (feltOvulationDate !== undefined) {
-          cycle.calculatedPeriodStartDate = DateTime.addDays(
+          //adjust calculated period start date because it prevails
+          currentCycle.calculatedPeriodStartDate = DateTime.addDays(
             feltOvulationDate,
             14
           );
+        } else {
+          //set the calculated period start again
+          const previousCycle = props.cycleInfo.findPreviousCycle(currentCycle);
+          if (previousCycle !== undefined) {
+            currentCycle.calculatedPeriodStartDate =
+              CycleUtils.calculateExpectedPeriodStartDateFromPreviousCycle(
+                previousCycle
+              );
+          } else {
+            //delete cycle
+            await new CycleApi().deleteById(currentCycle.id);
+            setCycle(undefined);
+            return;
+          }
         }
-        updateCycleRequest(async () => {
-          await new CycleApi().update(cycle);
+        await new CycleApi().update(currentCycle);
+        setCycle(currentCycle);
+      });
+    } else {
+      insertCycleRequest(async () => {
+        const cycle = await new CycleApi().insert({
+          calculatedPeriodStartDate: DateTime.addDays(props.date, 14),
+          feltOvulationDate: props.date,
+          feltOvulationSide: feltOvulationSide,
         });
         setCycle(cycle);
-      } else {
-        insertCycleRequest(async () => {
-          const cycle = await new CycleApi().insert({
-            calculatedPeriodStartDate: DateTime.addDays(props.date, 14),
-            feltOvulationDate: props.date,
-            feltOvulationSide: feltOvulationSide,
-          });
-          setCycle(cycle);
-        });
-      }
+      });
     }
   };
 

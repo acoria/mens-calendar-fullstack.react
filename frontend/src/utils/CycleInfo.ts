@@ -9,13 +9,14 @@ import { ICycleInfo } from "./ICycleInfo";
 export class CycleInfo implements ICycleInfo {
   private periodItems: IPeriodItem[] = [];
 
-  constructor(private cycles: ICycle[]) {
+  constructor(private readonly cycles: ICycle[]) {
     cycles.forEach((cycle) => {
       cycle.periodItems?.forEach((periodItem) =>
         this.periodItems.push(periodItem)
       );
     });
   }
+
   //check if a cycle or a period item with this date exists
   private findCycleByDate(date: Date): ICycle | undefined {
     if (this.cycles.length === 0) {
@@ -47,7 +48,7 @@ export class CycleInfo implements ICycleInfo {
 
   private getCycleById(id: string): ICycle {
     return (
-      this.cycles.find((cycle) => (cycle.id = id)) ??
+      this.cycles.find((cycle) => cycle.id === id) ??
       error(`Cycle with id ${id} not found`)
     );
   }
@@ -58,9 +59,9 @@ export class CycleInfo implements ICycleInfo {
   }
 
   findCycleDataByDate(date: Date): ICycleData | undefined {
-    if (DateTime.equalsDate(date, new Date(2024, 9, 31))) {
-      debugger;
-    }
+    // if (DateTime.equalsDate(date, new Date(2024, 9, 31))) {
+    //   debugger;
+    // }
     if (this.cycles.length === 0) {
       return;
     }
@@ -74,8 +75,6 @@ export class CycleInfo implements ICycleInfo {
           CycleUtils.calculateOvulationDateByPeriodStartDate(
             cycle.calculatedPeriodStartDate
           );
-        const expectedPeriodStartDate =
-          CycleUtils.calculateExpectedPeriodStartDate(cycle);
         if (DateTime.equalsDate(cycle.calculatedPeriodStartDate, date)) {
           return true;
         } else if (DateTime.equalsDate(calculatedOvulationDate, date)) {
@@ -85,10 +84,7 @@ export class CycleInfo implements ICycleInfo {
           DateTime.equalsDate(cycle.feltOvulationDate, date)
         ) {
           return true;
-        } else if (
-          expectedPeriodStartDate &&
-          DateTime.equalsDate(date, expectedPeriodStartDate)
-        ) {
+        } else if (DateTime.equalsDate(date, cycle.calculatedPeriodStartDate)) {
           return true;
         }
         return false;
@@ -133,6 +129,22 @@ export class CycleInfo implements ICycleInfo {
         day++;
       } while (foundCycle === undefined && day < 11);
     }
+    return foundCycle;
+  }
+  /**
+   * Finds a cycle that is somewhere between 20 and 40 days before the provided cycle period start date
+   */
+  findPreviousCycle(cycle: ICycle): ICycle | undefined {
+    let foundCycle = undefined;
+    let day = 20;
+    do {
+      const earlierDate = DateTime.subtractDays(
+        cycle.calculatedPeriodStartDate,
+        day
+      );
+      foundCycle = this.findCycleByDate(earlierDate);
+      day++;
+    } while (foundCycle === undefined && day < 41);
     return foundCycle;
   }
 }

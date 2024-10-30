@@ -120,9 +120,9 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
   };
 
   const days = viewModel.days.map((day, index) => {
-    if (DateTime.equalsDate(day.date, new Date(2024, 9, 31))) {
-      debugger;
-    }
+    // if (DateTime.equalsDate(day.date, new Date(2024, 9, 31))) {
+    //   debugger;
+    // }
     let className = "";
     let icons: ReactElement | ReactElement[] | undefined = undefined;
     let description: string = "";
