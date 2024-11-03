@@ -25,9 +25,12 @@
 #PMS Feature
 - als App publishen
 - Statistik-Seite anlegen
+- Detail-Seite für Mobile-Ansicht zu groß
 
-Bugs:
-- leerer Kalender, leichter Tag zweimal anhaken im gleichen Screen -> danach ist das Period Item weg
+#Bug leerer Kalender, leichter Tag zweimal anhaken im gleichen Screen -> danach ist das Period Item weg
+#Bug: Beim Löschen eines gefühlten Eisprungs darf der Cycle nur gelöscht werden, wenn keine PeriodItems dafür existieren
+- Bug: Beim Eintragen eines gefühlten Eisprungs wird der geplante auf den tatsächlichen gesetzt
+
 
 #period
 	id

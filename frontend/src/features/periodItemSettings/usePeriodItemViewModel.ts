@@ -117,14 +117,14 @@ export const usePeriodItemViewModel = (props: IPeriodItemSettingsProps) => {
   };
 
   const onNormalTamponAmountChange = (amount: number) => {
-      const newPeriodItem: IPeriodItem = {
-        ...periodItem,
-        amountTamponsNormal: amount,
-      };
-      if (amount > 0) {
-        newPeriodItem.isLightDay = false;
-      }
-      handlePeriodItemRequest(newPeriodItem);
+    const newPeriodItem: IPeriodItem = {
+      ...periodItem,
+      amountTamponsNormal: amount,
+    };
+    if (amount > 0) {
+      newPeriodItem.isLightDay = false;
+    }
+    handlePeriodItemRequest(newPeriodItem);
   };
 
   const onOvulationSideChange = (
@@ -156,9 +156,23 @@ export const usePeriodItemViewModel = (props: IPeriodItemSettingsProps) => {
                 previousCycle
               );
           } else {
-            //delete cycle
-            await new CycleApi().deleteById(currentCycle.id);
-            setCycle(undefined);
+            //if period items exist, reset date from earliest period item
+            let calculatedPeriodStartDate: Date | undefined = undefined;
+            if (currentCycle.periodItems?.length !== 0) {
+              const earliestPeriodItem =
+                CycleUtils.findEarliestPeriodItemInCycle(currentCycle);
+              calculatedPeriodStartDate = earliestPeriodItem?.day;
+            }
+            if (calculatedPeriodStartDate !== undefined) {
+              currentCycle.calculatedPeriodStartDate =
+                calculatedPeriodStartDate;
+              await new CycleApi().update(currentCycle);
+              setCycle(currentCycle);
+            } else {
+              //if no period items exist, delete cycle
+              await new CycleApi().deleteById(currentCycle.id);
+              setCycle(undefined);
+            }
             return;
           }
         }
@@ -178,14 +192,14 @@ export const usePeriodItemViewModel = (props: IPeriodItemSettingsProps) => {
   };
 
   const onSuperTamponAmountChange = (amount: number) => {
-      const newPeriodItem: IPeriodItem = {
-        ...periodItem,
-        amountTamponsSuper: amount,
-      };
-      if (amount > 0) {
-        newPeriodItem.isLightDay = false;
-      }
-      handlePeriodItemRequest(newPeriodItem);
+    const newPeriodItem: IPeriodItem = {
+      ...periodItem,
+      amountTamponsSuper: amount,
+    };
+    if (amount > 0) {
+      newPeriodItem.isLightDay = false;
+    }
+    handlePeriodItemRequest(newPeriodItem);
   };
 
   const ovulationSelectOptions: ISelectOption<OvulationSide>[] = useMemo(

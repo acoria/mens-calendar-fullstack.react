@@ -22,14 +22,8 @@ class CycleUtilsDefault {
     ) {
       return this.calculateNextPeriodStartDateFromPreviousCycle(previousCycle);
     } else {
-      let earliestPeriodItem: IPeriodItem | undefined = undefined;
-      previousCycle.periodItems?.forEach((periodItem) => {
-        if (earliestPeriodItem === undefined) {
-          earliestPeriodItem = periodItem;
-        } else if (DateTime.isBefore(periodItem.day, earliestPeriodItem.day)) {
-          earliestPeriodItem = periodItem;
-        }
-      });
+      const earliestPeriodItem =
+        this.findEarliestPeriodItemInCycle(previousCycle);
       if (earliestPeriodItem !== undefined) {
         const firstPeriodDay = (earliestPeriodItem as IPeriodItem).day;
         return DateTime.addDays(firstPeriodDay, 28);
@@ -39,6 +33,18 @@ class CycleUtilsDefault {
         );
       }
     }
+  }
+
+  findEarliestPeriodItemInCycle(cycle: ICycle): IPeriodItem | undefined {
+    let earliestPeriodItem: IPeriodItem | undefined = undefined;
+    cycle.periodItems?.forEach((periodItem) => {
+      if (earliestPeriodItem === undefined) {
+        earliestPeriodItem = periodItem;
+      } else if (DateTime.isBefore(periodItem.day, earliestPeriodItem.day)) {
+        earliestPeriodItem = periodItem;
+      }
+    });
+    return earliestPeriodItem;
   }
 }
 export const CycleUtils = new CycleUtilsDefault();
