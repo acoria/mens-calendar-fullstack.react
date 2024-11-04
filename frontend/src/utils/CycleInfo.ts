@@ -3,7 +3,6 @@ import { error } from "../core/utils/error";
 import { ICycle } from "../shared/model/ICycle";
 import { IPeriodItem } from "../shared/model/IPeriodItem";
 import { ICycleData } from "../types/ICycleData";
-import { CycleUtils } from "./CycleUtils";
 import { ICycleInfo } from "./ICycleInfo";
 
 export class CycleInfo implements ICycleInfo {
@@ -59,7 +58,7 @@ export class CycleInfo implements ICycleInfo {
   }
 
   findCycleDataByDate(date: Date): ICycleData | undefined {
-    // if (DateTime.equalsDate(date, new Date(2024, 9, 31))) {
+    // if (DateTime.equalsDate(date, new Date(2024, 9, 29))) {
     //   debugger;
     // }
     if (this.cycles.length === 0) {

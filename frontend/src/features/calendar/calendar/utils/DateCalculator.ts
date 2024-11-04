@@ -17,11 +17,17 @@ export class DateCalculator {
     return DateTime.subtractDays(thisMonthsFirstDay, 1);
   }
 
-  getFirstDayOfPreviousMonth(): Date {
+  // getFirstDayOfPreviousMonth(): Date {
+  //   const dateInPreviousMonth = this.getDateInPreviousMonth(this.todaysDate);
+  //   return this.addTimeDifference(
+  //     DateTime.getMonthStartDate(dateInPreviousMonth)
+  //   );
+  // }
+
+  getFirstMondayOfPreviousMonth(): Date {
     const dateInPreviousMonth = this.getDateInPreviousMonth(this.todaysDate);
-    return this.addTimeDifference(
-      DateTime.getMonthStartDate(dateInPreviousMonth)
-    );
+    const firstOfMonth = DateTime.getMonthStartDate(dateInPreviousMonth);
+    return this.addTimeDifference(DateTime.getWeekStartDate(firstOfMonth));
   }
 
   getLastDayOfNextMonth(): Date {

@@ -1,6 +1,5 @@
 import { DateTime } from "../../../../core/services/date/DateTime";
 import { ICycleData } from "../../../../types/ICycleData";
-import { CycleUtils } from "../../../../utils/CycleUtils";
 import { CalendarType } from "../CalendarType";
 
 export class CalendarInfo {

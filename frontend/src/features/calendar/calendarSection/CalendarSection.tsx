@@ -14,7 +14,7 @@ import { ICalendarSectionProps } from "./ICalendarSectionProps";
 // import styles from "./CalendarSection.module.scss";
 
 export const CalendarSection: React.FC<ICalendarSectionProps> = (props) => {
-  const [cycles, setCycles] = useState<ICycle[] | undefined>([]);
+  const [cycles, setCycles] = useState<ICycle[] | undefined>(undefined);
   const [pmsDays, setPMSDays] = useState<IPMSDay[]>([]);
   const [details, setDetails] = useState<ICalendarDayDetails | undefined>(
     undefined
@@ -23,8 +23,9 @@ export const CalendarSection: React.FC<ICalendarSectionProps> = (props) => {
   const [loadPMSDays] = useRequest();
 
   const dateCalculator = useMemo(() => new DateCalculator(), []);
+  //ensure the calendar starts on monday
   const calendarStartDate = useMemo(
-    () => dateCalculator.getFirstDayOfPreviousMonth(),
+    () => dateCalculator.getFirstMondayOfPreviousMonth(),
     [dateCalculator]
   );
   const calendarEndDate = useMemo(
@@ -32,7 +33,7 @@ export const CalendarSection: React.FC<ICalendarSectionProps> = (props) => {
     [dateCalculator]
   );
   const cycleInfo: ICycleInfo | undefined = useMemo(() => {
-    if (cycles) {
+    if (cycles !== undefined) {
       return new CycleInfo(cycles);
     }
   }, [cycles]);

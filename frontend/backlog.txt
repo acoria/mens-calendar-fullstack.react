@@ -23,14 +23,14 @@
 #Backend auf Raspberry laufen lassen
 #sicherstellen, dass beim nachträglichen Abwählen aller Eisprung-Seites "null" gesetzt wird und evtl. der Zyklus gelöscht wird, wenn noch keine weiteren Angaben bestehen
 #PMS Feature
-- Statistik-Seite anlegen
-#Detail-Seite für Mobile-Ansicht zu groß
-- als App publishen
-
 #Bug leerer Kalender, leichter Tag zweimal anhaken im gleichen Screen -> danach ist das Period Item weg
 #Bug: Beim Löschen eines gefühlten Eisprungs darf der Cycle nur gelöscht werden, wenn keine PeriodItems dafür existieren
 #Bug: Beim Eintragen eines gefühlten Eisprungs wird der geplante auf den tatsächlichen gesetzt
-
+#Wenn das Backend nicht erreichbar ist, sollte ein Toast angezeigt werden
+#Kalendar sollte immer montags starten
+- Statistik-Seite anlegen
+#Detail-Seite für Mobile-Ansicht zu groß
+- als App publishen
 
 #period
 	id
@@ -45,4 +45,3 @@
 	amount_tampon_normal: number
 	amount_tampon_super: number
 	period
-	
