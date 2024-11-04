@@ -1,8 +1,13 @@
 @use '../styles/colors.module.scss';
+@use '../styles/mixins.scss';
 
 .calendarDetailsSettingsIcon {
-    width: 2rem;
+    width: 1.5rem;
     height: auto;
+    
+    @include mixins.medium-screen {
+        width: 2rem;
+    }
 }
 
 .sunIcon {

@@ -18,8 +18,12 @@
     margin: 0;
     font-family: "Antonio";
     letter-spacing: 0.2rem;
-    font-size: large;
+    font-size: medium;
     text-transform: uppercase;
+    
+    @include mixins.medium-screen {
+        font-size: large;
+    }
 }
 
 .content {

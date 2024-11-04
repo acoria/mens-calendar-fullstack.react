@@ -1,4 +1,5 @@
 @use '../../../styles/colors.module.scss';
+@use '../../../styles/mixins.scss';
 
 .header {
     display: flex;
@@ -14,8 +15,12 @@
 
 .title {
     font-family: "Antonio";
-    font-size: x-large;
+    font-size: medium;
     letter-spacing: 0.05rem;
+
+    @include mixins.medium-screen {
+        font-size: x-large;
+    }
 }
 
 .settings {
