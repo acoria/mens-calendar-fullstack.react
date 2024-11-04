@@ -45,11 +45,12 @@ export class CalendarInfo {
     }
 
     //add calculated ovulation
-    const calculatedOvulationDate =
-      CycleUtils.calculateOvulationDateByPeriodStartDate(
-        cycleData.cycle.calculatedPeriodStartDate
-      );
-    if (DateTime.equalsDate(cycleData.date, calculatedOvulationDate)) {
+    if (
+      DateTime.equalsDate(
+        cycleData.cycle.calculatedOvulationDate,
+        cycleData.date
+      )
+    ) {
       calendarTypes.push(CalendarType.OVULATION_DAY_CALCULATED);
     }
 

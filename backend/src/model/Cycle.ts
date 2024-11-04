@@ -9,6 +9,7 @@ const cycle: ModelStatic<Model<ICycle, IEntityDetails<ICycle>>> = db.define(
   {
     id: createIdType(),
     calculatedPeriodStartDate: DataTypes.DATE,
+    calculatedOvulationDate: DataTypes.DATE,
     feltOvulationDate: DataTypes.DATE,
     feltOvulationSide: DataTypes.INTEGER,
   }

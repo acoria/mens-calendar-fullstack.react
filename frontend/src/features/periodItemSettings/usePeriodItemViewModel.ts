@@ -83,6 +83,10 @@ export const usePeriodItemViewModel = (props: IPeriodItemSettingsProps) => {
         insertCycleRequest(async () => {
           const period = await new CycleApi().insert({
             calculatedPeriodStartDate: periodItem.day,
+            calculatedOvulationDate:
+              CycleUtils.calculateOvulationDateByPeriodStartDate(
+                periodItem.day
+              ),
           });
           setCycle(period);
           periodItem.cycleId = period.id;
@@ -183,6 +187,7 @@ export const usePeriodItemViewModel = (props: IPeriodItemSettingsProps) => {
       insertCycleRequest(async () => {
         const cycle = await new CycleApi().insert({
           calculatedPeriodStartDate: DateTime.addDays(props.date, 14),
+          calculatedOvulationDate: props.date,
           feltOvulationDate: props.date,
           feltOvulationSide: feltOvulationSide,
         });

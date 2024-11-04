@@ -71,13 +71,9 @@ export class CycleInfo implements ICycleInfo {
       cycle = this.getCycleById(periodItem.cycleId);
     } else {
       cycle = this.cycles.find((cycle) => {
-        const calculatedOvulationDate =
-          CycleUtils.calculateOvulationDateByPeriodStartDate(
-            cycle.calculatedPeriodStartDate
-          );
         if (DateTime.equalsDate(cycle.calculatedPeriodStartDate, date)) {
           return true;
-        } else if (DateTime.equalsDate(calculatedOvulationDate, date)) {
+        } else if (DateTime.equalsDate(cycle.calculatedOvulationDate, date)) {
           return true;
         } else if (
           cycle.feltOvulationDate &&

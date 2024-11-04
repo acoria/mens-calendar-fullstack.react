@@ -21,8 +21,9 @@ export class PeriodItemRepo extends SequelizeRepository<IPeriodItem> {
       //add new next cycle if it is the first period item in the cycle
       const nextCycle: IEntityDetails<ICycle> = {
         calculatedPeriodStartDate: DateTime.addDays(entity.day, 28),
+        calculatedOvulationDate: DateTime.addDays(entity.day, 14),
       };
-      await new CycleRepo().insert(nextCycle)
+      await new CycleRepo().insert(nextCycle);
     }
 
     return periodItem;
