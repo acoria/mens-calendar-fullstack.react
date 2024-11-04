@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { IError } from "../core/types/IError";
 import { isError } from "../core/utils/isError";
+import { useToast } from "../lib/toast/hooks/useToast";
 
 export const useRequest = (): [
   send: (
@@ -10,14 +11,19 @@ export const useRequest = (): [
   isProcessing: boolean
 ] => {
   const [isProcessing, setIsProcessing] = useState(false);
-  // const toast = useToast();
+  const toast = useToast();
   // const navigate = useNavigate();
 
-  const handleError = useCallback((error: IError) => {
-    // unknown error navigate to error boundary page
-    console.log("Unknown error due to REST request.");
-    // navigate(AppRoutes.error.toPath());
-  }, []);
+  const handleError = useCallback(
+    (error: IError) => {
+      // unknown error navigate to error boundary page
+      // navigate(AppRoutes.error.toPath());
+      toast.error(
+        "Sorry. Looks like something is no quite right with the backend :("
+      );
+    },
+    [toast]
+  );
 
   const send = useCallback(
     async (

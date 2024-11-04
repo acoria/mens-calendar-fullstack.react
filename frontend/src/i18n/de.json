@@ -29,6 +29,12 @@
         },
         "no": "Nein",
         "right": "rechts",
+        "toastSeverity": {
+            "error": "Fehler",
+            "info": "Info",
+            "success": "Erfolg",
+            "warning": "Warnung"
+        },
         "weekdays": {
             "monday": "Montag",
             "mondayShort": "Mo",
