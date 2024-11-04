@@ -1,0 +1,15 @@
+@use '../../styles/mixins.scss';
+
+.tabstrip {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
+
+    @include mixins.medium-screen {
+        column-gap: 1.5rem;
+        row-gap: 0;
+    }
+}

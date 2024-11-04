@@ -30,6 +30,7 @@
 #Kalendar sollte immer montags starten
 - Statistik-Seite anlegen
 #Detail-Seite für Mobile-Ansicht zu groß
+- Bug: Eisprung abwählen ist im UI nicht sichtbar, da der Toggle aktiv bleibt
 - als App publishen
 
 #period

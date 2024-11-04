@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { AppContext } from "./context/AppContext";
-import { CalendarSection } from "./features/calendar/calendarSection/CalendarSection";
+import { MensCalendar } from "./features/mensCalendar/MensCalendar";
 import { ToastSection } from "./lib/toast/components/toastSection/ToastSection";
-import { useLanguageStorage } from "./lib/translation/language/useLanguageStorage";
-import { IToast } from "./lib/toast/model/IToast";
 import { ToastContext } from "./lib/toast/context/ToastContext";
+import { IToast } from "./lib/toast/model/IToast";
+import { useLanguageStorage } from "./lib/translation/language/useLanguageStorage";
 
 export const App = () => {
   const [toasts, setToasts] = useState<IToast[]>([]);
@@ -13,7 +13,7 @@ export const App = () => {
     <AppContext.Provider value={{ language: useLanguageStorage() }}>
       <ToastContext.Provider value={{ toasts: [toasts, setToasts] }}>
         <ToastSection />
-        <CalendarSection />
+        <MensCalendar />
       </ToastContext.Provider>
     </AppContext.Provider>
   );

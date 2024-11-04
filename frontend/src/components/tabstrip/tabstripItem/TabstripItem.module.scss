@@ -1,0 +1,47 @@
+@use '../../../styles/colors.module.scss';
+@use '../../../styles/components.scss' as comp;
+
+$font-weight: 500;
+$font-weight-selected: 600;
+
+.tabstripItem {
+    position: relative;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.caption {
+    color: colors.$color-font-light;
+    font-size: large;
+    font-weight: $font-weight;
+    letter-spacing: 0.05rem;
+
+    &:hover {
+        font-weight: $font-weight-selected;
+    }
+}
+
+.captionDarkMode {
+    @extend .caption;
+    color: colors.$color-tabstrip-font-dark-mode;
+}
+
+.selected {
+    font-weight: $font-weight-selected;
+    cursor: auto;
+
+    &::after {
+        @include comp.tabstrip-underline;
+    }
+}
+
+.selectedDarkMode {
+    @extend .selected;
+
+    &::after {
+        @include comp.tabstrip-underline(colors.$color-tabstrip-underline-dark-mode);
+    }
+}

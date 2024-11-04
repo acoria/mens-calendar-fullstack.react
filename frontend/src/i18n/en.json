@@ -58,6 +58,14 @@
         "ovulation": "Ovulation",
         "ovulationCalculated": "Ovulation?"
     },
+    "calendarMens": {
+        "calendar": {
+            "tabTitle": "Calendar"
+        },
+        "statistics": {
+            "tabTitle": "Statistics"
+        }
+    },
     "periodItem": {
         "lightDay": "Light day",
         "mini": "mini",

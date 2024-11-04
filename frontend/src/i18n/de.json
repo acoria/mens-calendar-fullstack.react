@@ -58,6 +58,14 @@
         "ovulation": "Eisprung",
         "ovulationCalculated": "Eisprung?"
     },
+    "calendarMens": {
+        "calendar": {
+            "tabTitle": "Kalendar"
+        },
+        "statistics": {
+            "tabTitle": "Statistik"
+        }
+    },
     "periodItem": {
         "lightDay": "Leichter Tag",
         "mini": "mini",
@@ -66,7 +74,7 @@
         "super": "super",
         "tamponAmount": "Benötigte Tampons"
     },
-    "pmsSettings":{
+    "pmsSettings": {
         "title": "PMS Tag"
     }
 }

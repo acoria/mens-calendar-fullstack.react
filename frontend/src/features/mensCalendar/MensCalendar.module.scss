@@ -1,0 +1,9 @@
+@use '../../styles/mixins.scss';
+
+.mensCalendar {
+    margin-top: 1rem;
+
+    @include mixins.medium-screen {
+        margin-top: 2rem;
+    }
+}
