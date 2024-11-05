@@ -13,10 +13,10 @@ export const StatisticsItem: React.FC<IStatisticsItemProps> = (props) => {
   const viewModel = useStatisticsItemViewModel(props);
 
   const drop = (days: number, className: string) => (
-    <div className={styles.drop}>
+    <>
       <Drop className={className} />
       <span>{`${days}d`}</span>
-    </div>
+    </>
   );
 
   return (
@@ -32,10 +32,6 @@ export const StatisticsItem: React.FC<IStatisticsItemProps> = (props) => {
         </div>
       </div>
       <div className={styles.content}>
-        <div className={styles.periodStrength}>
-          {drop(props.amountLightPeriodDays, styles.dropImageEmpty)}
-          {drop(props.amountNormalPeriodDays, styles.dropImageFilled)}
-        </div>
         <div className={styles.tampons}>
           <span>{props.amountTamponsMini}</span>
           <span>{t(texts.statisticsItem.tamponSize.mini)}</span>
@@ -44,14 +40,12 @@ export const StatisticsItem: React.FC<IStatisticsItemProps> = (props) => {
           <span>{props.amountTamponsSuper}</span>
           <span>{t(texts.statisticsItem.tamponSize.super)}</span>
         </div>
-        <div className={styles.ovulation}>
-          <Crack className={styles.crackIcon} />
-          <span>{viewModel.ovulationSide}</span>
-        </div>
-        <div className={styles.pms}>
-          <SunIcon className={styles.sunIcon} />
-          <span>{`${props.amountPMSDays}d`}</span>
-        </div>
+        {drop(props.amountLightPeriodDays, styles.dropImageEmpty)}
+        {drop(props.amountNormalPeriodDays, styles.dropImageFilled)}
+        <Crack className={styles.crackIcon} />
+        <span>{viewModel.ovulationSide}</span>
+        <SunIcon className={styles.sunIcon} />
+        <span>{`${props.amountPMSDays}d`}</span>
       </div>
     </div>
   );

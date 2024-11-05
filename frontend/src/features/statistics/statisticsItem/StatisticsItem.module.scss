@@ -21,6 +21,8 @@ $icon-text-column-gap: 0.5rem;
 .icon {
     width: 2rem;
     height: auto;
+    align-self: center;
+    justify-self: center;
 }
 
 .header {
@@ -30,7 +32,7 @@ $icon-text-column-gap: 0.5rem;
     align-items: center;
 
     @include mixins.medium-screen {
-        justify-content: space-around;
+        margin: 0 1rem;
     }
 }
 
@@ -47,8 +49,6 @@ $icon-text-column-gap: 0.5rem;
     font-weight: 600;
 }
 
-.days {}
-
 .periodBreak {
     display: flex;
     flex-direction: row;
@@ -57,26 +57,27 @@ $icon-text-column-gap: 0.5rem;
 
 .content {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    row-gap: 1rem;
-    justify-items: center;
+    grid-template-columns: 3fr 1fr 2fr 1fr 1fr;
+    align-items: center;
 
     @include mixins.medium-screen {
-        justify-items: flex-start;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: 3fr repeat(8, 1fr);
+        justify-content: center;
     }
 }
 
-.periodStrength {
-    display: flex;
-    flex-direction: row;
-    column-gap: 1rem;
-}
+.tampons {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: $icon-text-column-gap;
+    margin-left: 1rem;
+    grid-row-start: 1;
+    grid-row-end: 3;
 
-.drop {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    @include mixins.medium-screen {
+        justify-self: center;
+        grid-row: auto;
+    }
 }
 
 .dropImage {
@@ -95,44 +96,13 @@ $icon-text-column-gap: 0.5rem;
     color: transparent;
 }
 
-.tampons {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    column-gap: $icon-text-column-gap;
-
-    @include mixins.medium-screen {
-        justify-self: center;
-    }
-}
-
-.ovulation {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: $icon-text-column-gap;
-
-    @include mixins.medium-screen {
-        justify-self: center;
-    }
-}
-
 .crackIcon {
     @extend .icon;
     color: colors.$color-statistics-item-crack-fill;
-}
-
-.pms {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    column-gap: $icon-text-column-gap;
-
-    @include mixins.medium-screen {
-        justify-self: flex-end;
-    }
+    width: 1.8rem;
 }
 
 .sunIcon {
     @extend .icon;
-    width: 2.7rem;
+    width: 2.5rem;
 }
