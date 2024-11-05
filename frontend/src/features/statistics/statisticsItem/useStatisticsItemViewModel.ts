@@ -10,14 +10,14 @@ export const useStatisticsItemViewModel = (props: IStatisticsItemProps) => {
   const renderMonth = useRenderMonth();
   const { t } = useTranslation();
 
-  const days = `${DateTime.toDay(props.startDate)}. - ${DateTime.toDay(
-    props.endDate
-  )}.`;
+  const days = `${DateTime.toDay(
+    props.statisticsItem.startDate
+  )}. - ${DateTime.toDay(props.statisticsItem.endDate)}.`;
 
   const month = (): string => {
     let month: string = "";
-    const startMonth = DateTime.toMonth(props.startDate);
-    const endMonth = DateTime.toMonth(props.endDate);
+    const startMonth = DateTime.toMonth(props.statisticsItem.startDate);
+    const endMonth = DateTime.toMonth(props.statisticsItem.endDate);
     if (startMonth === endMonth) {
       month = renderMonth(startMonth);
     } else {
@@ -27,14 +27,14 @@ export const useStatisticsItemViewModel = (props: IStatisticsItemProps) => {
   };
 
   const ovulationSide = (): string => {
-    if (props.feltOvulationSide === undefined) return "?";
-    switch (props.feltOvulationSide) {
+    if (props.statisticsItem.feltOvulationSide === undefined) return "?";
+    switch (props.statisticsItem.feltOvulationSide) {
       case OvulationSide.LEFT:
         return t(texts.general.left);
       case OvulationSide.RIGHT:
         return t(texts.general.right);
       default:
-        error(`Text missing for ${props.feltOvulationSide}`);
+        error(`Text missing for ${props.statisticsItem.feltOvulationSide}`);
     }
   };
 

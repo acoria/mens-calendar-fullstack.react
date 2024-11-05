@@ -3,6 +3,7 @@ import { initializeModels } from "./db/initializeModels";
 import { CycleController } from "./controllers/CycleController";
 import { PeriodItemController } from "./controllers/PeriodItemController";
 import { PMSDayController } from "./controllers/PMSDayController";
+import { StatisticsItemController } from "./controllers/StatisticsItemController";
 
 const initialize = async () => {
   await initializeModels(false);
@@ -26,5 +27,6 @@ server.use((_, res, next) => {
 server.use("/api", new CycleController().router);
 server.use("/api", new PeriodItemController().router);
 server.use("/api", new PMSDayController().router);
+server.use("/api", new StatisticsItemController().router);
 
 server.listen(5000);

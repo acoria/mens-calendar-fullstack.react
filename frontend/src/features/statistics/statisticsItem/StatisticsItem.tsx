@@ -28,24 +28,24 @@ export const StatisticsItem: React.FC<IStatisticsItemProps> = (props) => {
         {/* </div> */}
         <div className={styles.periodBreak}>
           <Space />
-          <span>{`${props.durationPeriodBreakInDays}d`}</span>
+          <span>{`${props.statisticsItem.durationPeriodBreakInDays}d`}</span>
         </div>
       </div>
       <div className={styles.content}>
         <div className={styles.tampons}>
-          <span>{props.amountTamponsMini}</span>
+          <span>{props.statisticsItem.amountTamponsMini}</span>
           <span>{t(texts.statisticsItem.tamponSize.mini)}</span>
-          <span>{props.amountTamponsNormal}</span>
+          <span>{props.statisticsItem.amountTamponsNormal}</span>
           <span>{t(texts.statisticsItem.tamponSize.normal)}</span>
-          <span>{props.amountTamponsSuper}</span>
+          <span>{props.statisticsItem.amountTamponsSuper}</span>
           <span>{t(texts.statisticsItem.tamponSize.super)}</span>
         </div>
-        {drop(props.amountLightPeriodDays, styles.dropImageEmpty)}
-        {drop(props.amountNormalPeriodDays, styles.dropImageFilled)}
+        {drop(props.statisticsItem.amountLightPeriodDays, styles.dropImageEmpty)}
+        {drop(props.statisticsItem.amountNormalPeriodDays, styles.dropImageFilled)}
         <Crack className={styles.crackIcon} />
         <span>{viewModel.ovulationSide}</span>
         <SunIcon className={styles.sunIcon} />
-        <span>{`${props.amountPMSDays}d`}</span>
+        <span>{`${props.statisticsItem.amountPMSDays}d`}</span>
       </div>
     </div>
   );

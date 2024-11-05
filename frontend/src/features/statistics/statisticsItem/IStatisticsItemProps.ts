@@ -1,14 +1,5 @@
-import { OvulationSide } from "../../../shared/types/OvulationSide";
+import { IStatisticsItem } from "../../../shared/model/IStatisticsItem";
 
 export interface IStatisticsItemProps {
-  endDate: Date;
-  startDate: Date;
-  feltOvulationSide?: OvulationSide;
-  amountTamponsMini: number;
-  amountTamponsNormal: number;
-  amountTamponsSuper: number;
-  amountLightPeriodDays: number;
-  amountNormalPeriodDays: number;
-  amountPMSDays: number;
-  durationPeriodBreakInDays: number;
+  statisticsItem: IStatisticsItem;
 }
