@@ -76,5 +76,12 @@
     },
     "pmsSettings": {
         "title": "PMS day"
+    },
+    "statisticsItem": {
+        "tamponSize": {
+            "mini": "mini",
+            "normal": "normal",
+            "super": "super"
+        }
     }
 }

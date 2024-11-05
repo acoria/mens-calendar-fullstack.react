@@ -1,0 +1,138 @@
+@use '../../../styles/mixins.scss';
+@use '../../../styles/colors.module.scss';
+
+$icon-text-column-gap: 0.5rem;
+
+.statisticsItem {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    padding: 0.5rem;
+    width: 90vw;
+    border: 1px solid colors.$color-statistics-item-border;
+    font-weight: 600;
+
+    @include mixins.medium-screen {
+        //width of calendar view
+        width: 35.75rem;
+    }
+}
+
+.icon {
+    width: 2rem;
+    height: auto;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    @include mixins.medium-screen {
+        justify-content: space-around;
+    }
+}
+
+.date {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 1rem;
+    font-size: large;
+}
+
+.month {
+    margin: 0;
+    font-weight: 600;
+}
+
+.days {}
+
+.periodBreak {
+    display: flex;
+    flex-direction: row;
+    column-gap: 0.3rem;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 1rem;
+    justify-items: center;
+
+    @include mixins.medium-screen {
+        justify-items: flex-start;
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.periodStrength {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1rem;
+}
+
+.drop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.dropImage {
+    @extend .icon;
+}
+
+.dropImageFilled {
+    @extend .dropImage;
+    color: colors.$color-statistics-item-drop-fill;
+}
+
+.dropImageEmpty {
+    @extend .dropImage;
+    stroke: colors.$color-statistics-item-drop-stroke;
+    stroke-width: 0.3rem;
+    color: transparent;
+}
+
+.tampons {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: $icon-text-column-gap;
+
+    @include mixins.medium-screen {
+        justify-self: center;
+    }
+}
+
+.ovulation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: $icon-text-column-gap;
+
+    @include mixins.medium-screen {
+        justify-self: center;
+    }
+}
+
+.crackIcon {
+    @extend .icon;
+    color: colors.$color-statistics-item-crack-fill;
+}
+
+.pms {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: $icon-text-column-gap;
+
+    @include mixins.medium-screen {
+        justify-self: flex-end;
+    }
+}
+
+.sunIcon {
+    @extend .icon;
+    width: 2.7rem;
+}

@@ -1,9 +1,9 @@
 import { ReactElement } from "react";
 import { ReactComponent as Ovulation } from "../../../assets/crack.svg";
 import { ReactComponent as Drop } from "../../../assets/drop.svg";
-import { ReactComponent as Sun } from "../../../assets/sun.svg";
 import { style } from "../../../core/ui/style";
 import { error } from "../../../core/utils/error";
+import { SunIcon } from "../../../icons/SunIcon";
 import { texts } from "../../../lib/translation/texts";
 import { useTranslation } from "../../../lib/translation/useTranslation";
 import { OvulationSide } from "../../../shared/types/OvulationSide";
@@ -190,7 +190,7 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
         footerIcons={icons}
         headerIcon={
           showHeaderIcon ? (
-            <Sun className={style(styles.icon, styles.sunIcon)} />
+            <SunIcon className={styles.icon}/>
           ) : (
             <></>
           )

@@ -4,14 +4,14 @@ import { texts } from "../../lib/translation/texts";
 import { useTranslation } from "../../lib/translation/useTranslation";
 import { CalendarSection } from "../calendar/calendarSection/CalendarSection";
 import styles from "./MensCalendar.module.scss";
+import { StatisticsSection } from "../statistics/statisticsSection/StatisticsSection";
 
 export const MensCalendar: React.FC = () => {
   const { t } = useTranslation();
-  const [selectedTab, setSelectedTab] = useState<number>(0);
+  const [selectedTab, setSelectedTab] = useState<number>(1);
 
   const content =
-    selectedTab === 0 ? <CalendarSection /> : <div>Statistiken</div>;
-  //   const content = selectedTab === 0 ? <CalendarSection /> : <Statistics />
+    selectedTab === 0 ? <CalendarSection /> : <StatisticsSection />;
   return (
     <div className={styles.mensCalendar}>
       <Tabstrip

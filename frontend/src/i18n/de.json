@@ -63,7 +63,7 @@
             "tabTitle": "Kalendar"
         },
         "statistics": {
-            "tabTitle": "Statistik"
+            "tabTitle": "Statistiken"
         }
     },
     "periodItem": {
@@ -76,5 +76,12 @@
     },
     "pmsSettings": {
         "title": "PMS Tag"
+    },
+    "statisticsItem": {
+        "tamponSize": {
+            "mini": "mini",
+            "normal": "normal",
+            "super": "super"
+        }
     }
 }

@@ -1,5 +1,5 @@
-import { ReactComponent as Sun } from "../../assets/sun.svg";
 import { ToggleButtonGroup } from "../../components/toggleButtonGroup/ToggleButtonGroup";
+import { SunIcon } from "../../icons/SunIcon";
 import { texts } from "../../lib/translation/texts";
 import { useTranslation } from "../../lib/translation/useTranslation";
 import { CalendarDetailsSettings } from "../calendar/calendarDetails/calendarDetailsSettings/CalendarDetailsSettings";
@@ -14,7 +14,7 @@ export const PMSSettings: React.FC<IPMSSettingsProps> = (props) => {
   return (
     <CalendarDetailsSettings
       title={t(texts.pmsSettings.title)}
-      icon={<Sun className={styles.icon} />}
+      icon={<SunIcon className={styles.icon} />}
     >
       <ToggleButtonGroup
         items={viewModel.toggleButtonOptions}

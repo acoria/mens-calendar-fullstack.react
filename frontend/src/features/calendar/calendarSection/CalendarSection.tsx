@@ -10,10 +10,8 @@ import { Calendar } from "../calendar/Calendar";
 import { DateCalculator } from "../calendar/utils/DateCalculator";
 import { CalendarDetails } from "../calendarDetails/CalendarDetails";
 import { ICalendarDayDetails } from "../types/ICalendarDayDetails";
-import { ICalendarSectionProps } from "./ICalendarSectionProps";
-// import styles from "./CalendarSection.module.scss";
 
-export const CalendarSection: React.FC<ICalendarSectionProps> = (props) => {
+export const CalendarSection: React.FC = () => {
   const [cycles, setCycles] = useState<ICycle[] | undefined>(undefined);
   const [pmsDays, setPMSDays] = useState<IPMSDay[]>([]);
   const [details, setDetails] = useState<ICalendarDayDetails | undefined>(
@@ -59,7 +57,6 @@ export const CalendarSection: React.FC<ICalendarSectionProps> = (props) => {
   }, [calendarEndDate, calendarStartDate, details]);
 
   return (
-    // <div className={styles.calendarSection}>
     <>
       {cycleInfo && details !== undefined && (
         <CalendarDetails
