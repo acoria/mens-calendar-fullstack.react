@@ -44,10 +44,17 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
   );
 
   useEffect(() => {
+    setDays([]);
     DateTimeIterator.iterate(props.startDate, props.endDate, (date) =>
       addToDays(date, DateTime.toMonth(date) === currentMonth)
     );
-  }, [addToDays, currentMonth, props.endDate, props.startDate, props.cycleInfo]);
+  }, [
+    addToDays,
+    currentMonth,
+    props.endDate,
+    props.startDate,
+    props.cycleInfo,
+  ]);
 
   const onDayClicked = (index: number) => {
     const clickedDay = days[index];

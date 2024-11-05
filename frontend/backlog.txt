@@ -30,8 +30,7 @@
 #Kalendar sollte immer montags starten
 - Statistik-Seite anlegen
 #Detail-Seite für Mobile-Ansicht zu groß
-- Bug: Eisprung abwählen ist im UI nicht sichtbar, da der Toggle aktiv bleibt
-- Bug: Kalender aktualisiert sich nicht nach Auswahl eines Tages
+- Bug: Eisprung abwählen ist im mobile UI nicht sichtbar, da der Toggle aktiv bleibt
 - Story: Navigation durch frühere Monate im Kalender mittels Pfeilen
 
 #period
