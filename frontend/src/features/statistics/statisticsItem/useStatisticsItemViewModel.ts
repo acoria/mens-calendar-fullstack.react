@@ -18,9 +18,10 @@ export const useStatisticsItemViewModel = (props: IStatisticsItemProps) => {
     let month: string = "";
     const startMonth = DateTime.toMonth(props.startDate);
     const endMonth = DateTime.toMonth(props.endDate);
-    month = renderMonth(startMonth);
-    if (startMonth !== endMonth) {
-      month = `${month}/${renderMonth(endMonth)}`;
+    if (startMonth === endMonth) {
+      month = renderMonth(startMonth);
+    } else {
+      month = `${renderMonth(startMonth, true)}/${renderMonth(endMonth, true)}`;
     }
     return month;
   };

@@ -31,8 +31,8 @@
 - Statistik-Seite anlegen
 #Detail-Seite für Mobile-Ansicht zu groß
 - Bug: Eisprung abwählen ist im UI nicht sichtbar, da der Toggle aktiv bleibt
-- als App publishen
 - Bug: Kalender aktualisiert sich nicht nach Auswahl eines Tages
+- Story: Navigation durch frühere Monate im Kalender mittels Pfeilen
 
 #period
 	id

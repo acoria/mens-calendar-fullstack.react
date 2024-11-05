@@ -22,10 +22,10 @@ export const StatisticsItem: React.FC<IStatisticsItemProps> = (props) => {
   return (
     <div className={styles.statisticsItem}>
       <div className={styles.header}>
-        <div className={styles.date}>
+        {/* <div className={styles.date}> */}
           <h3 className={styles.month}>{viewModel.month}</h3>
-          <span className={styles.days}>{viewModel.days}</span>
-        </div>
+          <span>{viewModel.days}</span>
+        {/* </div> */}
         <div className={styles.periodBreak}>
           <Space />
           <span>{`${props.durationPeriodBreakInDays}d`}</span>

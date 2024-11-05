@@ -20,7 +20,7 @@ export const StatisticsSection: React.FC<IStatisticsSectionProps> = (props) => {
         feltOvulationSide={OvulationSide.LEFT}
       />
       <StatisticsItem
-        endDate={DateTime.addDays(new Date(), 7)}
+        endDate={DateTime.subtractDays(new Date(), 20)}
         startDate={new Date()}
         amountTamponsMini={1}
         amountTamponsNormal={2}
