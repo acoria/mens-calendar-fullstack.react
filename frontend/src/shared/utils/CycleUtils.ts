@@ -1,6 +1,6 @@
-import { DateTime } from "../core/services/date/DateTime";
-import { ICycle } from "../shared/model/ICycle";
-import { IPeriodItem } from "../shared/model/IPeriodItem";
+import { DateTime } from "../../core/services/date/DateTime";
+import { ICycle } from "../model/ICycle";
+import { IPeriodItem } from "../model/IPeriodItem";
 
 class CycleUtilsDefault {
   private calculateNextPeriodStartDateFromPreviousCycle(
@@ -36,8 +36,14 @@ class CycleUtilsDefault {
   }
 
   findEarliestPeriodItemInCycle(cycle: ICycle): IPeriodItem | undefined {
+    if (cycle.periodItems) {
+      return this.findEarliestPeriodItem(cycle.periodItems);
+    }
+  }
+
+  findEarliestPeriodItem(periodItems: IPeriodItem[]): IPeriodItem | undefined {
     let earliestPeriodItem: IPeriodItem | undefined = undefined;
-    cycle.periodItems?.forEach((periodItem) => {
+    periodItems.forEach((periodItem) => {
       if (earliestPeriodItem === undefined) {
         earliestPeriodItem = periodItem;
       } else if (DateTime.isBefore(periodItem.day, earliestPeriodItem.day)) {

@@ -23,12 +23,16 @@ export const StatisticsItem: React.FC<IStatisticsItemProps> = (props) => {
     <div className={styles.statisticsItem}>
       <div className={styles.header}>
         {/* <div className={styles.date}> */}
-          <h3 className={styles.month}>{viewModel.month}</h3>
-          <span>{viewModel.days}</span>
+        <h3 className={styles.month}>{viewModel.month}</h3>
+        <span>{viewModel.days}</span>
         {/* </div> */}
         <div className={styles.periodBreak}>
           <Space />
-          <span>{`${props.statisticsItem.durationPeriodBreakInDays}d`}</span>
+          <span>{`${
+            props.statisticsItem.durationPeriodBreakInDays !== undefined
+              ? props.statisticsItem.durationPeriodBreakInDays
+              : "?"
+          }d`}</span>
         </div>
       </div>
       <div className={styles.content}>
@@ -40,8 +44,14 @@ export const StatisticsItem: React.FC<IStatisticsItemProps> = (props) => {
           <span>{props.statisticsItem.amountTamponsSuper}</span>
           <span>{t(texts.statisticsItem.tamponSize.super)}</span>
         </div>
-        {drop(props.statisticsItem.amountLightPeriodDays, styles.dropImageEmpty)}
-        {drop(props.statisticsItem.amountNormalPeriodDays, styles.dropImageFilled)}
+        {drop(
+          props.statisticsItem.amountLightPeriodDays,
+          styles.dropImageEmpty
+        )}
+        {drop(
+          props.statisticsItem.amountNormalPeriodDays,
+          styles.dropImageFilled
+        )}
         <Crack className={styles.crackIcon} />
         <span>{viewModel.ovulationSide}</span>
         <SunIcon className={styles.sunIcon} />

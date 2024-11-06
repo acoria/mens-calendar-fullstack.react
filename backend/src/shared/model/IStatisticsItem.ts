@@ -3,7 +3,7 @@ import { IRouteMeta } from "../../core/api/types/IRouteMeta";
 import { OvulationSide } from "../types/OvulationSide";
 
 export interface IStatisticsItem extends IEntity {
-  endDate: Date;
+  endDate?: Date;
   startDate: Date;
   feltOvulationSide?: OvulationSide;
   amountTamponsMini: number;
@@ -12,7 +12,7 @@ export interface IStatisticsItem extends IEntity {
   amountLightPeriodDays: number;
   amountNormalPeriodDays: number;
   amountPMSDays: number;
-  durationPeriodBreakInDays: number;
+  durationPeriodBreakInDays?: number;
 }
 
 export const StatisticsItemRouteMeta: IRouteMeta = {

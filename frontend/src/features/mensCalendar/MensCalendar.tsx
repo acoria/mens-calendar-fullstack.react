@@ -8,7 +8,7 @@ import { StatisticsSection } from "../statistics/statisticsSection/StatisticsSec
 
 export const MensCalendar: React.FC = () => {
   const { t } = useTranslation();
-  const [selectedTab, setSelectedTab] = useState<number>(1);
+  const [selectedTab, setSelectedTab] = useState<number>(0);
 
   const content =
     selectedTab === 0 ? <CalendarSection /> : <StatisticsSection />;

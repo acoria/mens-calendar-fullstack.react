@@ -9,7 +9,7 @@ import { useTranslation } from "../../lib/translation/useTranslation";
 import { ICycle } from "../../shared/model/ICycle";
 import { IPeriodItem } from "../../shared/model/IPeriodItem";
 import { OvulationSide } from "../../shared/types/OvulationSide";
-import { CycleUtils } from "../../utils/CycleUtils";
+import { CycleUtils } from "../../shared/utils/CycleUtils";
 import { uuid } from "../../utils/uuid";
 import { IPeriodItemSettingsProps } from "./IPeriodItemSettingsProps";
 
