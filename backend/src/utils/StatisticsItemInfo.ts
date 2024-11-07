@@ -33,7 +33,7 @@ export class StatisticsItemInfo {
     let amountLightPeriodDays = 0;
     let amountNormalPeriodDays = 0;
 
-    if (cycle.periodItems === undefined || cycle.periodItems.length === 0) {
+    if (cycle.periodItems === undefined || cycle.periodItems?.length === 0) {
       return;
     }
     cycle.periodItems?.forEach((periodItem) => {
@@ -67,7 +67,6 @@ export class StatisticsItemInfo {
   }
 
   fillPeriodBreaks(statisticItems: IStatisticsItem[]): IStatisticsItem[] {
-    // return statisticItems;
     const sortedStatisticItems = statisticItems.sort((first, second) =>
       DateTime.compare(first.startDate, second.startDate)
     );

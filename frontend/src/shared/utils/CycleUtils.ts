@@ -42,15 +42,32 @@ class CycleUtilsDefault {
   }
 
   findEarliestPeriodItem(periodItems: IPeriodItem[]): IPeriodItem | undefined {
-    let earliestPeriodItem: IPeriodItem | undefined = undefined;
+    return this.findPeriodItemByDateCompareCondition(
+      periodItems,
+      (firstDate, secondDate) => DateTime.isBefore(firstDate, secondDate)
+    );
+  }
+
+  findLatestPeriodItem(periodItems: IPeriodItem[]): IPeriodItem | undefined {
+    return this.findPeriodItemByDateCompareCondition(
+      periodItems,
+      (firstDate, secondDate) => DateTime.isAfter(firstDate, secondDate)
+    );
+  }
+
+  findPeriodItemByDateCompareCondition(
+    periodItems: IPeriodItem[],
+    dateCompareCondition: (firstDate: Date, secondDate: Date) => boolean
+  ): IPeriodItem | undefined {
+    let foundPeriodItem: IPeriodItem | undefined = undefined;
     periodItems.forEach((periodItem) => {
-      if (earliestPeriodItem === undefined) {
-        earliestPeriodItem = periodItem;
-      } else if (DateTime.isBefore(periodItem.day, earliestPeriodItem.day)) {
-        earliestPeriodItem = periodItem;
+      if (foundPeriodItem === undefined) {
+        foundPeriodItem = periodItem;
+      } else if (dateCompareCondition(periodItem.day, foundPeriodItem.day)) {
+        foundPeriodItem = periodItem;
       }
     });
-    return earliestPeriodItem;
+    return foundPeriodItem;
   }
 }
 export const CycleUtils = new CycleUtilsDefault();

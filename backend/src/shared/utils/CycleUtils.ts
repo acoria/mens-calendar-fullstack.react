@@ -46,15 +46,6 @@ class CycleUtilsDefault {
       periodItems,
       (firstDate, secondDate) => DateTime.isBefore(firstDate, secondDate)
     );
-    // let earliestPeriodItem: IPeriodItem | undefined = undefined;
-    // periodItems.forEach((periodItem) => {
-    //   if (earliestPeriodItem === undefined) {
-    //     earliestPeriodItem = periodItem;
-    //   } else if (DateTime.isBefore(periodItem.day, earliestPeriodItem.day)) {
-    //     earliestPeriodItem = periodItem;
-    //   }
-    // });
-    // return earliestPeriodItem;
   }
 
   findLatestPeriodItem(periodItems: IPeriodItem[]): IPeriodItem | undefined {
@@ -62,16 +53,6 @@ class CycleUtilsDefault {
       periodItems,
       (firstDate, secondDate) => DateTime.isAfter(firstDate, secondDate)
     );
-
-    // let latestPeriodItem: IPeriodItem | undefined = undefined;
-    // periodItems.forEach((periodItem) => {
-    //   if (latestPeriodItem === undefined) {
-    //     latestPeriodItem = periodItem;
-    //   } else if (DateTime.isAfter(periodItem.day, latestPeriodItem.day)) {
-    //     latestPeriodItem = periodItem;
-    //   }
-    // });
-    // return latestPeriodItem;
   }
 
   findPeriodItemByDateCompareCondition(
