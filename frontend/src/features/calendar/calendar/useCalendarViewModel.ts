@@ -56,7 +56,9 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
     props.cycleInfo,
   ]);
 
-  const month = `${renderMonth(currentMonth)}`;
+  const months = `${renderMonth(props.firstFullMonth)} - ${renderMonth(
+    props.lastFullMonth
+  )}`;
 
   const onDayClicked = (index: number) => {
     const clickedDay = days[index];
@@ -70,7 +72,7 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
   return {
     days,
     legend,
-    month,
+    months,
     onDayClicked,
   };
 };

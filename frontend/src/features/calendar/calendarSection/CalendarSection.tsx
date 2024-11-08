@@ -7,10 +7,9 @@ import { IPMSDay } from "../../../shared/model/IPMSDay";
 import { CycleInfo } from "../../../utils/CycleInfo";
 import { ICycleInfo } from "../../../utils/ICycleInfo";
 import { Calendar } from "../calendar/Calendar";
-import { DateNavigator } from "../calendar/utils/DateNavigator";
+import { useThreeMonthDateNavigator } from "../calendar/hooks/useThreeMonthDateNavigator";
 import { CalendarDetails } from "../calendarDetails/CalendarDetails";
 import { ICalendarDayDetails } from "../types/ICalendarDayDetails";
-import { ICalendarSpan } from "../types/ICalendarSpan";
 
 export const CalendarSection: React.FC = () => {
   const [cycles, setCycles] = useState<ICycle[] | undefined>(undefined);
@@ -18,10 +17,14 @@ export const CalendarSection: React.FC = () => {
   const [details, setDetails] = useState<ICalendarDayDetails | undefined>(
     undefined
   );
-  const dateNavigator = useMemo(() => new DateNavigator(), []);
-  const [calendarSpan, setCalendarSpan] = useState<ICalendarSpan>(
-    dateNavigator.getNextCalendarSpan()
-  );
+  const {
+    calendarStartDate,
+    calendarEndDate,
+    firstFullMonth,
+    lastFullMonth,
+    navigateBackwards,
+    navigateForwards,
+  } = useThreeMonthDateNavigator();
   const [loadCycles] = useRequest();
   const [loadPMSDays] = useRequest();
 
@@ -34,22 +37,22 @@ export const CalendarSection: React.FC = () => {
   useEffect(() => {
     loadCycles(async () => {
       const cycles = await new CycleApi().findByDateTimeSpan({
-        from: calendarSpan.startDate,
-        to: calendarSpan.endDate,
+        from: calendarStartDate,
+        to: calendarEndDate,
       });
       setCycles(cycles);
     });
     loadPMSDays(async () => {
       const pmsDays = await new PMSDayApi().findByDateTimeSpan({
-        from: calendarSpan.startDate,
-        to: calendarSpan.endDate,
+        from: calendarStartDate,
+        to: calendarEndDate,
       });
       setPMSDays(pmsDays);
     });
 
     // do not add loadCycles since it currently has a bug
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [calendarSpan, details]);
+  }, [calendarStartDate, calendarEndDate, details]);
 
   return (
     <>
@@ -62,22 +65,20 @@ export const CalendarSection: React.FC = () => {
           pmsDay={details.pmsDay}
         />
       )}
-      {cycleInfo && !details && (
+      {cycleInfo && !details && firstFullMonth && lastFullMonth && (
         <>
           <Calendar
-            startDate={calendarSpan.startDate}
-            endDate={calendarSpan.endDate}
+            startDate={calendarStartDate}
+            endDate={calendarEndDate}
+            firstFullMonth={firstFullMonth}
+            lastFullMonth={lastFullMonth}
             cycleInfo={cycleInfo}
             pmsDays={pmsDays}
             onDayClicked={(date, cycleData, pmsDay) =>
               setDetails({ day: date, cycleData, pmsDay })
             }
-            onNavigateBackwardsClicked={() =>
-              setCalendarSpan(dateNavigator.getPreviousCalendarSpan())
-            }
-            onNavigateForwardsClicked={() =>
-              setCalendarSpan(dateNavigator.getNextCalendarSpan())
-            }
+            onNavigateBackwardsClicked={navigateBackwards}
+            onNavigateForwardsClicked={navigateForwards}
           />
         </>
       )}

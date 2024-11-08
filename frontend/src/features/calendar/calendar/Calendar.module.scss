@@ -1,11 +1,12 @@
 @use '../../../styles/colors.module.scss';
 @use '../../../styles/mixins.scss';
 
-.calendar{
+.calendar {
     display: flex;
     flex-direction: column;
     row-gap: 0.7rem;
 }
+
 .navigation {
     display: flex;
     flex-direction: row;
@@ -24,9 +25,11 @@
     @extend .arrow;
 }
 
-.month{
+.months {
     font-weight: 600;
     font-size: large;
+    width: 15rem;
+    text-align: center;
 }
 
 .arrowRight {

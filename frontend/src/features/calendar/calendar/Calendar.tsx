@@ -212,7 +212,7 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
           className={styles.arrowLeft}
           onClick={props.onNavigateBackwardsClicked}
         />
-        <span className={styles.month}>{viewModel.month}</span>
+        <span className={styles.months}>{viewModel.months}</span>
         <DoubleArrowLeft
           className={styles.arrowRight}
           onClick={props.onNavigateForwardsClicked}

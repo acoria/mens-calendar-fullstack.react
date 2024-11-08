@@ -4,7 +4,7 @@ import { ICalendarSpan } from "../../types/ICalendarSpan";
 /**
  * Navigates through the calendar spans using 3 months cycles
  */
-export class DateNavigator {
+export class ThreeMonthDateNavigator {
   private _firstDayOfMiddleMonth: Date | undefined;
 
   private get firstDayOfMiddleMonth(): Date {
@@ -43,10 +43,30 @@ export class DateNavigator {
   }
 
   private getCalendarSpan(): ICalendarSpan {
-    return {
+    const calendarSpan = {
       startDate: this.getFirstMondayOfPreviousMonth(),
       endDate: this.getLastDayOfNextMonth(),
     };
+    return calendarSpan;
+  }
+
+  getFirstFullMonth(): number | undefined {
+    if (!this._firstDayOfMiddleMonth) return;
+    const month = DateTime.toMonth(this._firstDayOfMiddleMonth);
+    if (month === 1) {
+      return 12;
+    } else {
+      return month - 1;
+    }
+  }
+  getLastFullMonth(): number | undefined {
+    if (!this._firstDayOfMiddleMonth) return;
+    const month = DateTime.toMonth(this._firstDayOfMiddleMonth);
+    if (month === 12) {
+      return 1;
+    } else {
+      return month + 1;
+    }
   }
 
   getNextCalendarSpan(): ICalendarSpan {
