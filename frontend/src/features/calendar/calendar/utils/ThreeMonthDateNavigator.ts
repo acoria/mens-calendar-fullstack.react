@@ -30,22 +30,27 @@ export class ThreeMonthDateNavigator {
     return DateTime.subtractDays(thisMonthsFirstDay, 1);
   }
 
-  private getFirstMondayOfPreviousMonth(): Date {
+  private getDateInNextMonth() {
+    const monthEndDate = DateTime.getMonthEndDate(this.firstDayOfMiddleMonth);
+    return DateTime.addDays(monthEndDate, 1);
+  }
+
+  private getPreviousMonthStartingWithMonday(): Date {
     const dateInPreviousMonth = this.getDateInPreviousMonth();
     const firstOfMonth = DateTime.getMonthStartDate(dateInPreviousMonth);
     return this.addTimeDifference(DateTime.getWeekStartDate(firstOfMonth));
   }
 
-  private getLastDayOfNextMonth(): Date {
-    const monthEndDate = DateTime.getMonthEndDate(this.firstDayOfMiddleMonth);
-    const dateInNextMonth = DateTime.addDays(monthEndDate, 1);
-    return this.addTimeDifference(DateTime.getMonthEndDate(dateInNextMonth));
+  private getNextMonthEndingWithSunday(): Date {
+    const dateInNextMonth = this.getDateInNextMonth();
+    const lastOfMonth = DateTime.getMonthEndDate(dateInNextMonth);
+    return DateTime.getWeekEndDate(lastOfMonth);
   }
 
   private getCalendarSpan(): ICalendarSpan {
     const calendarSpan = {
-      startDate: this.getFirstMondayOfPreviousMonth(),
-      endDate: this.getLastDayOfNextMonth(),
+      startDate: this.getPreviousMonthStartingWithMonday(),
+      endDate: this.getNextMonthEndingWithSunday(),
     };
     return calendarSpan;
   }
