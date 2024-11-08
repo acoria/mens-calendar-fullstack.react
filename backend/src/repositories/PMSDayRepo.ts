@@ -20,7 +20,21 @@ export class PMSDayRepo extends SequelizeRepository<IPMSDay> {
         ],
       },
     });
-    const cycles = data.map((model) => model.toJSON());
-    return cycles;
+    const pmsDays = data.map((model) => model.toJSON());
+    return pmsDays;
+  }
+
+  async countByDateTimeSpan(dateTimeSpan: IDateTimeSpan): Promise<number> {
+    const data = await this.model.findAll({
+      where: {
+        [Op.and]: [
+          { day: { [Op.gte]: dateTimeSpan.from } },
+          {
+            day: { [Op.lte]: dateTimeSpan.to },
+          },
+        ],
+      },
+    });
+    return data.length;
   }
 }

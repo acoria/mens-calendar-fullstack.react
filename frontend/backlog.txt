@@ -30,9 +30,9 @@
 #Kalendar sollte immer montags starten
 #Statistik-Seite anlegen
 #Detail-Seite für Mobile-Ansicht zu groß
+#Story: Navigation durch frühere Monate im Kalender mittels Pfeilen
+#Story: PMS Tage in Statistik anzeigen
 - Bug: Eisprung abwählen ist im mobile UI nicht sichtbar, da der Toggle aktiv bleibt
-- Story: Navigation durch frühere Monate im Kalender mittels Pfeilen
-- Story: PMS an einen Zyklus hängen anstatt frei
 - Bug: Retest: eine Period mit Items anlegen. Eine weiter im nächsten Monat, in der isLightDay angehakt ist. Wird die PeriodBreak korrekt berechnet?
 		 upsertPeriodItem -> muss beachten, dass auch ein Zyklus evtl. gelöscht werden muss, wenn ein PeriodItem gelöscht wird
 

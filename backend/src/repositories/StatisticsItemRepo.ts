@@ -1,3 +1,7 @@
+import { DateTime } from "../core/services/date/DateTime";
+import { IDateTimeSpan } from "../core/services/date/IDateTimeSpan";
+import { ICycle } from "../shared/model/ICycle";
+import { IPMSDay } from "../shared/model/IPMSDay";
 import { IStatisticsItem } from "../shared/model/IStatisticsItem";
 import { StatisticsItemInfo } from "../utils/StatisticsItemInfo";
 import { CycleRepo } from "./CycleRepo";
@@ -13,13 +17,35 @@ export class StatisticsItemRepo {
 
     const statisticsItemInfo = new StatisticsItemInfo();
     const statisticsItems: IStatisticsItem[] = [];
-    cycles.forEach((cycle) => {
+    cycles.forEach(async (cycle) => {
       const statisticsItem = statisticsItemInfo.determineByCycle(cycle);
       if (statisticsItem !== undefined) {
+        statisticsItem.amountPMSDays = this.countPMSDays(
+          cycle,
+          pmsDays,
+          statisticsItem
+        );
         statisticsItems.push(statisticsItem);
       }
     });
+    const result = statisticsItemInfo.fillPeriodBreaks(statisticsItems);
+    return result;
+  }
 
-    return statisticsItemInfo.fillPeriodBreaks(statisticsItems);
+  private countPMSDays(
+    cycle: ICycle,
+    pmsDays: IPMSDay[],
+    statisticsItem: IStatisticsItem
+  ) {
+    const startDate = cycle.calculatedOvulationDate;
+    const cycleSpan: IDateTimeSpan = {
+      from: startDate,
+      to: statisticsItem.endDate ?? DateTime.addDays(startDate, 28),
+    };
+    const pmsDaysInCycle = pmsDays.filter((pmsDay) =>
+      DateTime.spanContains(cycleSpan, pmsDay.day)
+    );
+
+    return pmsDaysInCycle.length;
   }
 }
