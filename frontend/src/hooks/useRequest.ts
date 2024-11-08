@@ -19,7 +19,7 @@ export const useRequest = (): [
       // unknown error navigate to error boundary page
       // navigate(AppRoutes.error.toPath());
       toast.error(
-        "Sorry. Looks like something is no quite right with the backend :("
+        "Sorry. Looks like something is not quite right with the backend :("
       );
     },
     [toast]

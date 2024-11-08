@@ -56,6 +56,8 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
     props.cycleInfo,
   ]);
 
+  const month = `${renderMonth(currentMonth)}`;
+
   const onDayClicked = (index: number) => {
     const clickedDay = days[index];
     props.onDayClicked(
@@ -68,6 +70,7 @@ export const useCalendarViewModel = (props: ICalendarProps) => {
   return {
     days,
     legend,
+    month,
     onDayClicked,
   };
 };

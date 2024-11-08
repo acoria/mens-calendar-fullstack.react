@@ -13,6 +13,7 @@ import styles from "./Calendar.module.scss";
 import { CalendarType } from "./CalendarType";
 import { ICalendarProps } from "./ICalendarProps";
 import { useCalendarViewModel } from "./useCalendarViewModel";
+import { ReactComponent as DoubleArrowLeft } from "../../../assets/double_arrow_left.svg";
 
 export const Calendar: React.FC<ICalendarProps> = (props) => {
   const viewModel = useCalendarViewModel(props);
@@ -189,11 +190,7 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
         description={description}
         footerIcons={icons}
         headerIcon={
-          showHeaderIcon ? (
-            <SunIcon className={styles.icon}/>
-          ) : (
-            <></>
-          )
+          showHeaderIcon ? <SunIcon className={styles.icon} /> : <></>
         }
         className={className}
         markerColor={markerColor}
@@ -210,8 +207,21 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
 
   return (
     <div className={styles.calendar}>
-      {legend}
-      {days}
+      <div className={styles.navigation}>
+        <DoubleArrowLeft
+          className={styles.arrowLeft}
+          onClick={props.onNavigateBackwardsClicked}
+        />
+        <span className={styles.month}>{viewModel.month}</span>
+        <DoubleArrowLeft
+          className={styles.arrowRight}
+          onClick={props.onNavigateForwardsClicked}
+        />
+      </div>
+      <div className={styles.calendarContent}>
+        {legend}
+        {days}
+      </div>
     </div>
   );
 };

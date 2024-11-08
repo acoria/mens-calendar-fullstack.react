@@ -6,6 +6,8 @@ export interface ICalendarProps {
   cycleInfo: ICycleInfo;
   endDate: Date;
   onDayClicked: (date: Date, cycleData?: ICycleData, pmsDay?: IPMSDay) => void;
+  onNavigateBackwardsClicked: () => void;
+  onNavigateForwardsClicked: () => void;
   pmsDays: IPMSDay[];
   startDate: Date;
 }

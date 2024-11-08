@@ -7,9 +7,10 @@ import { IPMSDay } from "../../../shared/model/IPMSDay";
 import { CycleInfo } from "../../../utils/CycleInfo";
 import { ICycleInfo } from "../../../utils/ICycleInfo";
 import { Calendar } from "../calendar/Calendar";
-import { DateCalculator } from "../calendar/utils/DateCalculator";
+import { DateNavigator } from "../calendar/utils/DateNavigator";
 import { CalendarDetails } from "../calendarDetails/CalendarDetails";
 import { ICalendarDayDetails } from "../types/ICalendarDayDetails";
+import { ICalendarSpan } from "../types/ICalendarSpan";
 
 export const CalendarSection: React.FC = () => {
   const [cycles, setCycles] = useState<ICycle[] | undefined>(undefined);
@@ -17,19 +18,13 @@ export const CalendarSection: React.FC = () => {
   const [details, setDetails] = useState<ICalendarDayDetails | undefined>(
     undefined
   );
+  const dateNavigator = useMemo(() => new DateNavigator(), []);
+  const [calendarSpan, setCalendarSpan] = useState<ICalendarSpan>(
+    dateNavigator.getNextCalendarSpan()
+  );
   const [loadCycles] = useRequest();
   const [loadPMSDays] = useRequest();
 
-  const dateCalculator = useMemo(() => new DateCalculator(), []);
-  //ensure the calendar starts on monday
-  const calendarStartDate = useMemo(
-    () => dateCalculator.getFirstMondayOfPreviousMonth(),
-    [dateCalculator]
-  );
-  const calendarEndDate = useMemo(
-    () => dateCalculator.getLastDayOfNextMonth(),
-    [dateCalculator]
-  );
   const cycleInfo: ICycleInfo | undefined = useMemo(() => {
     if (cycles !== undefined) {
       return new CycleInfo(cycles);
@@ -39,22 +34,22 @@ export const CalendarSection: React.FC = () => {
   useEffect(() => {
     loadCycles(async () => {
       const cycles = await new CycleApi().findByDateTimeSpan({
-        from: calendarStartDate,
-        to: calendarEndDate,
+        from: calendarSpan.startDate,
+        to: calendarSpan.endDate,
       });
       setCycles(cycles);
     });
     loadPMSDays(async () => {
       const pmsDays = await new PMSDayApi().findByDateTimeSpan({
-        from: calendarStartDate,
-        to: calendarEndDate,
+        from: calendarSpan.startDate,
+        to: calendarSpan.endDate,
       });
       setPMSDays(pmsDays);
     });
 
     // do not add loadCycles since it currently has a bug
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [calendarEndDate, calendarStartDate, details]);
+  }, [calendarSpan, details]);
 
   return (
     <>
@@ -70,12 +65,18 @@ export const CalendarSection: React.FC = () => {
       {cycleInfo && !details && (
         <>
           <Calendar
-            startDate={calendarStartDate}
-            endDate={calendarEndDate}
+            startDate={calendarSpan.startDate}
+            endDate={calendarSpan.endDate}
             cycleInfo={cycleInfo}
             pmsDays={pmsDays}
             onDayClicked={(date, cycleData, pmsDay) =>
               setDetails({ day: date, cycleData, pmsDay })
+            }
+            onNavigateBackwardsClicked={() =>
+              setCalendarSpan(dateNavigator.getPreviousCalendarSpan())
+            }
+            onNavigateForwardsClicked={() =>
+              setCalendarSpan(dateNavigator.getNextCalendarSpan())
             }
           />
         </>
