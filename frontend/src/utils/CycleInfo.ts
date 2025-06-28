@@ -106,7 +106,7 @@ export class CycleInfo implements ICycleInfo {
   }
 
   /**
-   * Finds the cycle that is within 20 days before or 10 days after the provided date.
+   * Finds the cycle that is within 12 days before or 10 days after the provided date.
    */
   findPotentialCycleForPeriodByDate(date: Date): ICycle | undefined {
     let foundCycle = undefined;
@@ -115,7 +115,7 @@ export class CycleInfo implements ICycleInfo {
       const earlierDate = DateTime.subtractDays(date, day);
       foundCycle = this.findCycleByDate(earlierDate);
       day++;
-    } while (foundCycle === undefined && day < 21);
+    } while (foundCycle === undefined && day < 11);
     if (foundCycle === undefined) {
       day = 1;
       do {
