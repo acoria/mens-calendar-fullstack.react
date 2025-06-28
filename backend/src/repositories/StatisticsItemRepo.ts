@@ -29,7 +29,16 @@ export class StatisticsItemRepo {
       }
     });
     const result = statisticsItemInfo.fillPeriodBreaks(statisticsItems);
-    return result;
+    const sortedResult = result.sort((left, right) => {
+      if (left.startDate > right.startDate) {
+        return -1;
+      }
+      if (left.startDate < right.startDate) {
+        return 1;
+      }
+      return 0;
+    });
+    return sortedResult;
   }
 
   private countPMSDays(
