@@ -10,7 +10,17 @@ export const useStatisticsItemViewModel = (props: IStatisticsItemProps) => {
   const renderMonth = useRenderMonth();
   const { t } = useTranslation();
 
-  const days = `${DateTime.toDay(props.statisticsItem.startDate)}. - ${
+  const periodLength = (): string | number => {
+    if (props.statisticsItem.endDate === undefined) return "?";
+    return DateTime.subtract(
+      props.statisticsItem.endDate,
+      props.statisticsItem.startDate
+    ).days;
+  };
+
+  const periodBreakDays = `${DateTime.toDay(
+    props.statisticsItem.startDate
+  )}. - ${
     props.statisticsItem.endDate
       ? DateTime.toDay(props.statisticsItem.endDate)
       : "?"
@@ -38,9 +48,16 @@ export const useStatisticsItemViewModel = (props: IStatisticsItemProps) => {
       case OvulationSide.RIGHT:
         return t(texts.general.right);
       default:
-        error(`Text missing for OvulationSide: ${props.statisticsItem.feltOvulationSide}`);
+        error(
+          `Text missing for OvulationSide: ${props.statisticsItem.feltOvulationSide}`
+        );
     }
   };
 
-  return { days, month: month(), ovulationSide: ovulationSide() };
+  return {
+    days: periodBreakDays,
+    month: month(),
+    ovulationSide: ovulationSide(),
+    periodLength: periodLength(),
+  };
 };
