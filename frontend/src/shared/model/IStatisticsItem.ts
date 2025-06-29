@@ -1,19 +1,18 @@
 import { IEntity } from "../../core/api/types/IEntity";
 import { IRouteMeta } from "../../core/api/types/IRouteMeta";
-import { OvulationSide } from "../types/OvulationSide";
+import { IHaveOvulation } from "./IHaveOvulation";
+import { IHavePeriodDays } from "./IHavePeriodDays";
+import { IHavePMSDays } from "./IHavePMSDays";
+import { IHaveTamponAmounts } from "./IHaveTamponAmounts";
 
-export interface IStatisticsItem extends IEntity {
+export interface IStatisticsItem
+  extends IEntity,
+    IHaveTamponAmounts,
+    IHavePeriodDays,
+    IHavePMSDays,
+    IHaveOvulation {
   endDate?: Date;
   startDate: Date;
-  feltOvulationSide?: OvulationSide;
-  amountTamponsMini: number;
-  amountTamponsNormal: number;
-  amountTamponsSuper: number;
-  amountLightPeriodDays: number;
-  amountNormalPeriodDays: number;
-  amountPMSDays: number;
-  durationPeriodBreakInDays?: number;
-  durationPeriodInDays?: number;
 }
 
 export const StatisticsItemRouteMeta: IRouteMeta = {
