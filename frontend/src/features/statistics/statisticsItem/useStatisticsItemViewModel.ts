@@ -10,13 +10,9 @@ export const useStatisticsItemViewModel = (props: IStatisticsItemProps) => {
   const renderMonth = useRenderMonth();
   const { t } = useTranslation();
 
-  const periodLength = (): string | number => {
-    if (props.statisticsItem.endDate === undefined) return "?";
-    return DateTime.subtract(
-      props.statisticsItem.endDate,
-      props.statisticsItem.startDate
-    ).days;
-  };
+  const periodLength = (): string | number =>
+    props.statisticsItem.amountLightPeriodDays +
+    props.statisticsItem.amountNormalPeriodDays;
 
   const periodBreakDays = `${DateTime.toDay(
     props.statisticsItem.startDate
