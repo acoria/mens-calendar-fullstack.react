@@ -14,6 +14,7 @@ import { CalendarType } from "./CalendarType";
 import { ICalendarProps } from "./ICalendarProps";
 import { useCalendarViewModel } from "./useCalendarViewModel";
 import { ReactComponent as DoubleArrowLeft } from "../../../assets/double_arrow_left.svg";
+import { renderDay } from "./utils/renderDay";
 
 export const Calendar: React.FC<ICalendarProps> = (props) => {
   const viewModel = useCalendarViewModel(props);
@@ -186,7 +187,7 @@ export const Calendar: React.FC<ICalendarProps> = (props) => {
     return (
       <CalendarItem
         key={index}
-        dayOfMonth={`${day.dayOfMonth.toString()} ${day.month}`}
+        dayOfMonth={renderDay(day)}
         description={description}
         footerIcons={icons}
         headerIcon={
