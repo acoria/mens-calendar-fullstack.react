@@ -1,3 +1,4 @@
+import { start } from "repl";
 import { DateTime } from "../core/services/date/DateTime";
 import { DateTimeIterator } from "../core/services/date/DateTimeIterator";
 import { ICycle } from "../shared/model/ICycle";
@@ -71,22 +72,37 @@ export class StatisticsItemInfo {
       DateTime.compare(first.startDate, second.startDate)
     );
     for (let i = 0; i < sortedStatisticItems.length; i++) {
-      let daysOfPeriodBreak = 0;
-      const startDate = sortedStatisticItems[i].startDate;
+      const statisticItem = sortedStatisticItems[i];
+      const startDate = this.resetTimeOfDateToZero(statisticItem.startDate);
       const previousStatisticsItem = sortedStatisticItems[i - 1];
       const endDateOfPreviousPeriod =
         previousStatisticsItem !== undefined
           ? previousStatisticsItem.endDate
           : undefined;
       if (endDateOfPreviousPeriod !== undefined) {
-        //deduct start and end day
-        const endOfPeriodBreak = DateTime.addDays(endDateOfPreviousPeriod, 2);
-        DateTimeIterator.iterate(endOfPeriodBreak, startDate, () => {
-          daysOfPeriodBreak++;
-        });
+        //deduct end day
+        const endOfPeriodBreak = DateTime.addDays(
+          this.resetTimeOfDateToZero(endDateOfPreviousPeriod),
+          1
+        );
+        statisticItem.durationPeriodBreakInDays = DateTime.subtract(
+          startDate,
+          endOfPeriodBreak
+        ).days;
+        statisticItem.durationPeriodInDays = DateTime.subtract(
+          startDate,
+          this.resetTimeOfDateToZero(previousStatisticsItem.startDate)
+        ).days;
       }
-      sortedStatisticItems[i].durationPeriodBreakInDays = daysOfPeriodBreak;
     }
     return sortedStatisticItems;
+  }
+
+  /**
+   * Set hours to 0 to be able to subtract without the time of day to be considered
+   */
+  private resetTimeOfDateToZero(date: Date): Date {
+    date.setHours(0, 0, 0, 0);
+    return date;
   }
 }
