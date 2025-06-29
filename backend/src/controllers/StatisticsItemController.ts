@@ -11,14 +11,25 @@ export class StatisticsItemController extends Controller {
   constructor() {
     super();
     this.findAll();
+    this.getAverageStatistic();
   }
 
   protected findAll() {
     this.router.get(
       this.routeMeta.path,
-      ErrorInterceptor(async (req, res) => {
+      ErrorInterceptor(async (_, res) => {
         const entities = await this.repo.findAll();
         return res.status(HttpStatusCode.OK_200).send(entities);
+      })
+    );
+  }
+
+  protected getAverageStatistic() {
+    this.router.get(
+      `${this.routeMeta.path}/average`,
+      ErrorInterceptor(async (_, res) => {
+        const result = await this.repo.getAverageStatistic();
+        return res.status(HttpStatusCode.OK_200).send(result);
       })
     );
   }
