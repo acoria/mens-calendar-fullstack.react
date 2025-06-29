@@ -13,6 +13,7 @@ export interface IStatisticsItem extends IEntity {
   amountNormalPeriodDays: number;
   amountPMSDays: number;
   durationPeriodBreakInDays?: number;
+  durationPeriodInDays?: number;
 }
 
 export const StatisticsItemRouteMeta: IRouteMeta = {
