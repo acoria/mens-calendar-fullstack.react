@@ -11,7 +11,7 @@ export class StatisticsItemController extends Controller {
   constructor() {
     super();
     this.findAll();
-    this.getAverageStatistic();
+    // this.getAverageStatistic();
   }
 
   protected findAll() {

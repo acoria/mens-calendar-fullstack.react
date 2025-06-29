@@ -80,10 +80,10 @@ export class StatisticsItemInfo {
           ? previousStatisticsItem.endDate
           : undefined;
       if (endDateOfPreviousPeriod !== undefined) {
-        //deduct end day
+        //deduct end day and start date
         const endOfPeriodBreak = DateTime.addDays(
           this.resetTimeOfDateToZero(endDateOfPreviousPeriod),
-          1
+          2
         );
         statisticItem.durationPeriodBreakInDays = DateTime.subtract(
           startDate,
